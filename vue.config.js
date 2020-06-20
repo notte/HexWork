@@ -1,6 +1,6 @@
 module.exports = {
 	publicPath: process.env.NODE_ENV === 'production' ?
-		'/hex_work' : '/',
+		'/HexWork' : '/',
 	devServer: {
 		open: true,
 		host: 'localhost',
