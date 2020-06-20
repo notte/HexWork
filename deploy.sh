@@ -9,8 +9,9 @@ git init
 git add -A
 git commit -m 'deploy'
 # 部署到 https://github.com/chou0728/eric-project.git 分支為 gh-pages
-git push -f https://github.com/notte/backoffice.git master:gh-pages
+git push -f https://github.com/notte/HexWork.git master:gh-pages
 
 cd -
 
 # git push -f git@github.com:notte/backoffice.git master
+# sh deploy.sh
