@@ -1,0 +1,67 @@
+$white: #eff3f5;
+$MainColor: #7029b6;
+
+body {
+    letter-spacing: 1px;
+    box-sizing: border-box;
+    font-size: 1em;
+    color: #434343;
+    overflow: hidden;
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+
+    * {
+        padding: 0;
+        margin: 0;
+        font-weight: normal;
+        text-decoration: none;
+        list-style: none;
+    }
+
+    a {
+        cursor: pointer;
+    }
+}
+
+body,
+#app {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container {
+    width: 40%;
+    text-align: center;
+    padding: 30px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .th {
+        display: none;
+    }
+
+    h2 {
+        font-weight: 900;
+        margin: 20px 0;
+    }
+
+    .item {
+        margin: 20px 0;
+        display: flex;
+
+        input {
+            flex: 2;
+        }
+
+        button {
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .is-plain {
+            width: 100px;
+        }
+    }
+}
