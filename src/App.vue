@@ -37,38 +37,26 @@ import { Component } from 'vue-property-decorator';
 
 @Component
 export default class App extends Vue {
-	// List
 	tableData: string[] = [];
-	// 被選取中的 List
 	multipleSelection: string[] = [];
-	// 綁定 input 的 task
 	task: string = '';
 
-	// 新增任務
 	addTask() {
-		// 從陣列的前端加入，讓後來新增的任務保持最新
 		this.tableData.unshift(this.task);
-		// 加入後清空 input
 		this.task = '';
 	}
 
-	// 單個刪除 task
 	deleteTask(index: number) {
 		this.tableData.splice(index, 1);
 	}
 
-	// 整個刪除 list，清空陣列
 	deleteTaskList() {
 		this.tableData = [];
 	}
 
-	// 刪除指定 task
-	deleteSelectTask(rows: any) {
-		// 迭代選取中的陣列
+	deleteSelectTask(rows: undefined) {
 		this.multipleSelection.forEach((item, index) => {
-			// 迭代目前的 List
 			for (const num in this.tableData) {
-				// 如果與 item 的內容相同，即刪除
 				if (this.tableData[num] === item) {
 					this.tableData.splice(+num, 1);
 				}
@@ -76,7 +64,6 @@ export default class App extends Vue {
 		});
 	}
 
-	// 偵測目前選取的 task，內容為 [task,task...]
 	handleSelectionChange(value: string[]) {
 		this.multipleSelection = value;
 	}
