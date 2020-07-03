@@ -9,12 +9,12 @@ module.exports = {
 		hotOnly: false,
 		proxy: {
 			'/token': {
-				target: 'https://account.kkbox.com/oauth2/token',
+				target: 'https://course-ec-api.hexschool.io/api/auth/login',
 				changeOrigin: true,
 				ws: true,
 			},
 			'/api': {
-				target: 'https://api.kkbox.com/v1.1/',
+				target: 'https://course-ec-api.hexschool.io/api/',
 				ws: true,
 				host: 'api.kkbox.com',
 				changeOrigin: true,
