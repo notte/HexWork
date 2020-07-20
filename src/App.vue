@@ -1,13 +1,13 @@
 <template>
 	<div id="app">
-		<el-tabs v-model="activeName">
+		<!-- <el-tabs v-model="activeName">
 			<el-tab-pane label="Week 1" name="first">
 				<FirstWeek />
 			</el-tab-pane>
 			<el-tab-pane label="Week 2" name="second">
 				<SecondWeek />
 			</el-tab-pane>
-		</el-tabs>
+		</el-tabs>-->
 	</div>
 </template>
 
