@@ -1,5 +1,10 @@
 <template>
 	<div id="app">
+		<div class="header">
+			<router-link to="/FirstWeek">W1</router-link>
+		</div>
+
+		<router-view class="container" />
 		<!-- <el-tabs v-model="activeName">
 			<el-tab-pane label="Week 1" name="first">
 				<FirstWeek />

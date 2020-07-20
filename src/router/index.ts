@@ -7,6 +7,10 @@ const routes: RouteConfig[] = [
 	{
 		path: '/',
 		name: 'Home',
+	}, {
+		path: '/FirstWeek',
+		name: 'FirstWeek',
+		component: () => import('@/components/FirstWeek.vue'),
 	},
 ];
 

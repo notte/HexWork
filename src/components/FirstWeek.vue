@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="container">
+		<div>
 			<h2>第一週：關注點分離</h2>
 			<div class="item">
 				<el-input v-model="task" placeholder="請輸入內容" />
