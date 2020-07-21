@@ -7,10 +7,17 @@ const routes: RouteConfig[] = [
 	{
 		path: '/',
 		name: 'Home',
-	}, {
-		path: '/FirstWeek',
-		name: 'FirstWeek',
-		component: () => import('@/components/FirstWeek.vue'),
+		component: () => import('@/views/Main.vue'),
+	},
+	{
+		path: '/Foreign',
+		name: 'Foreign',
+		component: () => import('@/views/Foreign.vue'),
+	},
+	{
+		path: '/Taiwan',
+		name: 'Taiwan',
+		component: () => import('@/views/Taiwan.vue'),
 	},
 ];
 

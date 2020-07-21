@@ -1,32 +1,22 @@
 <template>
 	<div id="app">
 		<div class="header">
-			<router-link to="/FirstWeek">W1</router-link>
+			<router-link class="item" to="/">老虎旅遊</router-link>
+			<router-link class="item" to="/Taiwan">台灣旅行</router-link>
+			<router-link class="item" to="/Foreign">國外旅行</router-link>
 		</div>
-
-		<router-view class="container" />
-		<!-- <el-tabs v-model="activeName">
-			<el-tab-pane label="Week 1" name="first">
-				<FirstWeek />
-			</el-tab-pane>
-			<el-tab-pane label="Week 2" name="second">
-				<SecondWeek />
-			</el-tab-pane>
-		</el-tabs>-->
+		<div class="project_container">
+			<router-view class="container" />
+		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import FirstWeek from '@/components/FirstWeek.vue';
-import SecondWeek from '@/components/SecondWeek.vue';
 
 @Component({
-	components: {
-		FirstWeek,
-		SecondWeek,
-	},
+	components: {},
 })
 export default class App extends Vue {
 	activeName: string = 'first';

@@ -1,7 +1,5 @@
 <template>
-	<div>
-		<div class="container">Week 2</div>
-	</div>
+	<div>Taiwan</div>
 </template>
 
 <script lang="ts">
@@ -9,5 +7,5 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
 @Component
-export default class SecondWeek extends Vue {}
+export default class Taiwan extends Vue {}
 </script>

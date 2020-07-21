@@ -1,5 +1,5 @@
 <template>
-	<div>header</div>
+	<div>Foreign</div>
 </template>
 
 <script lang="ts">
@@ -7,5 +7,5 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
 @Component
-export default class Header extends Vue {}
+export default class Foreign extends Vue {}
 </script>
