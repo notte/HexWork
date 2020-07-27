@@ -37,10 +37,19 @@ body,
 		left: 0;
 		width: 100%;
 		background-color: #eee;
-		padding: 20px;
+		padding: 30px;
 
 		.item {
 			padding: 10px;
+			display: inline-block;
+			vertical-align: text-bottom;
+		}
+
+		.logo {
+
+			img {
+				height: 38px;
+			}
 		}
 	}
 
@@ -53,8 +62,8 @@ body,
 	}
 
 	.project_container {
-		margin-top: 62px;
-		height: calc(100vh - 62px);
+		margin-top: 102px;
+		height: calc(100vh - 102px);
 		overflow: hidden;
 		display: flex;
 

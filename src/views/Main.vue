@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<Carousel />
-		<el-divider />
+		<!-- <el-divider /> -->
 	</div>
 </template>
 
