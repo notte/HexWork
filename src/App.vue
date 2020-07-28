@@ -7,8 +7,10 @@
 			<router-link class="item" to="/Taiwan">台灣旅行</router-link>
 			<router-link class="item" to="/Foreign">國外旅行</router-link>
 		</div>
-		<div class="project_container">
-			<router-view class="container" />
+		<div class="layout">
+			<div class="container">
+				<router-view class="content" />
+			</div>
 		</div>
 	</div>
 </template>
