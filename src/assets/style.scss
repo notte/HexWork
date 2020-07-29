@@ -56,10 +56,7 @@ body,
 	.Carousel {
 		width: 100%;
 		position: relative;
-		// background-color: #333;
-		// top: 60px;
-		// left: 0;
-		// display: block;
+		background-color: #333;
 	}
 
 	.layout {
@@ -84,14 +81,109 @@ body,
 .Main {
 
 	.commodity-search {
-		width: 100%;
-		border-radius: 20px;
-		padding: 40px 20px;
+		background-color: #fff;
+		position: relative;
+		top: -30px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 55%;
+		border-radius: 10px;
+		padding: 30px;
 		box-shadow: -1px 2px 9px #aeaeae85;
 		display: flex;
 
 		.item {
 			flex: 1;
+			margin-right: 15px;
+
+			button {
+				width: 100%;
+				border: 1px solid #434343;
+			}
+
+			button:hover {
+				border-color: #c6e2ff;
+			}
+
+		}
+
+		.item:last-child {
+			margin-right: 0;
+		}
+	}
+}
+
+// 台灣主頁
+.TaiwanMain {
+	margin-top: 30px;
+	display: flex;
+	flex-wrap: wrap;
+
+
+	.el-col {
+		flex: 1;
+		box-sizing: border-box;
+		width: 33.33333%;
+		min-width: 33.33333%;
+		max-width: 33.33333%;
+		padding: 30px;
+
+		.el-card {
+			cursor: pointer;
+		}
+
+		.el-card__body {
+			padding: 0;
+
+			.item-image {
+				width: 100%;
+				height: 300px;
+				overflow: hidden;
+
+				img {
+					width: 100%;
+				}
+			}
+
+
+			.item {
+				padding: 20px;
+
+				h3 {
+					color: #333;
+				}
+
+				.tag {
+					padding: 15px 0;
+
+					span {
+						padding: 5px 10px;
+						margin-right: 5px;
+						background-color: #000;
+						border-radius: 10px;
+						color: #fff;
+					}
+
+					span:last-child {
+						margin-right: 0;
+					}
+				}
+
+				.money {
+					text-align: right;
+
+				}
+			}
+		}
+	}
+
+}
+
+// 行程
+.stroke {
+	.title {
+		h1 {
+			text-align: center;
 		}
 	}
 }
