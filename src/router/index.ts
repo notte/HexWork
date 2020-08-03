@@ -7,7 +7,8 @@ const routes: RouteConfig[] = [
 	{
 		path: '/',
 		name: 'Home',
-		component: () => import('@/views/Main.vue'),
+		redirect: { name: 'ThirdWeek' },
+		// component: () => import('@/views/Main.vue'),
 	},
 	{
 		path: '/Foreign',
@@ -18,6 +19,21 @@ const routes: RouteConfig[] = [
 		path: '/Taiwan',
 		name: 'Taiwan',
 		component: () => import('@/views/Taiwan.vue'),
+	},
+	{
+		path: '/ThirdWeek',
+		name: 'ThirdWeek',
+		component: () => import('@/views/MainMission/ThirdWeek.vue'),
+	},
+	{
+		path: '/FourthWeek',
+		name: 'FourthWeek',
+		component: () => import('@/views/MainMission/FourthWeek.vue'),
+	},
+	{
+		path: '/FifthWeek',
+		name: 'FifthWeek',
+		component: () => import('@/views/MainMission/FifthWeek.vue'),
 	},
 ];
 

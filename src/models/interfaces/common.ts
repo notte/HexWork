@@ -6,3 +6,15 @@ export interface IgetTokenRequest {
 	client_id: string;
 	client_secret: string;
 }
+
+export interface ThirdWeek {
+	title: string;
+	category: string;
+	content: string;
+	description: string;
+	imageUrl: string;
+	enabled: boolean;
+	origin_price: number;
+	price: number;
+	unit: string;
+}
