@@ -25,7 +25,7 @@
 			</el-table-column>
 			<el-table-column label="是否啟用">
 				<template slot-scope="scope">
-					<span :class="{'isTrue':scope.row.enabled}">{{ textType(scope.row.enabled) }}</span>
+					<span :class="{ isTrue: scope.row.enabled }">{{ textType(scope.row.enabled) }}</span>
 				</template>
 			</el-table-column>
 			<el-table-column label="編輯">
@@ -155,10 +155,10 @@ export default class ThirdWeek extends Vue {
 
 	dele(index: number) {
 		this.$confirm('確認刪除？')
-			.then((_) => {
+			.then(_ => {
 				this.tableData.splice(index, 1);
 			})
-			.catch((_) => {});
+			.catch(_ => {});
 	}
 
 	textType(text: boolean) {

@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<div class="login">
-			<el-input placeholder="請輸入帳號" />
-			<el-input placeholder="請輸入密碼" />
-			<el-button type="primary">登入</el-button>
+			<el-input v-model="email" placeholder="請輸入帳號" />
+			<el-input type="password" v-model="password" placeholder="請輸入密碼" />
+			<el-button type="primary" @click="login(email, password)">登入</el-button>
 		</div>
 	</div>
 </template>
@@ -11,9 +11,24 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import axios from 'axios';
+import * as Modal from '@/models/interfaces/common';
 
 @Component
-export default class FourthWeek extends Vue {}
+export default class FourthWeek extends Vue {
+	email: string = '';
+	password: string = '';
+
+	login(email: string, password: string) {
+		axios
+			.post('https://course-ec-api.hexschool.io/api/auth/login', { email: this.email, password: this.password })
+			.then(res => {
+				localStorage.setItem('Token', res.data.token);
+				this.$router.push({ name: 'FourthWeek_login' });
+			})
+			.catch(err => {});
+	}
+}
 </script>
 
 <style lang="scss">

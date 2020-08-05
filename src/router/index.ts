@@ -35,6 +35,11 @@ const routes: RouteConfig[] = [
 		name: 'FifthWeek',
 		component: () => import('@/views/MainMission/FifthWeek.vue'),
 	},
+	{
+		path: '/FourthWeek_login',
+		name: 'FourthWeek_login',
+		component: () => import('@/views/MainMission/FourthWeek_login.vue'),
+	},
 ];
 
 const router = new VueRouter({

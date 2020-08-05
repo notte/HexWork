@@ -18,3 +18,14 @@ export interface ThirdWeek {
 	price: number;
 	unit: string;
 }
+export interface FourthWeek {
+	title: string;
+	category: string;
+	content: string;
+	description: string;
+	imageUrl: string[];
+	enabled: boolean;
+	origin_price: number;
+	price: number;
+	unit: string;
+}
