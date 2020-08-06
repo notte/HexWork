@@ -30,3 +30,7 @@ export interface FourthWeek {
 	price: number;
 	unit: string;
 }
+export interface Login {
+	email: string;
+	password: string;
+}

@@ -12,6 +12,9 @@ module.exports = {
 				target: 'https://course-ec-api.hexschool.io/api/auth/login',
 				changeOrigin: true,
 				ws: true,
+				pathRewrite: {
+					'^/token': '',
+				},
 			},
 			'/api': {
 				target: 'https://course-ec-api.hexschool.io/api/',

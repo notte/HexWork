@@ -1,9 +1,21 @@
 <template>
 	<div>
 		<div class="login">
-			<el-input v-model="email" placeholder="請輸入帳號" />
-			<el-input type="password" v-model="password" placeholder="請輸入密碼" />
-			<el-button type="primary" @click="login(email, password)">登入</el-button>
+			<el-form :model="dynamicValidateForm" ref="dynamicValidateForm" class="demo-dynamic">
+				<el-form-item
+					prop="email"
+					:rules="[
+						{ required: true, message: '請輸入電子信箱', trigger: 'blur' },
+						{ type: 'email', message: '請輸入正確的信箱', trigger: ['blur', 'change'] },
+					]"
+				>
+					<el-input placeholder="請輸入電子信箱" v-model="dynamicValidateForm.email"></el-input>
+				</el-form-item>
+				<el-form-item prop="password">
+					<el-input type="password" placeholder="請輸入密碼" v-model="dynamicValidateForm.password"></el-input>
+				</el-form-item>
+			</el-form>
+			<el-button type="primary" @click="login(dynamicValidateForm)">登入</el-button>
 		</div>
 	</div>
 </template>
@@ -16,12 +28,14 @@ import * as Modal from '@/models/interfaces/common';
 
 @Component
 export default class FourthWeek extends Vue {
-	email: string = '';
-	password: string = '';
+	dynamicValidateForm: Modal.Login = {
+		email: '',
+		password: '',
+	};
 
-	login(email: string, password: string) {
+	login(dynamicValidateForm: Modal.Login) {
 		axios
-			.post('https://course-ec-api.hexschool.io/api/auth/login', { email: this.email, password: this.password })
+			.post('/token', { email: this.dynamicValidateForm.email, password: this.dynamicValidateForm.password })
 			.then(res => {
 				localStorage.setItem('Token', res.data.token);
 				this.$router.push({ name: 'FourthWeek_login' });

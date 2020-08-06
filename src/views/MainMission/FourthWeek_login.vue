@@ -44,19 +44,19 @@
 				</div>
 				<el-form ref="form" :model="form" label-width="80px">
 					<el-form-item label="圖片網址">
-						<input v-model.lazy="form.imageUrl[0]" />
+						<input v-model.lazy="img1" />
 					</el-form-item>
 					<el-form-item label="圖片網址">
-						<input v-model.lazy="form.imageUrl[1]" />
+						<input v-model.lazy="img2" />
 					</el-form-item>
 					<el-form-item label="圖片網址">
-						<input v-model.lazy="form.imageUrl[2]" />
+						<input v-model.lazy="img3" />
 					</el-form-item>
 					<el-form-item label="圖片網址">
-						<input v-model.lazy="form.imageUrl[3]" />
+						<input v-model.lazy="img4" />
 					</el-form-item>
 					<el-form-item label="圖片網址">
-						<input v-model.lazy="form.imageUrl[4]" />
+						<input v-model.lazy="img5" />
 					</el-form-item>
 					<el-form-item label="分類">
 						<input v-model.lazy="form.category" />
@@ -140,35 +140,32 @@ export default class FourthWeek extends Vue {
 		this.upTable();
 	}
 
-	mounted() {}
-
 	upTable() {
 		axios
 			.get('/api' + this.uuid + '/admin/ec/products', this.config)
-			.then((res) => {
+			.then(res => {
 				this.tableData = res.data.data;
 			})
-			.catch((err) => {});
+			.catch(err => {});
 	}
 
 	add(form: Modal.FourthWeek) {
 		form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
 		axios
 			.post('/api' + this.uuid + '/admin/ec/product', form, this.config)
-			.then((res) => {
+			.then(res => {
 				this.upTable();
 			})
-			.catch((err) => {});
+			.catch(err => {});
 		this.dialogVisible = false;
 	}
 
 	modify(form: Modal.FourthWeek) {
-		// for (const item in this.tableData) {
-		// 	if (this.tableData[item].title === form.title) {
-		// 		this.tableData[item] = form;
-		// 	}
-		// }
-		// this.dialogVisible = false;
+		axios
+			.patch('/api' + this.uuid + '/admin/ec/product/' + form.id, form, this.config)
+			.then(res => {})
+			.catch(err => {});
+		this.dialogVisible = false;
 	}
 
 	edit(index: number, row: any) {
@@ -176,21 +173,22 @@ export default class FourthWeek extends Vue {
 		this.hide = true;
 		this.addHide = false;
 		this.form = this.tableData[index];
+		[this.img1, this.img2, this.img3, this.img4, this.img5] = this.form.imageUrl;
 	}
 
 	dele(row: any) {
 		const id = row.id;
 
 		this.$confirm('確認刪除？')
-			.then((_) => {
+			.then(_ => {
 				axios
 					.delete('/api' + this.uuid + '/admin/ec/product/' + id, this.config)
-					.then((res) => {
+					.then(res => {
 						this.upTable();
 					})
-					.catch((err) => {});
+					.catch(err => {});
 			})
-			.catch((_) => {});
+			.catch(_ => {});
 	}
 
 	handleClose() {
