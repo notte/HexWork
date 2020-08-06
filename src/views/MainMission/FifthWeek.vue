@@ -4,7 +4,9 @@
 			<!-- 產品列表 -->
 			<div class="product-list">
 				<div class="item" v-for="(item, index) in tableData" :key="index">
-					<div class="img"><img :src="item.imageUrl[0]" alt="" /></div>
+					<div class="img">
+						<img :src="item.imageUrl[0]" alt />
+					</div>
 					<div class="text">
 						<h2>{{ item.title }}</h2>
 						<h3>{{ item.content }}</h3>
@@ -17,7 +19,7 @@
 						<el-divider></el-divider>
 						<div class="button">
 							<el-button @click="showDialog(item)">查看</el-button>
-							<el-button type="primary" @click="addOneCar(item.id)">加入購物車</el-button>
+							<el-button type="primary" @click="addAproduct(item.id)">加入購物車</el-button>
 						</div>
 					</div>
 				</div>
@@ -27,11 +29,13 @@
 				<h1>購物車</h1>
 				<!-- 購物車列表 -->
 				<div class="cart-list">
-					<el-button class="addButton" type="danger" plain @click="alldele">清除購物車</el-button>
+					<el-button class="addButton" type="danger" plain @click="deleteAll">清除購物車</el-button>
 					<el-table :data="ProductList" empty-text="購物車無商品">
 						<el-table-column label="刪除">
 							<template slot-scope="scope">
-								<el-button size="mini" type="danger" plain @click="dele(scope.row.product)"><i class="el-icon-delete"></i></el-button>
+								<el-button size="mini" type="danger" plain @click="dele(scope.row.product)">
+									<i class="el-icon-delete"></i>
+								</el-button>
 							</template>
 						</el-table-column>
 
@@ -56,27 +60,28 @@
 							</template>
 						</el-table-column>
 					</el-table>
+					<h3>共計：{{ pay }}元</h3>
 				</div>
 				<!-- 表單 -->
-				<div class="form">
-					<el-form ref="form" :model="form" label-width="80px">
-						<el-form-item label="收件人" required>
-							<input v-model.lazy="form.name" />
+				<div class="form" :model="form">
+					<el-form ref="form" :model="form" label-width="80px" :rules="rules">
+						<el-form-item label="收件人" prop="name" required>
+							<el-input v-model.lazy="form.name" />
 						</el-form-item>
-						<el-form-item label="E-mail" required>
-							<input v-model.lazy="form.email" />
+						<el-form-item label="E-mail" prop="email" required>
+							<el-input v-model.lazy="form.email" />
 						</el-form-item>
-						<el-form-item label="電話" required>
-							<input v-model.lazy="form.tel" />
+						<el-form-item label="電話" prop="tel" required>
+							<el-input v-model.lazy="form.tel" />
 						</el-form-item>
-						<el-form-item label="地址" required>
-							<input v-model.lazy="form.address" />
+						<el-form-item label="地址" prop="address" required>
+							<el-input v-model.lazy="form.address" />
 						</el-form-item>
 						<el-form-item label="付款方式">
-							<input v-model.lazy="form.payment" />
+							<el-input v-model.lazy="form.payment" />
 						</el-form-item>
 						<el-form-item label="留言">
-							<textarea type="textarea" v-model.lazy="form.message" />
+							<textarea type="textarea" v-model.lazy="form.message"></textarea>
 						</el-form-item>
 					</el-form>
 					<el-button type="primary">送出表單</el-button>
@@ -90,11 +95,11 @@
 			<h4>原價{{ Product.origin_price }}元</h4>
 			<h1>現在只要{{ Product.price }}元</h1>
 			<el-select v-model="value" placeholder="請選擇">
-				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
 			</el-select>
 			<h2>小計{{ Product.price * value }}元</h2>
 			<span slot="footer" class="dialog-footer">
-				<el-button type="primary" @click="addCar(value, Product.id)">加到購物車</el-button>
+				<el-button type="primary" @click="dialogAddCart(value, Product.id)">加到購物車</el-button>
 			</span>
 		</el-dialog>
 	</div>
@@ -102,22 +107,26 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import axios, { AxiosRequestConfig } from 'axios';
 import * as Modal from '@/models/interfaces/common';
+import { Loading } from 'element-ui';
 
 @Component
 export default class FifthWeek extends Vue {
+	// 購物車總金額
+	pay: number = 0;
 	uuid: string = '59677b21-aeb1-45eb-8ac8-9fe077baa5a0';
 	token: string | null = '';
 	config: AxiosRequestConfig = {};
-	hide: boolean = false;
-	addHide: boolean = true;
 	dialogVisible: boolean = false;
+	// 購物車數量
 	value: number = 0;
+	// 已加購物車列表
 	ProductList: Modal.ProductList[] = [];
+	// 商品列表
 	tableData: Modal.FourthWeek[] = [];
-	num: number = 1;
+	// 購買數量選項
 	options: object[] = [
 		{
 			value: 1,
@@ -140,8 +149,9 @@ export default class FifthWeek extends Vue {
 			label: '選購 5 單位',
 		},
 	];
+	// 開啟的商品
 	Product: Modal.FourthWeek = { id: '', title: '', category: '', content: '', description: '', imageUrl: [], enabled: false, origin_price: 0, price: 0, unit: '' };
-
+	// 消費者表單
 	form: Modal.FifthWeek = {
 		name: '',
 		email: '',
@@ -151,45 +161,13 @@ export default class FifthWeek extends Vue {
 		coupon: '',
 		message: '',
 	};
-
-	beforeClose() {
-		this.value = 0;
-		this.dialogVisible = false;
-	}
-
-	alldele() {
-		axios
-			.delete('/api' + this.uuid + '/ec/shopping/all/product', this.config)
-			.then(res => {
-				this.upCar();
-			})
-			.catch(err => {});
-	}
-
-	addOneCar(id: string) {
-		axios
-			.post('/api' + this.uuid + '/ec/shopping', { product: id, quantity: 1 }, this.config)
-			.then(res => {
-				this.dialogVisible = false;
-				this.upCar();
-			})
-			.catch(err => {});
-	}
-
-	dele(product: Modal.FourthWeek) {
-		axios
-			.delete('/api' + this.uuid + '/ec/shopping/' + product.id, this.config)
-			.then(res => {
-				this.upCar();
-			})
-			.catch(err => {});
-	}
-
-	handleClose() {
-		this.$confirm('确认关闭？')
-			.then(_ => {})
-			.catch(_ => {});
-	}
+	// 驗證規則
+	rules: object = {
+		name: [{ required: true, message: '請輸入姓名', trigger: 'blur' }],
+		email: [{ required: true, message: '請輸入電子信箱', trigger: 'blur' }],
+		tel: [{ required: true, message: '請輸入電話', trigger: 'blur' }],
+		address: [{ required: true, message: '請輸入地址', trigger: 'blur' }],
+	};
 
 	created() {
 		this.token = localStorage.getItem('Token');
@@ -199,49 +177,113 @@ export default class FifthWeek extends Vue {
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
 		};
-		this.upTable();
-		this.upCar();
+
+		this.TableUpdate();
+		this.CartUpdate();
 	}
 
-	upTable() {
+	// 關閉視窗，資料歸零
+	beforeClose() {
+		this.value = 0;
+		this.dialogVisible = false;
+	}
+
+	// 購物車全刪除
+	deleteAll() {
+		const loadingInstance = Loading.service({ fullscreen: true });
+		axios
+			.delete('/api' + this.uuid + '/ec/shopping/all/product', this.config)
+			.then((res) => {
+				this.CartUpdate();
+			})
+			.catch((err) => {});
+		this.pay = 0;
+	}
+
+	// 新增一樣商品
+	addAproduct(id: string) {
+		const loadingInstance = Loading.service({ fullscreen: true });
+		axios
+			.post('/api' + this.uuid + '/ec/shopping', { product: id, quantity: 1 }, this.config)
+			.then((res) => {
+				this.dialogVisible = false;
+				this.CartUpdate();
+			})
+			.catch((err) => {});
+	}
+
+	// 刪除指定商品
+	dele(product: Modal.FourthWeek) {
+		const loadingInstance = Loading.service({ fullscreen: true });
+		axios
+			.delete('/api' + this.uuid + '/ec/shopping/' + product.id, this.config)
+			.then((res) => {
+				this.CartUpdate();
+			})
+			.catch((err) => {});
+	}
+
+	// 商品列表
+	TableUpdate() {
+		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
 			.get('/api' + this.uuid + '/admin/ec/products', this.config)
-			.then(res => {
+			.then((res) => {
 				this.tableData = res.data.data;
+				loadingInstance.close();
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
-	upCar() {
+	// 更新購物車
+	CartUpdate() {
+		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
 			.get('/api' + this.uuid + '/ec/shopping', this.config)
-			.then(res => {
+			.then((res) => {
 				this.ProductList = res.data.data;
+				loadingInstance.close();
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
+	// 購物車總金額
+	@Watch('ProductList')
+	sumPay() {
+		this.pay = 0;
+		for (const item of this.ProductList) {
+			this.pay = this.pay + item.product.price * item.quantity;
+		}
+	}
+
+	// 查看單一商品
 	showDialog(item: Modal.FourthWeek) {
-		this.dialogVisible = true;
+		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
 			.get('/api' + this.uuid + '/ec/product/' + item.id, this.config)
-			.then(res => {
+			.then((res) => {
 				this.Product = res.data.data;
+				loadingInstance.close();
+				this.dialogVisible = true;
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
-	addCar(value: number, id: string) {
+	// Dialog 新增購物車
+	dialogAddCart(value: number, id: string) {
 		if (value === 0) {
 			this.$confirm('請選擇數量');
 		}
+
+		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
 			.post('/api' + this.uuid + '/ec/shopping', { product: id, quantity: value }, this.config)
-			.then(res => {
+			.then((res) => {
 				this.dialogVisible = false;
-				this.upCar();
+				this.CartUpdate();
+				loadingInstance.close();
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 }
 </script>

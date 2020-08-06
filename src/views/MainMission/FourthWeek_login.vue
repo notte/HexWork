@@ -80,7 +80,7 @@
 						<textarea type="textarea" v-model.lazy="form.content" />
 					</el-form-item>
 					<el-form-item label="說明內容">
-						<textarea type="textarea" v-model.lazy="form.description" />
+						<textarea type="textarea" v-model.lazy="form.description"></textarea>
 					</el-form-item>
 				</el-form>
 
@@ -99,6 +99,7 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import axios, { AxiosRequestConfig } from 'axios';
 import * as Modal from '@/models/interfaces/common';
+import { Loading } from 'element-ui';
 
 @Component
 export default class FourthWeek extends Vue {
@@ -113,9 +114,7 @@ export default class FourthWeek extends Vue {
 	hide: boolean = false;
 	addHide: boolean = true;
 	dialogVisible: boolean = false;
-
 	tableData: Modal.FourthWeek[] = [];
-
 	form: Modal.FourthWeek = {
 		id: '',
 		title: '',
@@ -130,6 +129,7 @@ export default class FourthWeek extends Vue {
 	};
 
 	created() {
+		const loadingInstance = Loading.service({ fullscreen: true });
 		this.token = localStorage.getItem('Token');
 
 		this.config.headers = {
@@ -137,38 +137,44 @@ export default class FourthWeek extends Vue {
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
 		};
-		this.upTable();
-	}
 
-	upTable() {
+		this.TableUpdate();
+	}
+	// GET 商品列表
+	TableUpdate() {
+		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
 			.get('/api' + this.uuid + '/admin/ec/products', this.config)
-			.then(res => {
+			.then((res) => {
 				this.tableData = res.data.data;
+				loadingInstance.close();
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
+	// 新增商品
 	add(form: Modal.FourthWeek) {
 		form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
 		axios
 			.post('/api' + this.uuid + '/admin/ec/product', form, this.config)
-			.then(res => {
-				this.upTable();
+			.then((res) => {
+				this.TableUpdate();
 			})
-			.catch(err => {});
+			.catch((err) => {});
 		this.dialogVisible = false;
 	}
 
+	// 送出修改
 	modify(form: Modal.FourthWeek) {
 		axios
 			.patch('/api' + this.uuid + '/admin/ec/product/' + form.id, form, this.config)
-			.then(res => {})
-			.catch(err => {});
+			.then((res) => {})
+			.catch((err) => {});
 		this.dialogVisible = false;
 	}
 
-	edit(index: number, row: any) {
+	// 打開編輯商品
+	edit(index: number) {
 		this.dialogVisible = true;
 		this.hide = true;
 		this.addHide = false;
@@ -176,21 +182,23 @@ export default class FourthWeek extends Vue {
 		[this.img1, this.img2, this.img3, this.img4, this.img5] = this.form.imageUrl;
 	}
 
-	dele(row: any) {
+	// 刪除
+	dele(row: Modal.FourthWeek) {
 		const id = row.id;
 
 		this.$confirm('確認刪除？')
-			.then(_ => {
+			.then((_) => {
 				axios
 					.delete('/api' + this.uuid + '/admin/ec/product/' + id, this.config)
-					.then(res => {
-						this.upTable();
+					.then((res) => {
+						this.TableUpdate();
 					})
-					.catch(err => {});
+					.catch((err) => {});
 			})
-			.catch(_ => {});
+			.catch((_) => {});
 	}
 
+	// 關閉 Modal 視窗，將資料歸零
 	handleClose() {
 		this.hide = false;
 		this.addHide = true;
@@ -214,6 +222,7 @@ export default class FourthWeek extends Vue {
 		this.dialogVisible = false;
 	}
 
+	// 識別開關，對應渲染CSS
 	textType(text: boolean) {
 		if (text === false) {
 			return '未啟用';

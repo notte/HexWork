@@ -46,7 +46,7 @@ export interface FifthWeek {
 }
 
 export interface ProductList {
-	product: FifthWeek;
+	product: FourthWeek;
 	quantity: number;
 	created_at: string;
 	created_diff: string;

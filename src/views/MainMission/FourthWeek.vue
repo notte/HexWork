@@ -25,6 +25,7 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import axios from 'axios';
 import * as Modal from '@/models/interfaces/common';
+import { Loading } from 'element-ui';
 
 @Component
 export default class FourthWeek extends Vue {
@@ -34,13 +35,15 @@ export default class FourthWeek extends Vue {
 	};
 
 	login(dynamicValidateForm: Modal.Login) {
+		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
 			.post('/token', { email: this.dynamicValidateForm.email, password: this.dynamicValidateForm.password })
-			.then(res => {
+			.then((res) => {
 				localStorage.setItem('Token', res.data.token);
+				loadingInstance.close();
 				this.$router.push({ name: 'FourthWeek_login' });
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 }
 </script>
