@@ -102,7 +102,7 @@ import * as Modal from '@/models/interfaces/common';
 import { Loading } from 'element-ui';
 
 @Component
-export default class FourthWeek extends Vue {
+export default class FifthWeek extends Vue {
 	img1: string = '';
 	img2: string = '';
 	img3: string = '';
