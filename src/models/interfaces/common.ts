@@ -34,3 +34,22 @@ export interface Login {
 	email: string;
 	password: string;
 }
+
+export interface FifthWeek {
+	name: string;
+	email: string;
+	tel: string;
+	address: string;
+	payment: string;
+	coupon: string;
+	message: string;
+}
+
+export interface ProductList {
+	product: FifthWeek;
+	quantity: number;
+	created_at: string;
+	created_diff: string;
+	updated_at: string;
+	updated_diff: string;
+}
