@@ -72,13 +72,20 @@
 							<el-input v-model.lazy="form.email" />
 						</el-form-item>
 						<el-form-item label="電話" prop="tel" required>
-							<el-input v-model.lazy="form.tel" />
+							<el-input type="tel" v-model.lazy="form.tel" />
 						</el-form-item>
 						<el-form-item label="地址" prop="address" required>
 							<el-input v-model.lazy="form.address" />
 						</el-form-item>
-						<el-form-item label="付款方式">
-							<el-input v-model.lazy="form.payment" />
+						<el-form-item label="付款方式" class="paymentMethod">
+							<el-select v-model="paymentMethod" placeholder="請選擇">
+								<el-option
+									v-for="item in paymentMethodList"
+									:key="item.value"
+									:label="item.label"
+									:value="item.label"
+								></el-option>
+							</el-select>
 						</el-form-item>
 						<el-form-item label="留言">
 							<textarea type="textarea" v-model.lazy="form.message"></textarea>
@@ -149,6 +156,15 @@ export default class FifthWeek extends Vue {
 			label: '選購 5 單位',
 		},
 	];
+	paymentMethod: string = '';
+	paymentMethodList: object[] = [
+		{ value: 1, label: 'WebATM' },
+		{ value: 3, label: 'ATM' },
+		{ value: 4, label: 'Barcode' },
+		{ value: 5, label: 'Credit' },
+		{ value: 6, label: 'ApplePay' },
+		{ value: 7, label: 'GooglePay' },
+	];
 	// 開啟的商品
 	Product: Modal.FourthWeek = { id: '', title: '', category: '', content: '', description: '', imageUrl: [], enabled: false, origin_price: 0, price: 0, unit: '' };
 	// 消費者表單
@@ -164,8 +180,14 @@ export default class FifthWeek extends Vue {
 	// 驗證規則
 	rules: object = {
 		name: [{ required: true, message: '請輸入姓名', trigger: 'blur' }],
-		email: [{ required: true, message: '請輸入電子信箱', trigger: 'blur' }],
-		tel: [{ required: true, message: '請輸入電話', trigger: 'blur' }],
+		email: [
+			{ required: true, message: '請輸入電子信箱', trigger: 'blur' },
+			{ type: 'email', message: '請輸入正確的信箱', trigger: ['blur', 'change'] },
+		],
+		tel: [
+			{ required: true, message: '請輸入電話', trigger: 'blur' },
+			{ min: 8, message: '請輸入正確的電話', trigger: ['blur', 'change'] },
+		],
 		address: [{ required: true, message: '請輸入地址', trigger: 'blur' }],
 	};
 
@@ -289,6 +311,11 @@ export default class FifthWeek extends Vue {
 </script>
 
 <style lang="scss">
+.paymentMethod {
+	.el-select {
+		width: 100%;
+	}
+}
 .product-list {
 	display: flex;
 	.item {
@@ -299,7 +326,7 @@ export default class FifthWeek extends Vue {
 		border: 1px solid #ccc;
 		.img {
 			width: 100%;
-			height: 300px;
+			max-height: 300px;
 			overflow: hidden;
 			img {
 				width: 100%;
