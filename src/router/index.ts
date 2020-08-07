@@ -21,27 +21,27 @@ const routes: RouteConfig[] = [
 	// 	component: () => import('@/views/Taiwan.vue'),
 	// },
 	{
-		path: 'ThirdWeek',
+		path: '/ThirdWeek',
 		name: 'ThirdWeek',
 		component: () => import('@/views/MainMission/ThirdWeek.vue'),
 	},
 	{
-		path: 'FourthWeek',
+		path: '/FourthWeek',
 		name: 'FourthWeek',
 		component: () => import('@/views/MainMission/FourthWeek.vue'),
 	},
 	{
-		path: 'FifthWeek',
+		path: '/FifthWeek',
 		name: 'FifthWeek',
 		component: () => import('@/views/MainMission/FifthWeek.vue'),
 	},
 	{
-		path: 'FourthWeek_login',
+		path: '/FourthWeek_login',
 		name: 'FourthWeek_login',
 		component: () => import('@/views/MainMission/FourthWeek_login.vue'),
 	},
 	{
-		path: 'FifthWeek_login',
+		path: '/FifthWeek_login',
 		name: 'FifthWeek_login',
 		component: () => import('@/views/MainMission/FifthWeek_login.vue'),
 	},
