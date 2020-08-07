@@ -20,9 +20,14 @@
 			</div>
 		</div>
 		<div class="content">
-			<div class="title">
-				<h1>花蓮</h1>
-				<p class="description">不再是後山，是片淨土。 有多久沒有好好深呼吸了呢？ 來花蓮享受好山 好水，大口呼吸 看看山、看看水、看看天空、看看海、看看風吹草動 來花蓮走走吧❤️</p>
+			<div class="description">
+				<div class="img">
+					<img src="~@/assets/taiwan/south/the-urban-landscape-1698285-compressor.jpg" alt="" />
+				</div>
+				<h3>花蓮不再是後山，是片淨土。</h3>
+				<h3>有多久沒有好好深呼吸了呢？ 來花蓮享受好山 好水，大口呼吸</h3>
+				<h3>看看山、看看水、看看天空、看看海、看看風吹草動</h3>
+				<h3>來花蓮走走吧❤️</h3>
 			</div>
 		</div>
 	</div>
