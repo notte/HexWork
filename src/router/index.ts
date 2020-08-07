@@ -21,35 +21,35 @@ const routes: RouteConfig[] = [
 	// 	component: () => import('@/views/Taiwan.vue'),
 	// },
 	{
-		path: '/ThirdWeek',
+		path: '/HexWork/ThirdWeek',
 		name: 'ThirdWeek',
 		component: () => import('@/views/MainMission/ThirdWeek.vue'),
 	},
 	{
-		path: '/FourthWeek',
+		path: '/HexWork/FourthWeek',
 		name: 'FourthWeek',
 		component: () => import('@/views/MainMission/FourthWeek.vue'),
 	},
 	{
-		path: '/FifthWeek',
+		path: '/HexWork/FifthWeek',
 		name: 'FifthWeek',
 		component: () => import('@/views/MainMission/FifthWeek.vue'),
 	},
 	{
-		path: '/FourthWeek_login',
+		path: '/HexWork/FourthWeek_login',
 		name: 'FourthWeek_login',
 		component: () => import('@/views/MainMission/FourthWeek_login.vue'),
 	},
 	{
-		path: '/FifthWeek_login',
+		path: '/HexWork/FifthWeek_login',
 		name: 'FifthWeek_login',
 		component: () => import('@/views/MainMission/FifthWeek_login.vue'),
 	},
-	{
-		path: '*',
-		name: '404',
-		component: () => import('@/views/MainMission/404.vue'),
-	},
+	// {
+	// 	path: '*',
+	// 	name: '404',
+	// 	component: () => import('@/views/MainMission/404.vue'),
+	// },
 ];
 
 const router = new VueRouter({
