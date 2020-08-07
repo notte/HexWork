@@ -10,16 +10,16 @@ const routes: RouteConfig[] = [
 		redirect: { name: 'ThirdWeek' },
 		// component: () => import('@/views/Main.vue'),
 	},
-	{
-		path: '/Foreign',
-		name: 'Foreign',
-		component: () => import('@/views/Foreign.vue'),
-	},
-	{
-		path: '/Taiwan',
-		name: 'Taiwan',
-		component: () => import('@/views/Taiwan.vue'),
-	},
+	// {
+	// 	path: '/Foreign',
+	// 	name: 'Foreign',
+	// 	component: () => import('@/views/Foreign.vue'),
+	// },
+	// {
+	// 	path: '/Taiwan',
+	// 	name: 'Taiwan',
+	// 	component: () => import('@/views/Taiwan.vue'),
+	// },
 	{
 		path: '/ThirdWeek',
 		name: 'ThirdWeek',
@@ -45,8 +45,6 @@ const routes: RouteConfig[] = [
 		name: 'FifthWeek_login',
 		component: () => import('@/views/MainMission/FifthWeek_login.vue'),
 	},
-
-
 ];
 
 const router = new VueRouter({

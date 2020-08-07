@@ -133,7 +133,7 @@ export default class ThirdWeek extends Vue {
 		this.dialogVisible = true;
 		this.hide = true;
 		this.addHide = false;
-		this.form = this.tableData[index];
+		this.form = { ...this.tableData[index] };
 	}
 
 	handleClose() {

@@ -5,7 +5,7 @@
 				<img src="@/assets/logo-wihte.svg" alt />
 			</router-link>
 			<router-link class="item" to="/Taiwan">台灣旅行</router-link>
-			<router-link class="item" to="/Foreign">國外旅行</router-link>-->
+			<router-link class="item" to="/Foreign">國外旅行</router-link> -->
 			<router-link class="item" to="/ThirdWeek">第三週</router-link>
 			<router-link class="item" to="/FourthWeek">第四週</router-link>
 			<router-link class="item" to="/FifthWeek">第五週</router-link>

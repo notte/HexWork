@@ -1,11 +1,12 @@
 <template>
+	<!-- 行程 -->
 	<div class="stroke">
 		<div class="title">
 			<h1>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h1>
 			<div class="image">
 				<img src="~@/assets/taiwan/south/kaohsiung-2728058.jpg" alt />
 			</div>
-			<h3>所有行程</h3>
+			<h2>所有行程</h2>
 			<div class="other-time">
 				<el-table :data="tableData" :show-header="false">
 					<el-table-column prop="date"></el-table-column>
@@ -19,13 +20,10 @@
 			</div>
 		</div>
 		<div class="content">
-			<h3 class="title">
-				花蓮，不再是後山，是片淨土。
-				<br />有多久沒有好好深呼吸了呢？
-				<br />來花蓮享受好山 好水，大口呼吸！
-				<br />看看山、看看水、看看天空、看看海、看看風吹草動
-				<br />來花蓮走走吧❤️
-			</h3>
+			<div class="title">
+				<h1>花蓮</h1>
+				<p class="description">不再是後山，是片淨土。 有多久沒有好好深呼吸了呢？ 來花蓮享受好山 好水，大口呼吸 看看山、看看水、看看天空、看看海、看看風吹草動 來花蓮走走吧❤️</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -62,4 +60,3 @@ export default class Taipei extends Vue {
 	];
 }
 </script>
-
