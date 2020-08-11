@@ -79,12 +79,7 @@
 						</el-form-item>
 						<el-form-item label="付款方式" class="paymentMethod">
 							<el-select v-model="paymentMethod" placeholder="請選擇">
-								<el-option
-									v-for="item in paymentMethodList"
-									:key="item.value"
-									:label="item.label"
-									:value="item.label"
-								></el-option>
+								<el-option v-for="item in paymentMethodList" :key="item.value" :label="item.label" :value="item.label"></el-option>
 							</el-select>
 						</el-form-item>
 						<el-form-item label="留言">
@@ -214,11 +209,11 @@ export default class FifthWeek extends Vue {
 	deleteAll() {
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
-			.delete('/api' + this.uuid + '/ec/shopping/all/product', this.config)
-			.then((res) => {
+			.delete('https://course-ec-api.hexschool.iohttps://course-ec-api.hexschool.io/api//' + this.uuid + '/ec/shopping/all/product', this.config)
+			.then(res => {
 				this.CartUpdate();
 			})
-			.catch((err) => {});
+			.catch(err => {});
 		this.pay = 0;
 	}
 
@@ -226,47 +221,47 @@ export default class FifthWeek extends Vue {
 	addAproduct(id: string) {
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
-			.post('/api' + this.uuid + '/ec/shopping', { product: id, quantity: 1 }, this.config)
-			.then((res) => {
+			.post('https://course-ec-api.hexschool.io/api/' + this.uuid + '/ec/shopping', { product: id, quantity: 1 }, this.config)
+			.then(res => {
 				this.dialogVisible = false;
 				this.CartUpdate();
 			})
-			.catch((err) => {});
+			.catch(err => {});
 	}
 
 	// 刪除指定商品
 	dele(product: Modal.FourthWeek) {
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
-			.delete('/api' + this.uuid + '/ec/shopping/' + product.id, this.config)
-			.then((res) => {
+			.delete('https://course-ec-api.hexschool.io/api/' + this.uuid + '/ec/shopping/' + product.id, this.config)
+			.then(res => {
 				this.CartUpdate();
 			})
-			.catch((err) => {});
+			.catch(err => {});
 	}
 
 	// 商品列表
 	TableUpdate() {
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
-			.get('/api' + this.uuid + '/admin/ec/products', this.config)
-			.then((res) => {
+			.get('https://course-ec-api.hexschool.io/api/' + this.uuid + '/admin/ec/products', this.config)
+			.then(res => {
 				this.tableData = res.data.data;
 				loadingInstance.close();
 			})
-			.catch((err) => {});
+			.catch(err => {});
 	}
 
 	// 更新購物車
 	CartUpdate() {
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
-			.get('/api' + this.uuid + '/ec/shopping', this.config)
-			.then((res) => {
+			.get('https://course-ec-api.hexschool.io/api/' + this.uuid + '/ec/shopping', this.config)
+			.then(res => {
 				this.ProductList = res.data.data;
 				loadingInstance.close();
 			})
-			.catch((err) => {});
+			.catch(err => {});
 	}
 
 	// 購物車總金額
@@ -282,13 +277,13 @@ export default class FifthWeek extends Vue {
 	showDialog(item: Modal.FourthWeek) {
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
-			.get('/api' + this.uuid + '/ec/product/' + item.id, this.config)
-			.then((res) => {
+			.get('https://course-ec-api.hexschool.io/api/' + this.uuid + '/ec/product/' + item.id, this.config)
+			.then(res => {
 				this.Product = res.data.data;
 				loadingInstance.close();
 				this.dialogVisible = true;
 			})
-			.catch((err) => {});
+			.catch(err => {});
 	}
 
 	// Dialog 新增購物車
@@ -299,13 +294,13 @@ export default class FifthWeek extends Vue {
 
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
-			.post('/api' + this.uuid + '/ec/shopping', { product: id, quantity: value }, this.config)
-			.then((res) => {
+			.post('https://course-ec-api.hexschool.io/api/' + this.uuid + '/ec/shopping', { product: id, quantity: value }, this.config)
+			.then(res => {
 				this.dialogVisible = false;
 				this.CartUpdate();
 				loadingInstance.close();
 			})
-			.catch((err) => {});
+			.catch(err => {});
 	}
 }
 </script>

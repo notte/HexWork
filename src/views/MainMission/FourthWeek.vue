@@ -37,7 +37,7 @@ export default class FourthWeek extends Vue {
 	login(dynamicValidateForm: Modal.Login) {
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
-			.post('https://course-ec-api.hexschool.io/api/auth/login', { email: this.dynamicValidateForm.email, password: this.dynamicValidateForm.password })
+			.post('https://course-ec-api.hexschool.iohttps://course-ec-api.hexschool.io/api//auth/login', { email: this.dynamicValidateForm.email, password: this.dynamicValidateForm.password })
 			.then(res => {
 				localStorage.setItem('Token', res.data.token);
 				loadingInstance.close();

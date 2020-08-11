@@ -174,7 +174,7 @@ export default class FifthWeek extends Vue {
 	TableUpdate() {
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
-			.get('/api' + this.uuid + '/admin/ec/products', this.config)
+			.get('https://course-ec-api.hexschool.io/api/' + this.uuid + '/admin/ec/products', this.config)
 			.then(res => {
 				this.tableData = res.data.data;
 				loadingInstance.close();
@@ -186,7 +186,7 @@ export default class FifthWeek extends Vue {
 	add(form: Modal.FourthWeek) {
 		form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
 		axios
-			.post('/api' + this.uuid + '/admin/ec/product', form, this.config)
+			.post('https://course-ec-api.hexschool.io/api/' + this.uuid + '/admin/ec/product', form, this.config)
 			.then(res => {
 				this.TableUpdate();
 			})
@@ -197,7 +197,7 @@ export default class FifthWeek extends Vue {
 	// 送出修改
 	modify(form: Modal.FourthWeek) {
 		axios
-			.patch('/api' + this.uuid + '/admin/ec/product/' + form.id, form, this.config)
+			.patch('https://course-ec-api.hexschool.io/api/' + this.uuid + '/admin/ec/product/' + form.id, form, this.config)
 			.then(res => {})
 			.catch(err => {});
 		this.dialogVisible = false;
@@ -219,7 +219,7 @@ export default class FifthWeek extends Vue {
 		this.$confirm('確認刪除？')
 			.then(_ => {
 				axios
-					.delete('/api' + this.uuid + '/admin/ec/product/' + id, this.config)
+					.delete('https://course-ec-api.hexschool.io/api/' + this.uuid + '/admin/ec/product/' + id, this.config)
 					.then(res => {
 						this.TableUpdate();
 					})
