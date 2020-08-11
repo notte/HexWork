@@ -2,7 +2,7 @@
 	<div>
 		<div class="ThirdWeek">
 			<el-button class="addButton" @click="dialogVisible = true">新增產品</el-button>
-			<el-table :data="tableData" empty-text="無商品">
+			<el-table :data="PageData[CurrentPage]" empty-text="無商品">
 				<el-table-column label="分類">
 					<template slot-scope="scope">
 						<span>{{ scope.row.category }}</span>
@@ -36,6 +36,8 @@
 					</template>
 				</el-table-column>
 			</el-table>
+			<!-- 分頁 -->
+			<el-pagination small layout="prev, pager, next" @current-change="handleCurrentChange" :page-count="TotalPage"> </el-pagination>
 
 			<!-- dialog -->
 			<el-dialog :visible.sync="dialogVisible" width="50%" @close="handleClose">
@@ -96,9 +98,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import axios, { AxiosRequestConfig } from 'axios';
 import * as Modal from '@/models/interfaces/common';
+import * as EventBus from '@/utilities/event-bus';
 import { Loading } from 'element-ui';
 
 @Component
@@ -115,6 +118,9 @@ export default class FifthWeek extends Vue {
 	addHide: boolean = true;
 	dialogVisible: boolean = false;
 	tableData: Modal.FourthWeek[] = [];
+	PageData: object[] = [];
+	TotalPage: number = 0;
+	CurrentPage: number = 0;
 	form: Modal.FourthWeek = {
 		id: '',
 		title: '',
@@ -140,16 +146,40 @@ export default class FifthWeek extends Vue {
 
 		this.TableUpdate();
 	}
+
+	// 監聽事件
+	@Watch('tableData')
+	TotalePage() {
+		const newData: any = [];
+
+		this.tableData.forEach((item, i) => {
+			if (i % 10 === 0) {
+				newData.push([]);
+			}
+			const page = Math.floor(i / 10);
+			newData[page].push(item);
+		});
+
+		this.PageData = newData;
+		this.TotalPage = this.PageData.length;
+	}
+
+	// 頁碼跳轉
+	handleCurrentChange(val: number) {
+		this.CurrentPage = val - 1;
+		EventBus.getScrollEvent(0, 0);
+	}
+
 	// GET 商品列表
 	TableUpdate() {
 		const loadingInstance = Loading.service({ fullscreen: true });
 		axios
 			.get('/api' + this.uuid + '/admin/ec/products', this.config)
-			.then((res) => {
+			.then(res => {
 				this.tableData = res.data.data;
 				loadingInstance.close();
 			})
-			.catch((err) => {});
+			.catch(err => {});
 	}
 
 	// 新增商品
@@ -157,10 +187,10 @@ export default class FifthWeek extends Vue {
 		form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
 		axios
 			.post('/api' + this.uuid + '/admin/ec/product', form, this.config)
-			.then((res) => {
+			.then(res => {
 				this.TableUpdate();
 			})
-			.catch((err) => {});
+			.catch(err => {});
 		this.dialogVisible = false;
 	}
 
@@ -168,8 +198,8 @@ export default class FifthWeek extends Vue {
 	modify(form: Modal.FourthWeek) {
 		axios
 			.patch('/api' + this.uuid + '/admin/ec/product/' + form.id, form, this.config)
-			.then((res) => {})
-			.catch((err) => {});
+			.then(res => {})
+			.catch(err => {});
 		this.dialogVisible = false;
 	}
 
@@ -187,15 +217,15 @@ export default class FifthWeek extends Vue {
 		const id = row.id;
 
 		this.$confirm('確認刪除？')
-			.then((_) => {
+			.then(_ => {
 				axios
 					.delete('/api' + this.uuid + '/admin/ec/product/' + id, this.config)
-					.then((res) => {
+					.then(res => {
 						this.TableUpdate();
 					})
-					.catch((err) => {});
+					.catch(err => {});
 			})
-			.catch((_) => {});
+			.catch(_ => {});
 	}
 
 	// 關閉 Modal 視窗，將資料歸零
@@ -301,5 +331,15 @@ textarea {
 }
 .isTrue {
 	color: #0a9c11;
+}
+.el-pagination {
+	margin: 30px;
+	text-align: center;
+}
+
+.el-table__row {
+	td {
+		padding: 30px 0;
+	}
 }
 </style>
