@@ -7,44 +7,44 @@ const routes: RouteConfig[] = [
 	{
 		path: '/',
 		name: 'Home',
-		redirect: { name: 'ThirdWeek' },
-		// component: () => import('@/views/Main.vue'),
+		// redirect: { name: 'ThirdWeek' },
+		component: () => import('@/views/Main.vue'),
+	},
+	{
+		path: '/Foreign',
+		name: 'Foreign',
+		component: () => import('@/views/Foreign.vue'),
+	},
+	{
+		path: '/Taiwan',
+		name: 'Taiwan',
+		component: () => import('@/views/Taiwan.vue'),
 	},
 	// {
-	// 	path: '/Foreign',
-	// 	name: 'Foreign',
-	// 	component: () => import('@/views/Foreign.vue'),
+	// 	path: '/ThirdWeek',
+	// 	name: 'ThirdWeek',
+	// 	component: () => import('@/views/MainMission/ThirdWeek.vue'),
 	// },
 	// {
-	// 	path: '/Taiwan',
-	// 	name: 'Taiwan',
-	// 	component: () => import('@/views/Taiwan.vue'),
+	// 	path: '/FourthWeek',
+	// 	name: 'FourthWeek',
+	// 	component: () => import('@/views/MainMission/FourthWeek.vue'),
 	// },
-	{
-		path: '/ThirdWeek',
-		name: 'ThirdWeek',
-		component: () => import('@/views/MainMission/ThirdWeek.vue'),
-	},
-	{
-		path: '/FourthWeek',
-		name: 'FourthWeek',
-		component: () => import('@/views/MainMission/FourthWeek.vue'),
-	},
-	{
-		path: '/FifthWeek',
-		name: 'FifthWeek',
-		component: () => import('@/views/MainMission/FifthWeek.vue'),
-	},
-	{
-		path: '/FourthWeek_login',
-		name: 'FourthWeek_login',
-		component: () => import('@/views/MainMission/FourthWeek_login.vue'),
-	},
-	{
-		path: '/FifthWeek_login',
-		name: 'FifthWeek_login',
-		component: () => import('@/views/MainMission/FifthWeek_login.vue'),
-	},
+	// {
+	// 	path: '/FifthWeek',
+	// 	name: 'FifthWeek',
+	// 	component: () => import('@/views/MainMission/FifthWeek.vue'),
+	// },
+	// {
+	// 	path: '/FourthWeek_login',
+	// 	name: 'FourthWeek_login',
+	// 	component: () => import('@/views/MainMission/FourthWeek_login.vue'),
+	// },
+	// {
+	// 	path: '/FifthWeek_login',
+	// 	name: 'FifthWeek_login',
+	// 	component: () => import('@/views/MainMission/FifthWeek_login.vue'),
+	// },
 ];
 
 const router = new VueRouter({
