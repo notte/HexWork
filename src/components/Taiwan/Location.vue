@@ -2,7 +2,7 @@
 	<!-- 行程 -->
 	<div class="stroke">
 		<div class="title">
-			<h1>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h1>
+			<h1 class="">【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h1>
 			<div class="image">
 				<img src="~@/assets/taiwan/south/kaohsiung-2728058.jpg" alt />
 			</div>
@@ -53,12 +53,13 @@
 					</p>
 				</div>
 			</div>
+			<div class="divider" />
 			<div class="stroke">
 				<h3>預定行程</h3>
 				<p>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</p>
 				<div class="addCart">
 					<h1>NT.30000</h1>
-					<el-select v-model="value" placeholder="請選擇"> <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select>
+					<el-select v-model="value" placeholder="請選擇"> <el-option v-for="item in options" :key="item" :label="item" :value="item"> </el-option> </el-select>
 					<h3>/人</h3>
 				</div>
 			</div>
@@ -73,9 +74,13 @@ import { Component } from 'vue-property-decorator';
 @Component({
 	components: {},
 })
-export default class Taipei extends Vue {
+
+// 地點
+export default class Location extends Vue {
 	// 錯誤訊息：This relative module was not found
-	// 解法，路徑修改為 -> ~@/assets/taiwan/south/kaohsiung-2728058.jpg
+	// 解法，圖片路徑修改為 -> ~@/assets/taiwan/south/kaohsiung-2728058.jpg
+
+	// 假資料
 	tableData: object[] = [
 		{
 			date: '出發日期',
@@ -96,28 +101,10 @@ export default class Taipei extends Vue {
 			address: '$10,000',
 		},
 	];
-	options: object[] = [
-		{
-			value: '选项1',
-			label: '黄金糕',
-		},
-		{
-			value: '选项2',
-			label: '双皮奶',
-		},
-		{
-			value: '选项3',
-			label: '蚵仔煎',
-		},
-		{
-			value: '选项4',
-			label: '龙须面',
-		},
-		{
-			value: '选项5',
-			label: '北京烤鸭',
-		},
-	];
-	value: string = '';
+
+	// 人數
+	options: number[] = [1, 2, 3, 4, 5];
+	// 選定購買人數
+	value: number = 0;
 }
 </script>

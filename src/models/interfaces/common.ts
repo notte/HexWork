@@ -7,6 +7,32 @@ export interface IgetTokenRequest {
 	client_secret: string;
 }
 
+// 個別商品
+export interface IProductItem {
+	// 行程名稱
+	title: string;
+	// 行程類型，購物 / 水上 / 陸上 / 歷史 / 地點...
+	category: string;
+	// 已賣名額
+	content: string;
+	// 行程地點，台灣北部 / 台灣南部 / 日本...
+	description: string;
+	// imageUrl[0] 為主要商品照
+	// imageUrl[1] ~ [4] 為行程介紹照片
+	imageUrl: string[];
+	// 還沒想到
+	enabled: boolean;
+	// 出團時間
+	origin_price: number;
+	// 價格
+	price: number;
+	// 總名額
+	unit: string;
+	// 還沒想到
+	options?: object;
+}
+
+// 作業 interface
 export interface ThirdWeek {
 	title: string;
 	category: string;

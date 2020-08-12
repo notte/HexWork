@@ -50,18 +50,29 @@ body,
 		background-color: #eee;
 		padding: 30px;
 
-		.item {
-			padding: 10px;
-			display: inline-block;
-			vertical-align: text-bottom;
-		}
+		.itemList {
+			position: relative;
 
-		.logo {
+			.item {
+				padding: 10px;
+				display: inline-block;
+				vertical-align: middle;
+			}
 
-			img {
-				height: 38px;
+			.logo {
+
+				img {
+					height: 38px;
+				}
+			}
+
+			.float_right {
+				display: inline-block;
+				position: absolute;
+				right: 0;
 			}
 		}
+
 	}
 
 	.Carousel {
@@ -71,8 +82,8 @@ body,
 	}
 
 	.layout {
-		margin-top: 102px;
-		height: calc(100vh - 102px);
+		margin-top: 121px;
+		height: calc(100vh - 121px);
 		overflow: hidden;
 		display: flex;
 
@@ -184,6 +195,13 @@ body,
 				.money {
 					text-align: right;
 
+					h1 {
+						margin: 20px 0;
+					}
+
+					.el-button {
+						width: 100%;
+					}
 				}
 			}
 		}
@@ -256,6 +274,7 @@ body,
 	// 內文區塊（時程）
 	.content {
 		text-align: center;
+		padding: 0 !important;
 
 		// 描述
 		.description {
@@ -328,7 +347,7 @@ body,
 
 		// 行程(+購物車)
 		.stroke {
-			width: 60%;
+			width: 45%;
 			position: relative;
 			left: 50%;
 			transform: translateX(-50%);
@@ -337,16 +356,106 @@ body,
 			border-radius: 10px;
 			border: 1px solid #ccc;
 
+			h3 {
+				margin: 10px 0;
+				font-weight: 900;
+			}
+
+			p {
+				font-size: 15px;
+				margin-bottom: 20px;
+			}
+
 			// +購物車
 			.addCart {
 
+
 				h3,
 				h1 {
-					display: inline-block;
 					margin: 0 10px;
+					display: inline-block;
 					vertical-align: middle;
 				}
 			}
 		}
+	}
+}
+
+// 購物車
+.Cart {
+	border-radius: 3px;
+	// border: 1px solid rgb(196, 196, 199);
+	box-shadow: 0 0 2px rgb(196, 196, 199);
+	padding: 20px;
+	width: 50%;
+
+	// justify-content: center;
+	// align-items: center;
+	.Product {
+		display: flex;
+		margin-bottom: 30px;
+		border-bottom: 1px solid rgb(223, 223, 223);
+		padding-bottom: 20px;
+
+		.item {
+			flex: 1;
+			height: 150px;
+			text-align: center;
+			padding: 0 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-right: 1px solid rgb(223, 223, 223);
+
+			.el-select,
+			h4 {
+				margin: 0 10px;
+				width: 33.33333%;
+				display: inline-block;
+				font-size: 13px;
+			}
+		}
+
+		.delete {
+			width: 70px;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			// padding: 0 10px;
+		}
+
+		.image {
+			overflow: hidden;
+
+			img {
+				width: 100%;
+			}
+		}
+
+		.align-left {
+			text-align: left;
+		}
+
+		.item.flex-three {
+			flex: 3;
+		}
+
+
+		.item.flex-two {
+			flex: 2;
+		}
+
+		.item:last-child,
+		.item:first-child {
+			border-right: none;
+			padding: 0;
+		}
+	}
+
+	.Product:last-child {
+		margin-bottom: 0;
+		border-bottom: none;
+		padding-bottom: 0;
 	}
 }

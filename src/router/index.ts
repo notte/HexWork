@@ -7,8 +7,8 @@ const routes: RouteConfig[] = [
 	{
 		path: '/',
 		name: 'Home',
-		redirect: { name: 'FourthWeek' },
-		// component: () => import('@/views/Main.vue'),
+		// redirect: { name: 'FourthWeek' },
+		component: () => import('@/views/Main.vue'),
 	},
 	{
 		path: '/Foreign',
@@ -21,30 +21,40 @@ const routes: RouteConfig[] = [
 		component: () => import('@/views/Taiwan.vue'),
 	},
 	{
-		path: '/ThirdWeek',
-		name: 'ThirdWeek',
-		component: () => import('@/views/MainMission/ThirdWeek.vue'),
+		path: '/Taiwan/Id',
+		name: 'TaiwanItem',
+		component: () => import('@/components/Taiwan/Location.vue'),
 	},
 	{
-		path: '/FourthWeek',
-		name: 'FourthWeek',
-		component: () => import('@/views/MainMission/FourthWeek.vue'),
+		path: '/Cart',
+		name: 'Cart',
+		component: () => import('@/views/Cart.vue'),
 	},
-	{
-		path: '/FifthWeek',
-		name: 'FifthWeek',
-		component: () => import('@/views/MainMission/FifthWeek.vue'),
-	},
-	{
-		path: '/FourthWeek_login',
-		name: 'FourthWeek_login',
-		component: () => import('@/views/MainMission/FourthWeek_login.vue'),
-	},
-	{
-		path: '/FifthWeek_login',
-		name: 'FifthWeek_login',
-		component: () => import('@/views/MainMission/FifthWeek_login.vue'),
-	},
+	// {
+	// 	path: '/ThirdWeek',
+	// 	name: 'ThirdWeek',
+	// 	component: () => import('@/views/MainMission/ThirdWeek.vue'),
+	// },
+	// {
+	// 	path: '/FourthWeek',
+	// 	name: 'FourthWeek',
+	// 	component: () => import('@/views/MainMission/FourthWeek.vue'),
+	// },
+	// {
+	// 	path: '/FifthWeek',
+	// 	name: 'FifthWeek',
+	// 	component: () => import('@/views/MainMission/FifthWeek.vue'),
+	// },
+	// {
+	// 	path: '/FourthWeek_login',
+	// 	name: 'FourthWeek_login',
+	// 	component: () => import('@/views/MainMission/FourthWeek_login.vue'),
+	// },
+	// {
+	// 	path: '/FifthWeek_login',
+	// 	name: 'FifthWeek_login',
+	// 	component: () => import('@/views/MainMission/FifthWeek_login.vue'),
+	// },
 ];
 
 const router = new VueRouter({
