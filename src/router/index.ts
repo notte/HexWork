@@ -30,6 +30,11 @@ const routes: RouteConfig[] = [
 		name: 'Cart',
 		component: () => import('@/views/Cart.vue'),
 	},
+	{
+		path: '/Order',
+		name: 'Order',
+		component: () => import('@/components/Cart/SetOrder.vue'),
+	},
 	// {
 	// 	path: '/ThirdWeek',
 	// 	name: 'ThirdWeek',
