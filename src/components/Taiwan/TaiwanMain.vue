@@ -15,7 +15,7 @@
 						<h3>野柳地質公園．極北富貴角．玻璃屋星巴克 1 日</h3>
 						<div class="money">
 							<h1>$10,000</h1>
-							<el-button type="primary" @click="checkStroke">看看行程</el-button>
+							<el-button @click="checkStroke">看看行程</el-button>
 						</div>
 					</div>
 				</el-card>

@@ -1,6 +1,6 @@
 <template>
 	<!-- 行程 -->
-	<div class="stroke">
+	<div class="Stroke">
 		<div class="title">
 			<h1 class="">【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h1>
 			<div class="image">
@@ -63,6 +63,7 @@
 					<h3>/人</h3>
 				</div>
 			</div>
+			<el-button>立即報名</el-button>
 		</div>
 	</div>
 </template>

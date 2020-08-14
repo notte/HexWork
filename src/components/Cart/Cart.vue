@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<h1 class="CartTitle">購物車</h1>
 		<div class="CartLayout">
 			<div class="Cart">
 				<div class="Product">
@@ -46,7 +45,7 @@
 				<div class="total">
 					<el-divider><h2>總計</h2></el-divider>
 					<h1>$10,000,000</h1>
-					<el-button @click="setOrder">下一步</el-button>
+					<el-button>下一步</el-button>
 				</div>
 			</div>
 		</div>
@@ -58,14 +57,10 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 
 @Component
-export default class Foreign extends Vue {
+export default class Cart extends Vue {
 	// 人數
 	options: number[] = [1, 2, 3, 4, 5];
 	// 選定購買人數
 	value: number = 1;
-
-	setOrder() {
-		this.$router.push({ name: 'Order' });
-	}
 }
 </script>
