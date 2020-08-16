@@ -9,14 +9,19 @@
 				<el-input placeholder="目的地"></el-input>
 			</div>
 			<div class="item">
-				<el-date-picker start-placeholder="開始日期" end-placeholder="結束日期" type="datetimerange" :default-time="['12:00:00', '08:00:00']" />
+				<el-date-picker
+					start-placeholder="開始日期"
+					end-placeholder="結束日期"
+					type="datetimerange"
+					:default-time="['12:00:00', '08:00:00']"
+				/>
 			</div>
 			<div class="item">
 				<el-button class="search">搜尋行程</el-button>
 			</div>
 		</div>
-		<Recommend />
-		<!-- <Search /> -->
+		<!-- <Recommend /> -->
+		<Search />
 	</div>
 </template>
 

@@ -402,7 +402,6 @@ body,
 }
 
 // 購物車組
-
 .CartTitle {
 	text-align: center;
 	margin-bottom: 20px;
@@ -549,7 +548,6 @@ body,
 }
 
 // 訂單成立
-
 .SetOrder {
 	box-shadow: 0 0 4px 1px #c4c4c785;
 	flex: 3;
@@ -569,22 +567,6 @@ body,
 	.el-form-item:last-child {
 		width: 100%;
 		text-align: right;
-	}
-}
-
-.el-steps {
-	width: 50%;
-	margin: 50px auto;
-}
-
-.el-form--label-top .el-form-item__label {
-	padding: 0;
-}
-
-.Order.total {
-	h1 {
-		margin: 0;
-		margin-top: 30px;
 	}
 }
 
@@ -657,7 +639,6 @@ body,
 }
 
 // 推薦區塊
-
 .recommend {
 	width: 80%;
 	margin: 0 auto;
@@ -690,7 +671,7 @@ body,
 
 				.item-image {
 					width: 100%;
-					height: 250px;
+					height: 200px;
 					overflow: hidden;
 
 					img {
@@ -720,4 +701,25 @@ body,
 			}
 		}
 	}
+}
+
+
+.el-steps {
+	width: 50%;
+	margin: 50px auto;
+}
+
+.el-form--label-top .el-form-item__label {
+	padding: 0;
+}
+
+.Order.total {
+	h1 {
+		margin: 0;
+		margin-top: 30px;
+	}
+}
+
+.el-badge__content.is-fixed {
+	right: 17px;
 }
