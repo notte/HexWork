@@ -17,9 +17,8 @@ module.exports = {
 				},
 			},
 			'/api': {
-				target: 'https://course-ec-api.hexschool.io/api/',
+				target: 'https://course-ec-api.hexschool.io/api/59677b21-aeb1-45eb-8ac8-9fe077baa5a0/',
 				ws: true,
-				host: 'api.kkbox.com',
 				changeOrigin: true,
 				pathRewrite: {
 					'^/api': '',

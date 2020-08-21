@@ -9,8 +9,10 @@
 					</div>
 					<div class="item">
 						<div class="tag">
-							<span>海上</span>
-							<span>海上</span>
+							<span class="sea">海上</span>
+							<span class="land">陸上</span>
+							<span class="shopping">購物</span>
+							<span class="history">歷史</span>
 						</div>
 						<h3>野柳地質公園．極北富貴角．玻璃屋星巴克 1 日</h3>
 						<div class="money">
@@ -36,7 +38,7 @@ import * as Status from '@/models/status/type';
 })
 export default class TaiwanMain extends Vue {
 	checkStroke() {
-		EventBus.getTaiwanOpenType(Status.OpenType.TaiwanItem);
+		EventBus.getOpenType(Status.OpenType.TaiwanItem);
 	}
 }
 </script>

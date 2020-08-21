@@ -58,7 +58,9 @@
 					<el-input />
 				</div>
 			</el-card>
-			<div class="item button"><el-button>結帳</el-button></div>
+			<div class="item button">
+				<el-button class="major">結帳</el-button>
+			</div>
 		</div>
 	</div>
 </template>

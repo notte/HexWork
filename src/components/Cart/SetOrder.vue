@@ -26,7 +26,7 @@
 						<el-input type="textarea" v-model="form.desc"></el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button>送出訂單</el-button>
+						<el-button class="major">送出訂單</el-button>
 						<el-button>返回</el-button>
 					</el-form-item>
 				</el-form>
@@ -43,7 +43,9 @@
 					</div>
 				</div>
 				<div class="total Order">
-					<el-divider><h2>總計</h2></el-divider>
+					<el-divider>
+						<h2>總計</h2>
+					</el-divider>
 					<h1>$10,000,000</h1>
 				</div>
 			</div>

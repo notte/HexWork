@@ -6,4 +6,20 @@ export enum OpenType {
 	TaiwanMain = 'TaiwanMain',
 	// 台灣個別商品頁面
 	TaiwanItem = 'TaiwanItem',
+	// 搜尋
+	SearchPage = 'SearchPage',
+	// 推薦
+	RecommendPage = 'Recommend',
+	// 登入
+	Login = 'Login',
+	// 後台
+	Backoffice = 'Backoffice',
+	// 購物車列表
+	CartList = 'CartList',
+	// 成立訂單
+	SetOrder = 'SetOrder',
+	// 結帳
+	CheckOut = 'CheckOut',
+	// 完成訂單
+	Completed = 'Completed',
 }

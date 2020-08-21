@@ -27,7 +27,8 @@ export default class Taiwan extends Vue {
 	}
 
 	mounted() {
-		EventBus.$on('get-TaiwanOpenType', (param: any) => {
+		// 接收事件
+		EventBus.$on('open-type', (param: any) => {
 			this.$router.push({ name: param.type }).catch(err => {});
 			this.CurrentType = param.type;
 		});

@@ -5,8 +5,8 @@ export const getScrollEvent = (now: number, next: number) => {
 	EventBus.$emit('to-scroll', { now, next });
 };
 
-export const getTaiwanOpenType = (type: Status.OpenType) => {
-	EventBus.$emit('get-TaiwanOpenType', { type });
+export const getOpenType = (type: Status.OpenType) => {
+	EventBus.$emit('open-type', { type });
 };
 
 const EventBus = new Vue();

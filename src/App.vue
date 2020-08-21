@@ -11,18 +11,11 @@
 				<router-link class="item" to="/Foreign">國外旅行</router-link>
 
 				<div class="float_right">
+					<router-link class="item" to="/Backoffice"> <i class="el-icon-service"></i> 登入 </router-link>
 					<router-link class="item" to="/Cart">
-						<i class="el-icon-service"></i> 登入
-					</router-link>
-					<router-link class="item" to="/Cart">
-						<el-badge :value="12" class="item">
-							<i class="el-icon-shopping-cart-2"></i> 購物車
-						</el-badge>
+						<el-badge :value="12" class="item"> <i class="el-icon-shopping-cart-2"></i> 購物車 </el-badge>
 					</router-link>
 				</div>
-				<!-- <router-link class="item" to="ThirdWeek">第三週</router-link> -->
-				<!-- <router-link class="item" to="FourthWeek">第四週</router-link> -->
-				<!-- <router-link class="item" to="FifthWeek">第五週</router-link> -->
 			</div>
 		</div>
 		<div class="layout">
@@ -37,6 +30,7 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import EventBus from '@/utilities/event-bus';
+import Api from '@/api/common.ts';
 
 @Component({
 	components: {},

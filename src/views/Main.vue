@@ -3,25 +3,17 @@
 		<Carousel />
 		<div class="commodity-search">
 			<div class="item">
-				<el-input placeholder="出發地"></el-input>
+				<el-input placeholder="想去的地點、類型⋯⋯"></el-input>
 			</div>
 			<div class="item">
-				<el-input placeholder="目的地"></el-input>
+				<el-date-picker start-placeholder="開始時間" end-placeholder="結束時間" type="datetimerange" :default-time="['12:00:00', '08:00:00']" />
 			</div>
 			<div class="item">
-				<el-date-picker
-					start-placeholder="開始日期"
-					end-placeholder="結束日期"
-					type="datetimerange"
-					:default-time="['12:00:00', '08:00:00']"
-				/>
-			</div>
-			<div class="item">
-				<el-button class="search">搜尋行程</el-button>
+				<el-button class="major">搜尋行程</el-button>
 			</div>
 		</div>
-		<!-- <Recommend /> -->
-		<Search />
+		<Recommend />
+		<!-- <Search /> -->
 	</div>
 </template>
 

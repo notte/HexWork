@@ -7,7 +7,6 @@ const routes: RouteConfig[] = [
 	{
 		path: '/',
 		name: 'Home',
-		// redirect: { name: 'FourthWeek' },
 		component: () => import('@/views/Main.vue'),
 	},
 	{
@@ -35,31 +34,18 @@ const routes: RouteConfig[] = [
 		name: 'Order',
 		component: () => import('@/components/Cart/SetOrder.vue'),
 	},
-	// {
-	// 	path: '/ThirdWeek',
-	// 	name: 'ThirdWeek',
-	// 	component: () => import('@/views/MainMission/ThirdWeek.vue'),
-	// },
-	// {
-	// 	path: '/FourthWeek',
-	// 	name: 'FourthWeek',
-	// 	component: () => import('@/views/MainMission/FourthWeek.vue'),
-	// },
-	// {
-	// 	path: '/FifthWeek',
-	// 	name: 'FifthWeek',
-	// 	component: () => import('@/views/MainMission/FifthWeek.vue'),
-	// },
-	// {
-	// 	path: '/FourthWeek_login',
-	// 	name: 'FourthWeek_login',
-	// 	component: () => import('@/views/MainMission/FourthWeek_login.vue'),
-	// },
-	// {
-	// 	path: '/FifthWeek_login',
-	// 	name: 'FifthWeek_login',
-	// 	component: () => import('@/views/MainMission/FifthWeek_login.vue'),
-	// },
+	{
+		path: '/Backoffice',
+		name: 'Backoffice',
+		component: () => import('@/views/Backoffice.vue'),
+		children: [
+			{
+				path: 'Login',
+				name: 'Login',
+				component: () => import('@/components/Backoffice/Login.vue'),
+			},
+		],
+	},
 ];
 
 const router = new VueRouter({
