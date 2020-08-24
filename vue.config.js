@@ -17,7 +17,7 @@ module.exports = {
 				},
 			},
 			'/api': {
-				target: 'https://course-ec-api.hexschool.io/api/59677b21-aeb1-45eb-8ac8-9fe077baa5a0/',
+				target: 'https://course-ec-api.hexschool.io/api/' + process.env.VUE_APP_UUID + '/',
 				ws: true,
 				changeOrigin: true,
 				pathRewrite: {
@@ -26,9 +26,4 @@ module.exports = {
 			},
 		},
 	},
-	// configureWebpack: {
-	// 	output: {
-	// 		publicPath: '/'
-	// 	},
-	// }
 };
