@@ -2,12 +2,15 @@
 	<div class="Backoffice">
 		<el-tabs v-model="activeName">
 			<el-tab-pane label="產品列表" name="1">
-				<ProductList />
+				產品列表
+				<!-- <ProductList /> -->
 			</el-tab-pane>
 			<el-tab-pane label="優惠券" name="2">
+				優惠券
 				<!-- <Coupon /> -->
 			</el-tab-pane>
-			<el-tab-pane label="訂單列表" name="3">
+			<el-tab-pane label="訂單列表" name="3"
+				>訂單列表
 				<!-- <OrderList /> -->
 			</el-tab-pane>
 		</el-tabs>

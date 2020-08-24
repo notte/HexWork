@@ -1,8 +1,7 @@
 <template>
 	<div>
-		<!-- <Login v-if="isShow('Login')" /> -->
-		<!-- v-if="isShow('Backoffice')" -->
-		<Work />
+		<Login v-if="isShow('Login')" />
+		<Work v-if="isShow('Backoffice')" />
 	</div>
 </template>
 

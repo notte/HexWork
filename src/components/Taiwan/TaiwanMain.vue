@@ -56,24 +56,9 @@ export default class TaiwanMain extends Vue {
 				this.ProductList = res.data;
 				this.ProductList.forEach(item => {
 					const category = item.category.split('、');
-					category.forEach(item => {
-						// switch (item) {
-						// 	case '水上':
-						// 		this.isSea = true;
-						// 		break;
-						// 	case '陸上':
-						// 		this.isLand = true;
-						// 		break;
-						// 	case '購物':
-						// 		this.isShopping = true;
-						// 		break;
-						// 	case '歷史':
-						// 		this.isHistory = true;
-						// 		break;
-						// 	default:
-						// 		break;
-						// }
-					});
+					// category.forEach(item => {
+
+					// });
 				});
 			})
 			.catch(err => {
