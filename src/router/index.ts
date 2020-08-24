@@ -7,8 +7,8 @@ const routes: RouteConfig[] = [
 	{
 		path: '/',
 		name: 'Home',
-		component: () => import('@/views/Main.vue'),
-		// redirect: { name: 'About' },
+		// component: () => import('@/views/Main.vue'),
+		redirect: { name: 'About' },
 	},
 	{
 		path: '/About',
@@ -42,21 +42,21 @@ const routes: RouteConfig[] = [
 			},
 		],
 	},
-	{
-		path: '/Id',
-		name: 'TaiwanItem',
-		component: () => import('@/components/Taiwan/Location.vue'),
-	},
-	{
-		path: '/Cart',
-		name: 'Cart',
-		component: () => import('@/views/Cart.vue'),
-	},
-	{
-		path: '/Order',
-		name: 'Order',
-		component: () => import('@/components/Cart/SetOrder.vue'),
-	},
+	// {
+	// 	path: '/Id',
+	// 	name: 'TaiwanItem',
+	// 	component: () => import('@/components/Taiwan/Location.vue'),
+	// },
+	// {
+	// 	path: '/Cart',
+	// 	name: 'Cart',
+	// 	component: () => import('@/views/Cart.vue'),
+	// },
+	// {
+	// 	path: '/Order',
+	// 	name: 'Order',
+	// 	component: () => import('@/components/Cart/SetOrder.vue'),
+	// },
 ];
 
 const router = new VueRouter({

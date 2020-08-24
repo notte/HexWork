@@ -2,13 +2,13 @@
 	<div id="app">
 		<div class="header">
 			<div class="itemList">
-				<div class="item">
+				<!-- <div class="item">
 					<router-link class="logo" to="/">
 						<img src="@/assets/logo-wihte.svg" alt />
 					</router-link>
 				</div>
 				<router-link class="item" to="/Taiwan">精選行程</router-link>
-				<router-link class="item" to="/Foreign">國外旅行</router-link>
+				<router-link class="item" to="/Foreign">國外旅行</router-link>-->
 				<router-link class="item" to="/About">About</router-link>
 				<router-link class="item" to="/ProductList">ProductList</router-link>
 				<router-link class="item" to="/ShoppingCart">Shopping Cart</router-link>
