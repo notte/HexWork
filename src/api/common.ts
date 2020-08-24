@@ -9,7 +9,7 @@ export default {
 	async getToken(payload: Model.IgetTokenRequest): Promise<Model.IgetTokenReponse> {
 		const config = {
 			method: 'post',
-			url: `/token`,
+			url: `https://course-ec-api.hexschool.io/api/auth/login`,
 			data: payload,
 		};
 		const result = await Handler.request(config);
