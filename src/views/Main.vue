@@ -12,8 +12,7 @@
 				<el-button class="major">搜尋行程</el-button>
 			</div>
 		</div>
-		<Recommend />
-		<!-- <Search /> -->
+		<TaiwanMain />
 	</div>
 </template>
 
@@ -21,11 +20,10 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import Carousel from '@/components/Common/Carousel.vue';
-import Recommend from '@/components/Main/Recommend.vue';
-import Search from '@/components/Main/Search.vue';
+import TaiwanMain from '@/components/Taiwan/TaiwanMain.vue';
 
 @Component({
-	components: { Carousel, Recommend, Search },
+	components: { Carousel, TaiwanMain },
 })
 export default class Main extends Vue {}
 </script>

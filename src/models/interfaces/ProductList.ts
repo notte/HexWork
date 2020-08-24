@@ -6,21 +6,21 @@ export interface IProductItem {
 	title: string;
 	// 行程類型，購物 / 水上 / 陸上 / 歷史 / 地點...
 	category: string;
-	// 已賣名額
+	// 出團時間，格式為 -> 年份.日期.月份~年份.日期.月份
 	content: string;
 	// 行程地點，台灣北部 / 台灣南部 / 日本...
-	description: string;
+	unit: string;
 	// imageUrl[0] 為主要商品照
 	// imageUrl[1] ~ [4] 為行程介紹照片
 	imageUrl: string[];
 	// 是否成團
 	enabled: boolean;
-	// 出團時間
+	// 已賣名額
 	origin_price: number;
 	// 價格
 	price: number;
 	// 總名額
-	unit: string;
+	description: string;
 	// 還沒想到
 	options?: object;
 }

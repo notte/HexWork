@@ -7,8 +7,8 @@
 						<img src="@/assets/logo-wihte.svg" alt />
 					</router-link>
 				</div>
-				<router-link class="item" to="/Taiwan">台灣旅行</router-link>
-				<router-link class="item" to="/Foreign">國外旅行</router-link>
+				<!-- <router-link class="item" to="/Taiwan">精選行程</router-link> -->
+				<!-- <router-link class="item" to="/Foreign">國外旅行</router-link> -->
 
 				<div class="float_right">
 					<router-link class="item" to="/Backoffice"> <i class="el-icon-service"></i> 登入 </router-link>
@@ -41,6 +41,10 @@ export default class App extends Vue {
 	mounted() {
 		EventBus.$on('to-scroll', (now: number, next: number) => {
 			(this.$refs.childDiv as any).scrollTop = 0;
+		});
+
+		EventBus.$on('open-type', (param: any) => {
+			this.$router.push({ name: param.type }).catch(err => {});
 		});
 	}
 }

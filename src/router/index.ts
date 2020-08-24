@@ -8,19 +8,10 @@ const routes: RouteConfig[] = [
 		path: '/',
 		name: 'Home',
 		component: () => import('@/views/Main.vue'),
+		// redirect: { name: 'Taiwan' },
 	},
 	{
-		path: '/Foreign',
-		name: 'Foreign',
-		component: () => import('@/views/Foreign.vue'),
-	},
-	{
-		path: '/Taiwan',
-		name: 'Taiwan',
-		component: () => import('@/views/Taiwan.vue'),
-	},
-	{
-		path: '/Taiwan/Id',
+		path: '/Id',
 		name: 'TaiwanItem',
 		component: () => import('@/components/Taiwan/Location.vue'),
 	},

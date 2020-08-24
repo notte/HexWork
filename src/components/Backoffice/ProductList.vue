@@ -20,7 +20,7 @@
 					<span>{{ scope.row.title }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="出團時間">
+			<el-table-column label="已賣名額">
 				<template slot-scope="scope">
 					<span>{{ scope.row.origin_price }}</span>
 				</template>
@@ -67,51 +67,50 @@
 			</div>
 			<el-form ref="form" :model="form">
 				<el-form-item label="主題圖">
-					<input v-model.lazy="img1" />
+					<el-input v-model.lazy="img1" />
 				</el-form-item>
 				<el-form-item label="行程圖">
-					<input v-model.lazy="img2" />
+					<el-input v-model.lazy="img2" />
 				</el-form-item>
 				<el-form-item label="行程圖">
-					<input v-model.lazy="img3" />
+					<el-input v-model.lazy="img3" />
 				</el-form-item>
 				<el-form-item label="行程圖">
-					<input v-model.lazy="img4" />
+					<el-input v-model.lazy="img4" />
 				</el-form-item>
 				<el-form-item label="行程圖">
-					<input v-model.lazy="img5" />
+					<el-input v-model.lazy="img5" />
 				</el-form-item>
 				<el-form-item label="行程標題">
-					<input v-model.lazy="form.title" />
+					<el-input v-model.lazy="form.title" />
 				</el-form-item>
 				<el-form-item label="出發日期">
-					<el-date-picker value-format="timestamp" type="date" v-model.number.lazy="startDate" />
+					<el-date-picker value-format="yyyy-MM-dd" v-model.lazy="startDate" />
 				</el-form-item>
 				<el-form-item label="回來日期">
-					<el-date-picker value-format="timestamp" type="date" v-model.number.lazy="endDate" />
+					<el-date-picker value-format="yyyy-MM-dd" v-model.lazy="endDate" />
 				</el-form-item>
 				<el-form-item label="行程分類">
-					<input v-model.lazy="form.category" />
+					<el-input v-model.lazy="form.category" />
+				</el-form-item>
+				<el-form-item label="地點">
+					<el-input v-model.lazy="form.unit" />
 				</el-form-item>
 				<el-form-item label="總人數">
-					<input v-model.lazy="form.content" />
+					<el-input v-model.lazy="form.description" :disabled="isShow" />
 				</el-form-item>
-				<el-form-item label="已售">
-					<input v-model.lazy="form.unit" />
+				<el-form-item label="已售人數">
+					<el-input v-model.lazy="form.origin_price" />
 				</el-form-item>
 				<el-form-item label="售價">
-					<input v-model.number.lazy="form.price" />
+					<el-input v-model.number.lazy="form.price" />
 				</el-form-item>
 				<el-form-item label="是否成團">
 					<el-switch v-model="form.enabled" active-text="啟用" inactive-text="不啟用"></el-switch>
 				</el-form-item>
-				<el-form-item label="地點">
-					<input v-model.lazy="form.description" />
-				</el-form-item>
 
 				<div class="footer">
 					<span slot="footer" class="dialog-footer">
-						<el-button class="cancel" @click="sum(startDate, endDate)">計算</el-button>
 						<el-button class="cancel" @click="dialogVisible = false">取消</el-button>
 						<el-button @click="submit(form)" v-if="submitButton">確定</el-button>
 						<el-button @click="modify(form)" v-if="modifyButton">修改</el-button>
@@ -130,6 +129,28 @@ import * as Model from '@/models/interfaces/ProductList';
 
 @Component
 export default class ProductList extends Vue {
+	// 表單
+	form: Model.IProductItem = {
+		// 自動生成
+		id: '',
+		// 行程名稱
+		title: '',
+		// 行程類型
+		category: '',
+		// 出團時間
+		content: '',
+		// 行程地點
+		description: '',
+		imageUrl: [],
+		// 是否成團
+		enabled: false,
+		// 已賣名額
+		origin_price: 0,
+		// 價格
+		price: 0,
+		// 總名額
+		unit: '',
+	};
 	dialogVisible: boolean = false;
 	// 未排頁面資料
 	ProductList: Model.IProductList[] = [];
@@ -150,26 +171,9 @@ export default class ProductList extends Vue {
 	// 控制修改按鈕顯示
 	modifyButton: boolean = false;
 	// 出發回來日期
-	startDate: Date = new Date();
-	endDate: Date = new Date();
-
-	sum(start: number, end: number) {
-		console.log(end - start);
-	}
-
-	// 表單
-	form: Model.IProductItem = {
-		id: '',
-		title: '',
-		category: '',
-		content: '',
-		description: '',
-		imageUrl: [],
-		enabled: false,
-		origin_price: 0,
-		price: 0,
-		unit: '',
-	};
+	startDate: string = '';
+	endDate: string = '';
+	isShow: boolean = false;
 
 	created() {
 		this.getProductList();
@@ -213,6 +217,10 @@ export default class ProductList extends Vue {
 		this.modifyButton = true;
 		this.form = row;
 		[this.img1, this.img2, this.img3, this.img4, this.img5] = this.form.imageUrl;
+		const timeArray = this.form.content.split('~');
+		this.startDate = timeArray[0];
+		this.endDate = timeArray[1];
+		this.isShow = true;
 	}
 
 	// 刪除單一品項
@@ -229,6 +237,8 @@ export default class ProductList extends Vue {
 	// 新增商品
 	submit(form: Model.IProductItem) {
 		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
+		this.form.content = this.startDate + '~' + this.endDate;
+		this.form.origin_price = +this.form.origin_price;
 		Api.addProductItem(form)
 			.then(res => {
 				this.dialogVisible = false;
@@ -270,9 +280,12 @@ export default class ProductList extends Vue {
 		this.img3 = '';
 		this.img4 = '';
 		this.img5 = '';
+		this.startDate = '';
+		this.endDate = '';
 		this.modifyButton = false;
 		this.submitButton = false;
 		this.dialogVisible = false;
+		this.isShow = false;
 	}
 }
 </script>
