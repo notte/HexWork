@@ -7,8 +7,6 @@
 						<img src="@/assets/logo-wihte.svg" alt />
 					</router-link>
 				</div>
-				<!-- <router-link class="item" to="/Taiwan">精選行程</router-link>
-				<router-link class="item" to="/Foreign">國外旅行</router-link>-->
 
 				<div class="float_right">
 					<router-link class="item" to="/Backoffice">
