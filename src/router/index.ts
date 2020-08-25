@@ -7,8 +7,7 @@ const routes: RouteConfig[] = [
 	{
 		path: '/',
 		name: 'Home',
-		// component: () => import('@/views/Main.vue'),
-		redirect: { name: 'About' },
+		component: () => import('@/views/Main.vue'),
 	},
 	{
 		path: '/Backoffice',
@@ -23,7 +22,7 @@ const routes: RouteConfig[] = [
 		],
 	},
 	{
-		path: '/Id',
+		path: '/:id',
 		name: 'TaiwanItem',
 		component: () => import('@/components/Taiwan/Location.vue'),
 	},
