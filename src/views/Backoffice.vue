@@ -29,10 +29,14 @@ export default class Backoffice extends Vue {
 	// 要做一個驗證機制，如果有 token 且 token 沒有過期，應該直接進入 Backoffice
 	// 反之則是要跳回登入頁面
 
+	created() {
+		this.$router.push({ name: this.CurrentType }).catch((err) => {});
+	}
+
 	mounted() {
 		// 接收事件
 		EventBus.$on('open-type', (param: any) => {
-			this.$router.push({ name: param.type }).catch(err => {});
+			this.$router.push({ name: param.type }).catch((err) => {});
 			this.CurrentType = param.type;
 		});
 	}

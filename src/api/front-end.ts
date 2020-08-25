@@ -13,4 +13,13 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetProductListReponse>result.data;
 	},
+	// 前端，取得單一產品細節
+	async getProductItem(id: string): Promise<Model.IProductItemReponse> {
+		const config = {
+			method: 'get',
+			url: `/api/ec/product/${id}`,
+		};
+		const result = await Handler.request(config);
+		return <Model.IProductItemReponse>result.data;
+	},
 };

@@ -11,26 +11,6 @@ const routes: RouteConfig[] = [
 		// redirect: { name: 'About' },
 	},
 	{
-		path: '/About',
-		name: 'About',
-		component: () => import('@/views/About.vue'),
-	},
-	{
-		path: '/ProductList',
-		name: 'ProductList',
-		component: () => import('@/views/ProductList.vue'),
-	},
-	{
-		path: '/ShoppingCart',
-		name: 'ShoppingCart',
-		component: () => import('@/views/ShoppingCart.vue'),
-	},
-	{
-		path: '/Payment',
-		name: 'Payment',
-		component: () => import('@/views/Payment.vue'),
-	},
-	{
 		path: '/Backoffice',
 		name: 'Backoffice',
 		component: () => import('@/views/Backoffice.vue'),
@@ -43,7 +23,7 @@ const routes: RouteConfig[] = [
 		],
 	},
 	{
-		path: '/Id',
+		path: '/:id',
 		name: 'TaiwanItem',
 		component: () => import('@/components/Taiwan/Location.vue'),
 	},

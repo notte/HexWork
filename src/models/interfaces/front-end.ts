@@ -17,11 +17,34 @@ export interface IProductList {
 	options: IOption;
 }
 
-interface IMeta {
+// 單一產品型別
+export interface IProductItemReponse {
+	data: IData;
+}
+
+export interface IData {
+	id: string;
+	title: string;
+	category: string;
+	content: string;
+	description: string;
+	imageUrl: string[];
+	enabled: boolean;
+	origin_price: number;
+	price: number;
+	unit: string;
+	options: IOption;
+	created_at: string;
+	created_diff: string;
+	updated_at: string;
+	updated_diff: string;
+}
+
+export interface IMeta {
 	pagination: IPagination;
 }
 
-interface IPagination {
+export interface IPagination {
 	total: number;
 	count: number;
 	per_page: number;
@@ -30,6 +53,6 @@ interface IPagination {
 	links: void /* undefined */[];
 }
 
-interface IOption {
+export interface IOption {
 	message: string;
 }
