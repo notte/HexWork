@@ -10,6 +10,11 @@ const routes: RouteConfig[] = [
 		component: () => import('@/views/Main.vue'),
 	},
 	{
+		path: '/Cart',
+		name: 'Cart',
+		component: () => import('@/views/Cart.vue'),
+	},
+	{
 		path: '/Backoffice',
 		name: 'Backoffice',
 		component: () => import('@/views/Backoffice.vue'),
@@ -25,16 +30,6 @@ const routes: RouteConfig[] = [
 		path: '/:id',
 		name: 'TaiwanItem',
 		component: () => import('@/components/Taiwan/Location.vue'),
-	},
-	{
-		path: '/Cart',
-		name: 'Cart',
-		component: () => import('@/views/Cart.vue'),
-	},
-	{
-		path: '/Order',
-		name: 'Order',
-		component: () => import('@/components/Cart/SetOrder.vue'),
 	},
 ];
 

@@ -7,11 +7,11 @@
 						<img :src="item.imageUrl[1]" />
 					</div>
 					<div class="item">
-						<div class="tag">{{item.category | showTag(tag) }}</div>
-
+						<div class="tag" v-html="item.category"></div>
+						<p>{{item.content | timeFormat}}</p>
 						<h3>{{ item.title }}</h3>
 						<div class="money">
-							<h1>${{ item.price }}</h1>
+							<h1>${{ item.price| moneyFormat }}</h1>
 							<el-button @click="checkStroke(item.id)">看看行程</el-button>
 						</div>
 					</div>
@@ -28,40 +28,16 @@ import * as EventBus from '@/utilities/event-bus';
 import * as Status from '@/models/status/type';
 import Api from '@/api/front-end.ts';
 import * as Model from '@/models/interfaces/front-end';
+import { formatMixin } from '@/utilities/format';
 
-@Component({
-	filters: {
-		showTag(data: string, tag: string) {
-			const newDate = data.split('、');
-			newDate.forEach((item) => {
-				switch (item) {
-					case '海上':
-						tag = tag + `<span class="sea">海上</span>`;
-						break;
-					case '陸上':
-						tag = tag + `<span class="land">陸上</span>`;
-						break;
-					case '歷史':
-						tag = tag + `<span class="history">歷史</span>`;
-						break;
-					case '購物':
-						tag = tag + `<span class="shopping">購物</span>`;
-						break;
-					default:
-						break;
-				}
-			});
-			return tag;
-		},
-	},
-})
+@Component({ mixins: [formatMixin] })
 export default class TaiwanMain extends Vue {
 	ProductList: Model.IProductList[] = [];
 	isSea: boolean = false;
 	isLand: boolean = false;
 	isShopping: boolean = false;
 	isHistory: boolean = false;
-	tag: string = '';
+	price: string = '';
 
 	// 發送事件
 	checkStroke(id: string) {
@@ -76,13 +52,35 @@ export default class TaiwanMain extends Vue {
 		Api.getProductList()
 			.then((res) => {
 				this.ProductList = res.data;
+				this.ProductList.forEach((element) => {
+					const newDate = element.category.split('、');
+					let tag: string = '';
+					newDate.forEach((item) => {
+						switch (item) {
+							case '海上':
+								tag = tag + `<span class="sea">海上</span>`;
+								break;
+							case '陸上':
+								tag = tag + `<span class="land">陸上</span>`;
+								break;
+							case '歷史':
+								tag = tag + `<span class="history">歷史</span>`;
+								break;
+							case '購物':
+								tag = tag + `<span class="shopping">購物</span>`;
+								break;
+							default:
+								break;
+						}
+						return tag;
+					});
+					element.category = tag;
+				});
 			})
 			.catch((err) => {
 				// console.log(err);
 			});
 	}
-
-	mounted() {}
 }
 </script>
 
