@@ -17,9 +17,36 @@ export interface IProductList {
 	options: IOption;
 }
 
-// 單一產品型別
+// 單一產品
 export interface IProductItemReponse {
 	data: IData;
+}
+
+// 購物車列表
+export interface ICartListReponse {
+	data: ICartData[];
+	meta: IMeta;
+}
+
+interface ICartData {
+	product: IProduct;
+	quantity: number;
+	created_at: string;
+	created_diff: string;
+	updated_at: string;
+	updated_diff: string;
+}
+
+interface IProduct {
+	id: string;
+	title: string;
+	category: string;
+	content: string;
+	imageUrl: string[];
+	enabled: boolean;
+	origin_price: number;
+	price: number;
+	unit: string;
 }
 
 export interface IData {

@@ -17,12 +17,16 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { State, Action, Getter, namespace } from 'vuex-class';
 import { Component } from 'vue-property-decorator';
 import axios from 'axios';
-import * as Model from '@/models/interfaces/common';
 import Api from '@/api/common.ts';
 import * as EventBus from '@/utilities/event-bus';
 import * as Status from '@/models/status/type';
+import * as Model from '@/models/interfaces/common';
+
+const tokenModule = namespace('token');
+const qs = require('qs');
 
 @Component
 export default class Login extends Vue {
@@ -34,10 +38,16 @@ export default class Login extends Vue {
 		{ required: true, message: '請輸入電子信箱', trigger: 'blur' },
 		{ type: 'email', message: '請輸入正確的信箱', trigger: ['blur', 'change'] },
 	];
+
+	// 映射 state 到變數 Token
+	@tokenModule.State('token') token!: string;
+	@Action('token/setToken') private setToken!: any;
+
 	login(dynamicValidateForm: Model.IgetTokenRequest) {
 		Api.getToken(dynamicValidateForm)
 			.then(res => {
 				localStorage.setItem('accessToken', res.token);
+				this.setToken(res.token);
 				EventBus.getOpenType(Status.OpenType.Backoffice);
 			})
 			.catch(err => {});

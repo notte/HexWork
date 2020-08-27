@@ -9,10 +9,18 @@ export default {
 	async getToken(payload: Model.IgetTokenRequest): Promise<Model.IgetTokenReponse> {
 		const config = {
 			method: 'post',
-			url: `https://course-ec-api.hexschool.io/api/auth/login`,
+			url: `/token`,
 			data: payload,
 		};
 		const result = await Handler.request(config);
 		return <Model.IgetTokenReponse>result.data;
+	},
+	async logout(): Promise<Model.IlogOutReponse> {
+		const config = {
+			method: 'post',
+			url: `/logout`,
+		};
+		const result = await Handler.request(config);
+		return <Model.IlogOutReponse>result.data;
 	},
 };

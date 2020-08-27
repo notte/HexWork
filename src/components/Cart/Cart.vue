@@ -6,10 +6,14 @@
 					<div class="item flex-three image">
 						<img src="~@/assets/taiwan/south/02.jpg" alt />
 					</div>
-					<div class="item flex-three align-left"><h3>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h3></div>
+					<div class="item flex-three align-left">
+						<h3>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h3>
+					</div>
 					<div class="item flex-two">
 						<p>NT.10,000</p>
-						<el-select v-model="value" placeholder="請選擇"> <el-option v-for="item in options" :key="item" :label="item" :value="item"> </el-option> </el-select>
+						<el-select v-model="value" placeholder="請選擇">
+							<el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+						</el-select>
 						<p>人</p>
 					</div>
 					<div class="delete">
@@ -20,10 +24,14 @@
 					<div class="item flex-three image">
 						<img src="~@/assets/taiwan/south/02.jpg" alt />
 					</div>
-					<div class="item flex-three align-left"><h3>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h3></div>
+					<div class="item flex-three align-left">
+						<h3>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h3>
+					</div>
 					<div class="item flex-two">
 						<p>NT.10,000</p>
-						<el-select v-model="value" placeholder="請選擇"> <el-option v-for="item in options" :key="item" :label="item" :value="item"> </el-option> </el-select>
+						<el-select v-model="value" placeholder="請選擇">
+							<el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+						</el-select>
 						<p>人</p>
 					</div>
 					<div class="delete">
@@ -43,7 +51,9 @@
 					</div>
 				</div>
 				<div class="total">
-					<el-divider><h2>總計</h2></el-divider>
+					<el-divider>
+						<h2>總計</h2>
+					</el-divider>
 					<h1>$10,000,000</h1>
 					<el-button>下一步</el-button>
 				</div>
@@ -55,6 +65,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import Api from '@/api/front-end';
 
 @Component
 export default class Cart extends Vue {
@@ -62,5 +73,15 @@ export default class Cart extends Vue {
 	options: number[] = [1, 2, 3, 4, 5];
 	// 選定購買人數
 	value: number = 1;
+
+	created() {
+		Api.getCart()
+			.then(res => {
+				// console.log(res);
+			})
+			.catch(err => {
+				// console.log(err);
+			});
+	}
 }
 </script>

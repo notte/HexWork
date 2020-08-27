@@ -135,6 +135,11 @@ body,
 				display: inline-block;
 				position: absolute;
 				right: 0;
+
+				.logout {
+					color: #333;
+					font-weight: 900;
+				}
 			}
 		}
 
