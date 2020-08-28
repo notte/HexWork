@@ -4,7 +4,7 @@
 			<div class="Cart">
 				<div class="Product">
 					<div class="item flex-three image">
-						<img src="~@/assets/taiwan/south/02.jpg" alt />
+						<!-- <img src="~@/assets/taiwan/south/02.jpg" alt /> -->
 					</div>
 					<div class="item flex-three align-left">
 						<h3>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h3>
@@ -22,7 +22,7 @@
 				</div>
 				<div class="Product">
 					<div class="item flex-three image">
-						<img src="~@/assets/taiwan/south/02.jpg" alt />
+						<!-- <img src="~@/assets/taiwan/south/02.jpg" alt /> -->
 					</div>
 					<div class="item flex-three align-left">
 						<h3>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境</h3>

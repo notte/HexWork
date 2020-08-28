@@ -11,7 +11,7 @@ export interface IgetTokenReponse {
 	expired: number;
 }
 
-export interface IlogOutReponse {
+export interface ItokenReponse {
 	success: boolean;
 	message: string;
 }

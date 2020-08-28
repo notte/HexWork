@@ -18,13 +18,12 @@ const routes: RouteConfig[] = [
 		path: '/Backoffice',
 		name: 'Backoffice',
 		component: () => import('@/views/Backoffice.vue'),
-		children: [
-			{
-				path: 'Login',
-				name: 'Login',
-				component: () => import('@/components/Backoffice/Login.vue'),
-			},
-		],
+		// children: [],
+	},
+	{
+		path: '/Login',
+		name: 'Login',
+		component: () => import('@/components/Backoffice/Login.vue'),
 	},
 	{
 		path: '/:id',
@@ -37,6 +36,11 @@ const router = new VueRouter({
 	mode: 'hash',
 	base: process.env.BASE_URL,
 	routes,
+});
+
+router.beforeEach((to, from, next) => {
+	next();
+	console.log(to, from);
 });
 
 export default router;

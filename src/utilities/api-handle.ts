@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-// import { SystemAlert } from '@/utilities/event-bus';
-// import * as Status from '@/models/status/type';
 import { requestSuccess, requestFail, responseSuccess, responseFail } from './error-handler';
 
 /*

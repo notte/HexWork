@@ -25,9 +25,14 @@ export default class Backoffice extends Vue {
 		return this.CurrentType === tab ? true : false;
 	}
 
-	// created() {
-	// 	this.$router.push({ name: this.CurrentType }).catch(err => {});
-	// }
+	created() {
+		if (!localStorage.getItem('accessToken')) {
+			this.CurrentType = 'Login';
+			this.$router.push({ name: 'Login' });
+		} else {
+			this.CurrentType = 'Backoffice';
+		}
+	}
 
 	mounted() {
 		EventBus.$on('open-type', (param: any) => {
