@@ -2,7 +2,7 @@
 	<div>
 		<h1 class="CartTitle">購物車</h1>
 
-		<el-steps :active="0" simple v-if="CurrentType !=='CartList'">
+		<el-steps :active="0" simple v-if="CurrentType !== 'CartList'">
 			<el-step title="訂單成立" icon="el-icon-s-order"></el-step>
 			<el-step title="結帳付款" icon="el-icon-s-finance"></el-step>
 			<el-step title="訂單完成" icon="el-icon-s-claim"></el-step>
@@ -40,7 +40,6 @@ export default class Foreign extends Vue {
 	CheckOut: Status.OpenType.CheckOut = Status.OpenType.CheckOut;
 	Completed: Status.OpenType.Completed = Status.OpenType.Completed;
 
-	// 判斷當前要顯示哪個組件
 	isShow(tab: Status.OpenType): boolean {
 		return this.CurrentType === tab ? true : false;
 	}

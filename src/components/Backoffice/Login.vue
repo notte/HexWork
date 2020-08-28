@@ -44,7 +44,7 @@ export default class Login extends Vue {
 	@Action('token/setToken') private setToken!: any;
 
 	login(dynamicValidateForm: Model.IgetTokenRequest) {
-		Api.getToken(dynamicValidateForm)
+		Api.login(dynamicValidateForm)
 			.then(res => {
 				localStorage.setItem('accessToken', res.token);
 				this.setToken(res.token);

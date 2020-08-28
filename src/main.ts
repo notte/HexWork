@@ -7,6 +7,7 @@ import locale from 'element-ui/lib/locale/lang/zh-TW.js';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/style.scss';
 
+// locale 帶入繁體中文語言包
 Vue.use(ElementUI, { locale });
 Vue.config.productionTip = false;
 

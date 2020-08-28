@@ -124,8 +124,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
-import Api from '@/api/productList.ts';
-import * as Model from '@/models/interfaces/ProductList';
+import Api from '@/api/backoffice/product.ts';
+import * as Model from '@/models/interfaces/backoffice/product';
 
 @Component
 export default class ProductList extends Vue {

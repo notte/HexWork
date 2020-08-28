@@ -1,15 +1,15 @@
 <template>
 	<div id="app">
+		<!-- header -->
 		<div class="header">
 			<div class="itemList">
 				<div class="item">
 					<router-link class="logo" to="/">
-						<img src="@/assets/logo-wihte.svg" alt />
+						<img src="@/assets/logo-black.svg" alt />
 					</router-link>
 				</div>
-
 				<div class="float_right">
-					<router-link class="item" to="/Backoffice"> <i class="el-icon-service"></i> 登入 </router-link>
+					<router-link class="item" to="/Backoffice" v-if="showLogin"><i class="el-icon-service"></i> 登入 </router-link>
 					<router-link class="item logout" v-if="showLogout" @click="logout">登出</router-link>
 					<router-link class="item" to="/Cart">
 						<el-badge :value="12" class="item"> <i class="el-icon-shopping-cart-2"></i> 購物車 </el-badge>
@@ -17,6 +17,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- router-view -->
 		<div class="layout">
 			<div class="container" ref="childDiv">
 				<router-view class="content" />
@@ -54,6 +55,8 @@ export default class App extends Vue {
 			this.$router.push({ name: param.type, params: { id: param.id } }).catch(err => {});
 		});
 	}
+
+	// 檢測 token 是否存在/是否過期，來決定 登入/登出 的出現按鈕
 
 	// @Watch('this.token')
 	// checkToken() {

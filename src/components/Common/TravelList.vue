@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-row class="TaiwanMain">
+		<el-row class="TravelList">
 			<el-col v-for="(item, index) in ProductList" :key="index">
 				<el-card shadow="hover">
 					<div class="item-image">
@@ -8,10 +8,10 @@
 					</div>
 					<div class="item">
 						<div class="tag" v-html="item.category"></div>
-						<p>{{item.content | timeFormat}}</p>
+						<p>{{ item.content | timeFormat }}</p>
 						<h3>{{ item.title }}</h3>
 						<div class="money">
-							<h1>${{ item.price| moneyFormat }}</h1>
+							<h1>${{ item.price | moneyFormat }}</h1>
 							<el-button @click="checkStroke(item.id)">看看行程</el-button>
 						</div>
 					</div>
@@ -26,12 +26,12 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import * as EventBus from '@/utilities/event-bus';
 import * as Status from '@/models/status/type';
-import Api from '@/api/front-end.ts';
-import * as Model from '@/models/interfaces/front-end';
+import Api from '@/api/frontend/product.ts';
+import * as Model from '@/models/interfaces/frontend/product';
 import { formatMixin } from '@/utilities/format';
 
 @Component({ mixins: [formatMixin] })
-export default class TaiwanMain extends Vue {
+export default class TravelList extends Vue {
 	ProductList: Model.IProductList[] = [];
 	isSea: boolean = false;
 	isLand: boolean = false;
@@ -50,12 +50,12 @@ export default class TaiwanMain extends Vue {
 
 	getProductList() {
 		Api.getProductList()
-			.then((res) => {
+			.then(res => {
 				this.ProductList = res.data;
-				this.ProductList.forEach((element) => {
+				this.ProductList.forEach(element => {
 					const newDate = element.category.split('、');
 					let tag: string = '';
-					newDate.forEach((item) => {
+					newDate.forEach(item => {
 						switch (item) {
 							case '海上':
 								tag = tag + `<span class="sea">海上</span>`;
@@ -77,11 +77,9 @@ export default class TaiwanMain extends Vue {
 					element.category = tag;
 				});
 			})
-			.catch((err) => {
+			.catch(err => {
 				// console.log(err);
 			});
 	}
 }
 </script>
-
-

@@ -1,10 +1,12 @@
 $white: #eff3f5;
-$shopping:#e65f25;
+$shopping:#ec9b21;
 $history:#7f5524;
 $sea:#0990a2;
 $land:#009855;
 $major:#c31612;
 
+
+// layout
 body {
 	letter-spacing: 1px;
 	font-size: 1em;
@@ -27,6 +29,76 @@ body {
 		color: rgb(43, 43, 43);
 		cursor: pointer;
 	}
+}
+
+body,
+#app {
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
+
+	.header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		background-color: #35393b;
+		padding: 30px;
+
+		.itemList {
+			position: relative;
+
+			.item {
+				padding: 10px;
+				display: inline-block;
+				vertical-align: middle;
+				color: $white;
+			}
+
+			.logo {
+
+				img {
+					height: 38px;
+				}
+			}
+
+			.float_right {
+				display: inline-block;
+				position: absolute;
+				right: 0;
+
+				.logout {
+					color: $white;
+					font-weight: 900;
+				}
+			}
+		}
+
+	}
+
+	.Carousel {
+		width: 100%;
+		position: relative;
+		background-color: #333;
+	}
+
+	.layout {
+		margin-top: 121px;
+		height: calc(100vh - 121px);
+		overflow: hidden;
+		display: flex;
+
+		.container {
+			overflow-x: hidden;
+			flex: 1 1 0;
+			overflow-y: auto;
+
+			.content {
+				padding: 30px;
+			}
+		}
+	}
+
 }
 
 // 基礎按鈕
@@ -66,7 +138,7 @@ body {
 }
 
 
-// 刪除原鈕
+// 刪除圓鈕
 .el-button.is-circle.el-button--danger {
 	background-color: $major;
 	color: #fff;
@@ -100,75 +172,6 @@ body {
 	margin: 30px auto;
 }
 
-body,
-#app {
-	height: 100%;
-	width: 100%;
-	margin: 0 auto;
-
-	.header {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		background-color: $white;
-		padding: 30px;
-
-		.itemList {
-			position: relative;
-
-			.item {
-				padding: 10px;
-				display: inline-block;
-				vertical-align: middle;
-				color: #333;
-			}
-
-			.logo {
-
-				img {
-					height: 38px;
-				}
-			}
-
-			.float_right {
-				display: inline-block;
-				position: absolute;
-				right: 0;
-
-				.logout {
-					color: #333;
-					font-weight: 900;
-				}
-			}
-		}
-
-	}
-
-	.Carousel {
-		width: 100%;
-		position: relative;
-		background-color: #333;
-	}
-
-	.layout {
-		margin-top: 121px;
-		height: calc(100vh - 121px);
-		overflow: hidden;
-		display: flex;
-
-		.container {
-			overflow-x: hidden;
-			flex: 1 1 0;
-			overflow-y: auto;
-
-			.content {
-				padding: 30px;
-			}
-		}
-	}
-
-}
 
 // 主頁
 .Main {
@@ -179,7 +182,7 @@ body,
 		top: -30px;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 55%;
+		width: 40%;
 		border-radius: 10px;
 		padding: 30px;
 		box-shadow: -1px 2px 9px #aeaeae85;
@@ -200,83 +203,84 @@ body,
 			margin-right: 0;
 		}
 	}
-}
-
-// 台灣主頁
-.TaiwanMain {
-	width: 80%;
-	margin: 30px auto 0 auto;
-	display: flex;
-	flex-wrap: wrap;
 
 
-	.el-col {
-		flex: 1;
-		box-sizing: border-box;
-		width: 25%;
-		min-width: 25%;
-		max-width: 25%;
-		padding: 30px;
+	.TravelList {
+		width: 80%;
+		margin: 30px auto 0 auto;
+		display: flex;
+		flex-wrap: wrap;
 
-		.el-card__body {
-			padding: 0;
 
-			.item-image {
-				width: 100%;
-				height: 200px;
-				overflow: hidden;
+		.el-col {
+			flex: 1;
+			box-sizing: border-box;
+			width: 25%;
+			min-width: 25%;
+			max-width: 25%;
+			padding: 30px;
 
-				img {
+			.el-card__body {
+				padding: 0;
+
+				.item-image {
 					width: 100%;
-					height: 100%;
-				}
-			}
+					height: 200px;
+					overflow: hidden;
 
-
-			.item {
-				padding: 20px;
-
-				h3 {
-					font-weight: 900;
-					color: #333;
-				}
-
-				p {
-					color: #6d6d6d;
-				}
-
-				.tag {
-					padding: 15px 0;
-
-					span {
-						padding: 5px 10px;
-						margin-right: 5px;
-						border-radius: 10px;
-						color: #fff;
-					}
-
-					span:last-child {
-						margin-right: 0;
-					}
-				}
-
-				.money {
-					text-align: right;
-
-					h1 {
-						margin: 20px 0;
-						color: $major;
-					}
-
-					.el-button {
+					img {
 						width: 100%;
+						height: 100%;
+					}
+				}
+
+
+				.item {
+					padding: 20px;
+
+					h3 {
+						font-weight: 900;
+						color: #333;
+					}
+
+					p {
+						color: #6d6d6d;
+					}
+
+					.tag {
+						padding: 15px 0;
+
+						span {
+							padding: 5px 10px;
+							margin-right: 5px;
+							border-radius: 10px;
+							color: #fff;
+						}
+
+						span:last-child {
+							margin-right: 0;
+						}
+					}
+
+					.money {
+						text-align: right;
+
+						h1 {
+							margin: 20px 0;
+							color: $major;
+						}
+
+						.el-button {
+							width: 100%;
+						}
 					}
 				}
 			}
 		}
-	}
 
+	}
 }
+
 
 // 行程(外層)
 .Stroke {
@@ -500,7 +504,6 @@ body,
 
 }
 
-
 // 購物車計算
 .Compute {
 	flex: 1;
@@ -655,27 +658,6 @@ body,
 	}
 }
 
-
-.el-steps {
-	width: 50%;
-	margin: 50px auto;
-}
-
-.el-form--label-top .el-form-item__label {
-	padding: 0;
-}
-
-.Order.total {
-	h1 {
-		margin: 0;
-		margin-top: 30px;
-	}
-}
-
-.el-badge__content.is-fixed {
-	right: 17px;
-}
-
 // 登入
 .login {
 	position: relative;
@@ -701,7 +683,6 @@ body,
 	}
 
 }
-
 
 // 後台
 .Backoffice {
@@ -818,4 +799,25 @@ body,
 		text-align: center;
 	}
 
+}
+
+
+.el-steps {
+	width: 50%;
+	margin: 50px auto;
+}
+
+.el-form--label-top .el-form-item__label {
+	padding: 0;
+}
+
+.Order.total {
+	h1 {
+		margin: 0;
+		margin-top: 30px;
+	}
+}
+
+.el-badge__content.is-fixed {
+	right: 17px;
 }

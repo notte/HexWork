@@ -51,8 +51,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import Api from '@/api/front-end.ts';
-import * as Model from '@/models/interfaces/front-end';
+import Api from '@/api/frontend/product.ts';
+import * as Model from '@/models/interfaces/frontend/product';
 import { formatMixin } from '@/utilities/format';
 
 @Component({ mixins: [formatMixin] })

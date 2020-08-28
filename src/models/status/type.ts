@@ -2,9 +2,9 @@
 
 // 開啟類型
 export enum OpenType {
-	// 台灣主頁
-	TaiwanMain = 'TaiwanMain',
-	// 台灣個別商品頁面
+	// 旅遊列表
+	TravelList = 'TravelList',
+	// 個別商品頁面
 	TaiwanItem = 'TaiwanItem',
 	// 搜尋
 	SearchPage = 'SearchPage',

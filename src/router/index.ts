@@ -29,7 +29,7 @@ const routes: RouteConfig[] = [
 	{
 		path: '/:id',
 		name: 'TaiwanItem',
-		component: () => import('@/components/Taiwan/Location.vue'),
+		component: () => import('@/components/Common/Location.vue'),
 	},
 ];
 

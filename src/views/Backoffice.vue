@@ -21,22 +21,17 @@ export default class Backoffice extends Vue {
 	Login: Status.OpenType.Login = Status.OpenType.Login;
 	Backoffice: Status.OpenType.Backoffice = Status.OpenType.Backoffice;
 
-	// 判斷當前要顯示哪個組件
 	isShow(tab: Status.OpenType): boolean {
 		return this.CurrentType === tab ? true : false;
 	}
 
-	// 要做一個驗證機制，如果有 token 且 token 沒有過期，應該直接進入 Backoffice
-	// 反之則是要跳回登入頁面
-
-	created() {
-		this.$router.push({ name: this.CurrentType }).catch((err) => {});
-	}
+	// created() {
+	// 	this.$router.push({ name: this.CurrentType }).catch(err => {});
+	// }
 
 	mounted() {
-		// 接收事件
 		EventBus.$on('open-type', (param: any) => {
-			this.$router.push({ name: param.type }).catch((err) => {});
+			this.$router.push({ name: param.type }).catch(err => {});
 			this.CurrentType = param.type;
 		});
 	}

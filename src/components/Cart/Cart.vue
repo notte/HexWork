@@ -65,7 +65,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import Api from '@/api/front-end';
+import Api from '@/api/frontend/cart.ts';
 
 @Component
 export default class Cart extends Vue {

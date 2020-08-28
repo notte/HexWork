@@ -1,4 +1,3 @@
-// get Token API
 export interface IgetTokenRequest {
 	email: string;
 	password: string;

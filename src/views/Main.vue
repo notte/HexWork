@@ -3,16 +3,16 @@
 		<Carousel />
 		<div class="commodity-search">
 			<div class="item">
-				<el-input placeholder="想去的地點、類型⋯⋯"></el-input>
+				<el-date-picker v-model="setOff" placeholder="出發日期" type="date" />
 			</div>
 			<div class="item">
-				<el-date-picker start-placeholder="開始時間" end-placeholder="結束時間" type="datetimerange" :default-time="['12:00:00', '08:00:00']" />
+				<el-date-picker v-model="returnTrip" placeholder="回程日期" type="date" />
 			</div>
 			<div class="item">
 				<el-button class="major">搜尋行程</el-button>
 			</div>
 		</div>
-		<TaiwanMain />
+		<TravelList />
 	</div>
 </template>
 
@@ -20,10 +20,13 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import Carousel from '@/components/Common/Carousel.vue';
-import TaiwanMain from '@/components/Taiwan/TaiwanMain.vue';
+import TravelList from '@/components/Common/TravelList.vue';
 
 @Component({
-	components: { Carousel, TaiwanMain },
+	components: { Carousel, TravelList },
 })
-export default class Main extends Vue {}
+export default class Main extends Vue {
+	setOff: string = '';
+	returnTrip: string = '';
+}
 </script>

@@ -1,7 +1,5 @@
-// 帶入api handler，透過此去call api
 import Handler from '@/utilities/api-handle';
-// 管理request及reponse型別
-import * as Model from '@/models/interfaces/ProductList';
+import * as Model from '@/models/interfaces/backoffice/product';
 
 export default {
 	// 後台，取得所有商品
