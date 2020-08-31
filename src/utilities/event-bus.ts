@@ -9,8 +9,8 @@ export const getOpenType = (type: Status.OpenType, id?: string) => {
 	EventBus.$emit('open-type', { type, id });
 };
 
-export const setTag = (data: string) => {
-	EventBus.$emit('set-tag', { data });
+export const setTag = () => {
+	EventBus.$emit('set-tag');
 };
 
 const EventBus = new Vue();

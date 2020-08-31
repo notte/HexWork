@@ -45,16 +45,17 @@ export default class Login extends Vue {
 
 	login(dynamicValidateForm: Model.IgetTokenRequest) {
 		Api.login(dynamicValidateForm)
-			.then(res => {
+			.then((res) => {
 				// 將 token 儲存 localStorage
 				localStorage.setItem('accessToken', res.token);
 				// 將 token 儲存 vuex（暫用）
 				this.setToken(res.token);
+				// 跳轉 router 到後台
 				this.$router.push({ name: 'Backoffice' });
-				EventBus.getOpenType(Status.OpenType.Backoffice);
-				EventBus.setTag('true');
+				// 發送事件，讓登入登出按鈕切換顯示
+				EventBus.setTag();
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 }
 </script>

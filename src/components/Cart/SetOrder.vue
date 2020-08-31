@@ -26,27 +26,23 @@
 						<el-input type="textarea" v-model="form.desc"></el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button class="major">送出訂單</el-button>
+						<el-button class="major" @click="nextStep">送出訂單</el-button>
 						<el-button>返回</el-button>
 					</el-form-item>
 				</el-form>
 			</div>
 			<div class="Compute">
 				<div class="itemList">
-					<div class="item">
-						<p>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境 x1</p>
-						<h3>NT.10,000</h3>
-					</div>
-					<div class="item">
-						<p>【大人囝仔】森林聚落／紫斑蝶季．霧中仙境 x1</p>
-						<h3>NT.10,000</h3>
+					<div class="item" v-for="(item,index) in cart" :key="index">
+						<p>{{item.product.title}} x {{item.quantity}}</p>
+						<h3>${{item.product.price | moneyFormat}}</h3>
 					</div>
 				</div>
 				<div class="total Order">
 					<el-divider>
 						<h2>總計</h2>
 					</el-divider>
-					<h1>$10,000,000</h1>
+					<h1>${{total | moneyFormat}}</h1>
 				</div>
 			</div>
 		</div>
@@ -56,9 +52,17 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import { State, Action, Getter, namespace } from 'vuex-class';
+import * as Model from '@/models/interfaces/frontend/cart';
+import { formatMixin } from '@/utilities/format';
+import * as EventBus from '@/utilities/event-bus';
+import * as Status from '@/models/status/type';
 
-@Component
+const tokenModule = namespace('cart');
+const qs = require('qs');
+@Component({ mixins: [formatMixin] })
 export default class SetOrder extends Vue {
+	total: string = '';
 	form: object = {
 		name: '',
 		region: '',
@@ -69,5 +73,18 @@ export default class SetOrder extends Vue {
 		resource: '',
 		desc: '',
 	};
+	@tokenModule.State('CartList') cart!: Model.ICartData[];
+
+	mounted() {
+		let total = 0;
+		this.cart.forEach((item) => {
+			total = total + item.quantity * item.product.price;
+		});
+		this.total = total.toString();
+	}
+
+	nextStep() {
+		EventBus.getOpenType(Status.OpenType.CheckOut);
+	}
 }
 </script>

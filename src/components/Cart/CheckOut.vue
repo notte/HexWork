@@ -59,7 +59,7 @@
 				</div>
 			</el-card>
 			<div class="item button">
-				<el-button class="major">結帳</el-button>
+				<el-button class="major" @click="nextStep">結帳</el-button>
 			</div>
 		</div>
 	</div>
@@ -68,7 +68,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
+import * as EventBus from '@/utilities/event-bus';
+import * as Status from '@/models/status/type';
 
 @Component
-export default class CheckOut extends Vue {}
+export default class CheckOut extends Vue {
+	// 下一步
+	nextStep() {
+		EventBus.getOpenType(Status.OpenType.Completed);
+	}
+}
 </script>

@@ -22,4 +22,14 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IProductItemReponse>result.data;
 	},
+	// 單一產品加入購物車
+	async addProductCart(params: Model.IAddProductCartRequest): Promise<Model.IProductItemReponse> {
+		const config = {
+			method: 'post',
+			url: URL + UUID + `/ec/shopping`,
+			data: params,
+		};
+		const result = await Handler.request(config);
+		return <Model.IProductItemReponse>result.data;
+	},
 };

@@ -33,12 +33,5 @@ export default class Backoffice extends Vue {
 			this.CurrentType = 'Backoffice';
 		}
 	}
-
-	mounted() {
-		EventBus.$on('open-type', (param: any) => {
-			this.$router.push({ name: param.type }).catch(err => {});
-			this.CurrentType = param.type;
-		});
-	}
 }
 </script>

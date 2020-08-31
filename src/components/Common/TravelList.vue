@@ -39,8 +39,8 @@ export default class TravelList extends Vue {
 	isHistory: boolean = false;
 	price: string = '';
 
-	// 發送事件
 	checkStroke(id: string) {
+		// 發送傳遞產品 id 事件，從 APP.vue 接收
 		EventBus.getOpenType(Status.OpenType.TaiwanItem, id);
 	}
 
@@ -50,12 +50,12 @@ export default class TravelList extends Vue {
 
 	getProductList() {
 		Api.getProductList()
-			.then(res => {
+			.then((res) => {
 				this.ProductList = res.data;
-				this.ProductList.forEach(element => {
+				this.ProductList.forEach((element) => {
 					const newDate = element.category.split('、');
 					let tag: string = '';
-					newDate.forEach(item => {
+					newDate.forEach((item) => {
 						switch (item) {
 							case '海上':
 								tag = tag + `<span class="sea">海上</span>`;
@@ -77,9 +77,7 @@ export default class TravelList extends Vue {
 					element.category = tag;
 				});
 			})
-			.catch(err => {
-				// console.log(err);
-			});
+			.catch((err) => {});
 	}
 }
 </script>

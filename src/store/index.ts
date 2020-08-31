@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex, { Commit, Dispatch } from 'vuex';
 import token from '@/store/token';
+import cart from '@/store/cart';
 
 Vue.use(Vuex);
 
@@ -8,6 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	modules: {
 		token,
+		cart,
 	},
 });
 

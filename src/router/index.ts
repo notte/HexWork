@@ -15,6 +15,21 @@ const routes: RouteConfig[] = [
 		component: () => import('@/views/Cart.vue'),
 	},
 	{
+		path: '/SetOrder',
+		name: 'SetOrder',
+		component: () => import('@/views/Cart.vue'),
+	},
+	{
+		path: '/CheckOut',
+		name: 'CheckOut',
+		component: () => import('@/views/Cart.vue'),
+	},
+	{
+		path: '/Completed',
+		name: 'Completed',
+		component: () => import('@/views/Cart.vue'),
+	},
+	{
 		path: '/Backoffice',
 		name: 'Backoffice',
 		component: () => import('@/views/Backoffice.vue'),
@@ -40,7 +55,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 	next();
-	console.log(to, from);
+	// console.log(to, from);
 });
 
 export default router;

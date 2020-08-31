@@ -79,12 +79,10 @@ export default class ProductList extends Vue {
 
 	created() {
 		Api.getCouponList()
-			.then(res => {
+			.then((res) => {
 				// console.log(res);
 			})
-			.catch(err => {
-				// console.log(err);
-			});
+			.catch((err) => {});
 	}
 }
 </script>

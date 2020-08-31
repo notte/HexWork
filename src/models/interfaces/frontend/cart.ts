@@ -4,6 +4,17 @@ export interface ICartListReponse {
 	meta: IMeta;
 }
 
+// 更新單一產品
+export interface IEditProductCartRequest {
+	product: string;
+	quantity: string;
+}
+
+// 刪除
+export interface IDeleteProductCartRequest {
+	product: string;
+}
+
 export interface ICartData {
 	product: IProduct;
 	quantity: number;

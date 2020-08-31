@@ -440,6 +440,13 @@ body,
 			display: flex;
 			margin-bottom: 10px;
 
+			h1 {
+				padding: 20px;
+				margin: 0 auto;
+				font-weight: 900;
+				color: $major;
+			}
+
 			.item {
 				flex: 1;
 				height: 150px;
@@ -456,6 +463,11 @@ body,
 					width: 33.33333%;
 					display: inline-block;
 					font-size: 13px;
+				}
+
+				p.productTitle {
+					color: $major;
+					font-weight: 900;
 				}
 			}
 
@@ -553,6 +565,11 @@ body,
 
 		.el-button {
 			width: 100%;
+		}
+
+		.el-button.major {
+			margin: 0;
+			margin-top: 10px;
 		}
 	}
 
@@ -820,4 +837,16 @@ body,
 
 .el-badge__content.is-fixed {
 	right: 17px;
+}
+
+.el-step__title.is-finish {
+	color: $major;
+
+}
+
+.is-finish {
+
+	.el-step__icon-inner {
+		color: $major;
+	}
 }

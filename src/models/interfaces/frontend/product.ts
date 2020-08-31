@@ -22,6 +22,12 @@ export interface IProductItemReponse {
 	data: IData;
 }
 
+// 單一產品加入購物車，請求 interface
+export interface IAddProductCartRequest {
+	product: string;
+	quantity: string;
+}
+
 export interface IData {
 	id: string;
 	title: string;
