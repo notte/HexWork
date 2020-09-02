@@ -100,6 +100,7 @@ export default class Cart extends Vue {
 		Api.emptyCart()
 			.then((res) => {
 				this.getCart();
+				EventBus.setCartQuantity();
 			})
 			.catch((err) => {});
 	}
@@ -125,6 +126,7 @@ export default class Cart extends Vue {
 		Api.deleteProduct(id, params)
 			.then((res) => {
 				this.getCart();
+				EventBus.setCartQuantity();
 			})
 			.catch((err) => {});
 	}

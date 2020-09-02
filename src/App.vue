@@ -14,7 +14,7 @@
 					</router-link>
 					<a class="item logout" v-if="showLogout" @click="logout">登出</a>
 					<router-link class="item" to="/Cart">
-						<el-badge :value="12" class="item">
+						<el-badge :value="cartQuantity" class="item">
 							<i class="el-icon-shopping-cart-2"></i> 購物車
 						</el-badge>
 					</router-link>
@@ -36,6 +36,7 @@ import { Component, Watch, Model } from 'vue-property-decorator';
 import { State, Action, Getter, namespace } from 'vuex-class';
 import EventBus from '@/utilities/event-bus';
 import Api from '@/api/common.ts';
+import CartApi from '@/api/frontend/cart.ts';
 import Login from './components/Backoffice/Login.vue';
 
 const tokenModule = namespace('token');
@@ -45,6 +46,7 @@ const qs = require('qs');
 	components: {},
 })
 export default class App extends Vue {
+	cartQuantity: number = 0;
 	activeName: string = 'first';
 	showLogin: boolean = false;
 	showLogout: boolean = false;
@@ -52,6 +54,7 @@ export default class App extends Vue {
 	@Action('token/setToken') private setToken!: any;
 
 	created() {
+		this.checkShoppingCart();
 		// 如果無法取得 token，顯示登入按鈕
 		if (!localStorage.getItem('accessToken')) {
 			this.showLogin = true;
@@ -60,6 +63,12 @@ export default class App extends Vue {
 			this.showLogout = true;
 			this.checkToken(this.token);
 		}
+	}
+
+	checkShoppingCart() {
+		CartApi.getCart().then((res) => {
+			this.cartQuantity = res.data.length;
+		});
 	}
 
 	checkToken(check: string | null) {
@@ -80,6 +89,10 @@ export default class App extends Vue {
 		EventBus.$on('set-tag', () => {
 			this.showLogout = true;
 			this.showLogin = false;
+		});
+
+		EventBus.$on('set-quantity', () => {
+			this.checkShoppingCart();
 		});
 
 		// 接收切換 router 及頁面的事件，打包參數一併傳遞

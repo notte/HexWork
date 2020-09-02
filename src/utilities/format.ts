@@ -29,5 +29,18 @@ export const formatMixin = {
 			time = newTime[0] + ' 至 ' + newTime[1];
 			return time;
 		},
+		captureTime(time: string | null) {
+			if (typeof time === 'string') {
+				const timeArray = time.substring(0, 19).split('T');
+				time = timeArray[0] + ' ' + timeArray[1];
+			} else {
+				time = '尚未付款';
+			}
+			return time;
+		},
+		captureOrderID(id: string) {
+			id = id.substring(0, 8);
+			return id;
+		},
 	},
 };

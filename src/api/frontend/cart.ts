@@ -42,4 +42,23 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.ICartListReponse>result.data;
 	},
+	// 成立一筆訂單
+	async setOrder(params: Model.ISetOrderUserForm): Promise<Model.IOrderItemReponse> {
+		const config = {
+			method: 'post',
+			url: URL + UUID + `/ec/orders`,
+			data: params,
+		};
+		const result = await Handler.request(config);
+		return <Model.IOrderItemReponse>result.data;
+	},
+	// 付費結帳
+	async checkOut(id: string): Promise<Model.IOrderItemReponse> {
+		const config = {
+			method: 'post',
+			url: URL + UUID + `/ec/orders/${id}/paying`,
+		};
+		const result = await Handler.request(config);
+		return <Model.IOrderItemReponse>result.data;
+	},
 };

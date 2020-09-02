@@ -16,6 +16,11 @@ export interface ItokenReponse {
 	message: string;
 }
 
+export interface IRules {
+	email: string;
+	password: string;
+}
+
 // 暫定錯誤類型
 
 // 錯誤物件回傳的型別

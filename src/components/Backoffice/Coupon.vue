@@ -70,8 +70,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import Api from '@/api/frontend/coupon.ts';
-import * as Model from '@/models/interfaces/frontend/coupon';
+import Api from '@/api/backoffice/coupon';
+import * as Model from '@/models/interfaces/backoffice/coupon';
 
 @Component
 export default class ProductList extends Vue {

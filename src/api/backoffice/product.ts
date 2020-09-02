@@ -1,12 +1,14 @@
 import Handler from '@/utilities/api-handle';
 import * as Model from '@/models/interfaces/backoffice/product';
+const URL = process.env.VUE_APP_URL;
+const UUID = process.env.VUE_APP_UUID;
 
 export default {
 	// 後台，取得所有商品
 	async getBackofficeProductList(): Promise<Model.IGetProductListReponse> {
 		const config = {
 			method: 'get',
-			url: `/api/admin/ec/products`,
+			url: URL + UUID + `/admin/ec/products`,
 		};
 		const result = await Handler.request(config);
 		return <Model.IGetProductListReponse>result.data;
@@ -15,7 +17,7 @@ export default {
 	async deleteProduct(id: string): Promise<Model.IGetProductListReponse> {
 		const config = {
 			method: 'delete',
-			url: `/api/admin/ec/product/${id}`,
+			url: URL + UUID + `/admin/ec/product/${id}`,
 		};
 		const result = await Handler.request(config);
 		return <Model.IGetProductListReponse>result.data;
@@ -24,7 +26,7 @@ export default {
 	async addProductItem(form: Model.IProductItem): Promise<Model.IGetProductListReponse> {
 		const config = {
 			method: 'post',
-			url: `/api/admin/ec/product`,
+			url: URL + UUID + `/admin/ec/product`,
 			data: form,
 		};
 		const result = await Handler.request(config);
@@ -34,7 +36,7 @@ export default {
 	async modifyProductItem(form: Model.IProductItem, id: string): Promise<Model.IGetProductListReponse> {
 		const config = {
 			method: 'patch',
-			url: `/api/admin/ec/product/${id}`,
+			url: URL + UUID + `/admin/ec/product/${id}`,
 			data: form,
 		};
 		const result = await Handler.request(config);

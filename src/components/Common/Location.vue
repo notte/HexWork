@@ -50,6 +50,7 @@ import { Component } from 'vue-property-decorator';
 import Api from '@/api/frontend/product.ts';
 import * as Model from '@/models/interfaces/frontend/product';
 import { formatMixin } from '@/utilities/format';
+import * as EventBus from '@/utilities/event-bus';
 
 @Component({ mixins: [formatMixin] })
 export default class Location extends Vue {
@@ -93,7 +94,9 @@ export default class Location extends Vue {
 		};
 
 		Api.addProductCart(params)
-			.then((res) => {})
+			.then((res) => {
+				EventBus.setCartQuantity();
+			})
 			.catch((err) => {});
 	}
 

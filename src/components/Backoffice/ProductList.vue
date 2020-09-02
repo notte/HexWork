@@ -23,7 +23,7 @@
 			</el-table-column>
 			<el-table-column label="售價">
 				<template slot-scope="scope">
-					<span>{{ scope.row.price }}</span>
+					<span>${{ scope.row.price | moneyFormat }}</span>
 				</template>
 			</el-table-column>
 			<el-table-column label="是否成團">
@@ -127,8 +127,9 @@ import Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
 import Api from '@/api/backoffice/product.ts';
 import * as Model from '@/models/interfaces/backoffice/product';
+import { formatMixin } from '@/utilities/format';
 
-@Component
+@Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
 	// 表單
 	form: Model.IProductItem = {

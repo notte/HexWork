@@ -1,17 +1,14 @@
 <template>
 	<div class="Backoffice">
-		<el-tabs v-model="activeName" tab-position="left">
+		<el-tabs v-model="activeName">
 			<el-tab-pane label="產品列表" name="1">
-				產品列表
-				<!-- <ProductList /> -->
+				<ProductList v-if="activeName ==='1'" />
 			</el-tab-pane>
 			<el-tab-pane label="優惠券" name="2">
-				優惠券
-				<!-- <Coupon /> -->
+				<Coupon v-if="activeName ==='2'" />
 			</el-tab-pane>
 			<el-tab-pane label="訂單列表" name="3">
-				訂單列表
-				<!-- <OrderList /> -->
+				<OrderList v-if="activeName ==='3'" />
 			</el-tab-pane>
 		</el-tabs>
 	</div>
