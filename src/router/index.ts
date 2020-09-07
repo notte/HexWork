@@ -10,6 +10,11 @@ const routes: RouteConfig[] = [
 		component: () => import('@/views/Main.vue'),
 	},
 	{
+		path: '/Product',
+		name: 'Product',
+		component: () => import('@/views/Product.vue'),
+	},
+	{
 		path: '/Cart',
 		name: 'Cart',
 		component: () => import('@/views/Cart.vue'),
@@ -56,6 +61,9 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	next();
 	// console.log(to, from);
+	// if (to.name === 'Cart') {
+	// 	console.log(from);
+	// }
 });
 
 export default router;

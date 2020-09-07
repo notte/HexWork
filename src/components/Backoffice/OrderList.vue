@@ -12,7 +12,7 @@
 					<span>${{ scope.row.amount | moneyFormat }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="付款方式" prop="payment"></el-table-column>
+			<!-- <el-table-column label="付款方式" prop="payment"></el-table-column> -->
 			<el-table-column label="付款時間">
 				<template slot-scope="scope">
 					<span>{{ scope.row.paid_at | captureTime}}</span>

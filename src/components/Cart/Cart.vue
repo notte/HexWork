@@ -3,7 +3,7 @@
 		<div class="CartLayout">
 			<div class="Cart">
 				<div class="Product" v-if="CartList.length == 0">
-					<h1>無商品</h1>
+					<h3>無商品</h3>
 				</div>
 				<div class="Product" v-for="(item,index) in CartList" :key="index">
 					<div class="item flex-three image">

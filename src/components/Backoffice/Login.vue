@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="login_layout">
 		<div class="login">
 			<h1>登入</h1>
 			<el-form

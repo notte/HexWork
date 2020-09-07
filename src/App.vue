@@ -3,28 +3,33 @@
 		<!-- header -->
 		<div class="header">
 			<div class="itemList">
-				<div class="item">
-					<router-link class="logo" to="/">
-						<img src="@/assets/logo-black.svg" alt />
-					</router-link>
+				<router-link to="/" v-if="showLogin">
+					<div class="logo">
+						<img src="@/assets/logo.svg" alt />
+					</div>
+				</router-link>
+				<div class="logo" v-if="showLogout">
+					<img src="@/assets/logo.svg" alt />
 				</div>
+				<h3 v-if="showLogout">後台管理</h3>
 				<div class="float_right">
-					<router-link class="item" to="/Backoffice" v-if="showLogin">
-						<i class="el-icon-service"></i> 登入
-					</router-link>
-					<a class="item logout" v-if="showLogout" @click="logout">登出</a>
-					<router-link class="item" to="/Cart">
-						<el-badge :value="cartQuantity" class="item">
-							<i class="el-icon-shopping-cart-2"></i> 購物車
-						</el-badge>
-					</router-link>
+					<router-link class="item" v-if="showLogin" to="/Product">產品列表</router-link>
+					<a v-if="showLogin" class="cart" @click="toCart">
+						<p class="item">購物車</p>
+						<el-badge :value="cartQuantity" v-if="cartQuantity !== 0" />
+					</a>
+					<a class="item" v-if="showLogout" @click="logout">登出</a>
 				</div>
 			</div>
 		</div>
 		<!-- router-view -->
 		<div class="layout">
 			<div class="container" ref="childDiv">
-				<router-view class="content" />
+				<router-view />
+				<div class="container-footer">
+					<p>Copyright © 2020 Journey. Some Rights Reserved.</p>
+					<router-link class="item" to="/Backoffice" v-if="showLogin">管理後台</router-link>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -82,6 +87,10 @@ export default class App extends Vue {
 				// token 過期
 				this.showLogout = false;
 				this.showLogin = true;
+				// 將 vuex 中的 token，設為空值
+				this.setToken('');
+				// 刪除 localStorage 中的 token
+				localStorage.removeItem('accessToken');
 			});
 	}
 
@@ -103,6 +112,14 @@ export default class App extends Vue {
 		// EventBus.$on('to-scroll', (now: number, next: number) => {
 		// 	(this.$refs.childDiv as any).scrollTop = 0;
 		// });
+	}
+
+	toCart() {
+		if (this.cartQuantity !== 0) {
+			this.$router.push({ path: '/Cart' });
+		} else {
+			console.log('購物車為空');
+		}
 	}
 
 	logout() {
