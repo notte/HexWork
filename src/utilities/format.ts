@@ -42,5 +42,8 @@ export const formatMixin = {
 			id = id.substring(0, 8);
 			return id;
 		},
+		setMemberFull(status: boolean) {
+			return status === true ? '尚未' : '已滿員';
+		},
 	},
 };

@@ -16,19 +16,19 @@
 					<span>{{ scope.row.title }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="已賣名額">
+			<!-- <el-table-column label="已賣名額">
 				<template slot-scope="scope">
 					<span>{{ scope.row.origin_price }}</span>
 				</template>
-			</el-table-column>
+			</el-table-column>-->
 			<el-table-column label="售價">
 				<template slot-scope="scope">
 					<span>${{ scope.row.price | moneyFormat }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="是否成團">
+			<el-table-column label="是否滿員">
 				<template slot-scope="scope">
-					<span>{{ scope.row.enabled }}</span>
+					<span>{{ scope.row.enabled | setMemberFull }}</span>
 				</template>
 			</el-table-column>
 			<el-table-column label="編輯">
@@ -98,7 +98,8 @@
 					<el-input v-model.lazy="form.unit" />
 				</el-form-item>
 				<el-form-item label="總人數">
-					<el-input v-model.lazy="form.description" :disabled="isShow" />
+					<!-- :disabled="isShow" -->
+					<el-input v-model.lazy="form.description" />
 				</el-form-item>
 				<el-form-item label="已售人數">
 					<el-input v-model.lazy="form.origin_price" />
@@ -106,8 +107,8 @@
 				<el-form-item label="售價">
 					<el-input v-model.number.lazy="form.price" />
 				</el-form-item>
-				<el-form-item label="是否成團">
-					<el-switch v-model="form.enabled" active-text="啟用" inactive-text="不啟用"></el-switch>
+				<el-form-item label="是否滿員">
+					<el-switch v-model="form.enabled" active-text="未滿員" inactive-text="滿員"></el-switch>
 				</el-form-item>
 
 				<div class="footer">
@@ -125,9 +126,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
+import { State, Action, Getter, namespace } from 'vuex-class';
 import Api from '@/api/backoffice/product.ts';
 import * as Model from '@/models/interfaces/backoffice/product';
 import { formatMixin } from '@/utilities/format';
+
+const tokenModule = namespace('order');
+const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
@@ -175,10 +180,22 @@ export default class ProductList extends Vue {
 	// 出發回來日期
 	startDate: string = '';
 	endDate: string = '';
-	isShow: boolean = false;
+	@tokenModule.State('OrderList') OrderList!: string;
+	// isShow: boolean = false;
 
 	created() {
 		this.getProductList();
+
+		(this.OrderList as any).forEach((element: any) => {
+			const newData: any = [];
+
+			element.products.forEach((item: any) => {
+				// console.log(item);
+				// newData[index].push(item);
+				// console.log(item.product.title, item.quantity);
+			});
+			// console.log(newData);
+		});
 	}
 
 	// 取得產品列表
@@ -215,12 +232,17 @@ export default class ProductList extends Vue {
 	edit(row: Model.IProductItem) {
 		this.dialogVisible = true;
 		this.modifyButton = true;
-		this.form = row;
-		[this.img1, this.img2, this.img3, this.img4, this.img5] = this.form.imageUrl;
-		const timeArray = this.form.content.split('~');
-		this.startDate = timeArray[0];
-		this.endDate = timeArray[1];
-		this.isShow = true;
+
+		Api.getProductItem(row.id)
+			.then((res) => {
+				this.form = row;
+				this.form.description = res.data.description;
+				[this.img1, this.img2, this.img3, this.img4, this.img5] = this.form.imageUrl;
+				const timeArray = this.form.content.split('~');
+				this.startDate = timeArray[0];
+				this.endDate = timeArray[1];
+			})
+			.catch((err) => {});
 	}
 
 	// 刪除單一品項
@@ -281,7 +303,6 @@ export default class ProductList extends Vue {
 		this.modifyButton = false;
 		this.submitButton = false;
 		this.dialogVisible = false;
-		this.isShow = false;
 	}
 }
 </script>

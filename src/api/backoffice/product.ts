@@ -13,6 +13,15 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetProductListReponse>result.data;
 	},
+	// 後台，取得單一商品
+	async getProductItem(id: string): Promise<Model.IGetProductItemReponse> {
+		const config = {
+			method: 'get',
+			url: URL + UUID + `/admin/ec/product/${id}`,
+		};
+		const result = await Handler.request(config);
+		return <Model.IGetProductItemReponse>result.data;
+	},
 	// 後台，刪除單一產品
 	async deleteProduct(id: string): Promise<Model.IGetProductListReponse> {
 		const config = {

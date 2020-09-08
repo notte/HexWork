@@ -45,6 +45,43 @@ export interface IProductList {
 	options: IOption;
 }
 
+// 取得單一商品
+export interface IGetProductItemReponse {
+	data: IGetProductItem;
+}
+
+export interface IGetProductItem {
+	id: string;
+	title: string;
+	category: string;
+	content: string;
+	description: string;
+	imageUrl: string[];
+	enabled: boolean;
+	origin_price: number;
+	price: number;
+	unit: string;
+	options: IOption;
+	created: ICreated;
+	updated: IUpdated;
+}
+
+interface IUpdated {
+	diff: string;
+	datetime: string;
+	timestamp: number;
+}
+
+interface ICreated {
+	diff: string;
+	datetime: string;
+	timestamp: number;
+}
+
+interface IOption {
+	message: string;
+}
+
 interface IMeta {
 	pagination: IPagination;
 }

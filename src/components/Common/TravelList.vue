@@ -53,12 +53,12 @@ export default class TravelList extends Vue {
 			.then((res) => {
 				this.ProductList = res.data;
 				this.ProductList.forEach((element) => {
-					const newDate = element.category.split('、');
+					const newData = element.category.split('、');
 					let tag: string = '';
-					newDate.forEach((item) => {
+					newData.forEach((item) => {
 						switch (item) {
-							case '海上':
-								tag = tag + `<span class="sea">海上</span>`;
+							case '水上':
+								tag = tag + `<span class="sea">水上</span>`;
 								break;
 							case '陸上':
 								tag = tag + `<span class="land">陸上</span>`;

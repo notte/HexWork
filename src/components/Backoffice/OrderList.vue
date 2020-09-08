@@ -85,9 +85,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
+import { State, Action, Getter, namespace } from 'vuex-class';
 import Api from '@/api/backoffice/order';
 import * as Model from '@/models/interfaces/backoffice/order';
 import { formatMixin } from '@/utilities/format';
+
+const tokenModule = namespace('order');
+const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
@@ -102,6 +106,7 @@ export default class ProductList extends Vue {
 	amount: number = 0;
 	dialogVisible: boolean = false;
 	options: number[] = [1, 2, 3, 4, 5];
+	@Action('order/setOrderList') private setOrderList!: any;
 
 	created() {
 		this.getOrderList();
@@ -130,6 +135,7 @@ export default class ProductList extends Vue {
 		Api.getOrderList()
 			.then((res) => {
 				this.orderList = res.data;
+				this.setOrderList(this.orderList);
 			})
 			.catch((err) => {});
 	}
@@ -142,6 +148,7 @@ export default class ProductList extends Vue {
 				this.id = this.orderItem.id;
 				this.time = this.orderItem.updated.datetime;
 				this.amount = this.orderItem.amount;
+				// console.log(this.orderItem);
 			})
 			.catch((err) => {});
 	}

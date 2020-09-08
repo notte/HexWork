@@ -51,7 +51,7 @@
 				<div slot="header" class="clearfix">
 					<span>結帳資訊</span>
 				</div>
-				<div class="item">
+				<!-- <div class="item">
 					<p>信用卡卡號：</p>
 					<el-input />
 				</div>
@@ -62,7 +62,19 @@
 				<div class="item">
 					<p>背後末三碼：</p>
 					<el-input />
-				</div>
+				</div>-->
+
+				<el-form ref="form" :model="form" :rules="rules" label-width="80px" label-position="top">
+					<el-form-item label="信用卡卡號" prop="card" required>
+						<el-input maxlength="16" v-model.number.lazy="form.card"></el-input>
+					</el-form-item>
+					<el-form-item label="有效期限" prop="date" required>
+						<el-date-picker v-model="form.date" type="month" placeholder="有效期限"></el-date-picker>
+					</el-form-item>
+					<el-form-item label="背後末三碼" prop="code" required>
+						<el-input maxlength="3" v-model.number="form.code"></el-input>
+					</el-form-item>
+				</el-form>
 			</el-card>
 			<div class="item button">
 				<el-button class="major" @click="CheckOut(orderID)">結帳</el-button>
@@ -88,6 +100,26 @@ export default class CheckOut extends Vue {
 	orderID: string = '';
 	orderCreated: string = '';
 	orderAmount: string = '';
+	value2: any = '';
+	form: object = {
+		card: '',
+		date: '',
+		code: '',
+	};
+	rules: object = {
+		card: [
+			{ required: true, message: '請輸入信用卡卡號', trigger: 'blur' },
+			{ type: 'number', message: '請輸入正確的信用卡卡號', trigger: ['blur', 'change'] },
+		],
+		date: [
+			{ required: true, message: '請輸入有效期限', trigger: 'blur' },
+			{ type: 'date', message: '請輸入正確的有效期限', trigger: ['blur', 'change'] },
+		],
+		code: [
+			{ required: true, message: '請輸入背後末三碼', trigger: 'blur' },
+			{ type: 'number', length: 3, message: '請輸入正確的背後末三碼', trigger: ['blur', 'change'] },
+		],
+	};
 	@tokenModule.State('SetOrderForm') SetForm!: string;
 	@tokenModule.State('CartList') cart!: string;
 

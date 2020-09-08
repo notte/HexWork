@@ -14,10 +14,22 @@
 				<h3 v-if="showLogout">後台管理</h3>
 				<div class="float_right">
 					<router-link class="item" v-if="showLogin" to="/Product">產品列表</router-link>
-					<a v-if="showLogin" class="cart" @click="toCart">
+					<!-- <a v-if="showLogin" class="cart" @click="toCart">
 						<p class="item">購物車</p>
 						<el-badge :value="cartQuantity" v-if="cartQuantity !== 0" />
-					</a>
+					</a>-->
+					<el-tooltip
+						:disabled="cartQuantity !==0"
+						class="item"
+						effect="dark"
+						content="購物車沒有商品"
+						placement="top-start"
+					>
+						<a v-if="showLogin" class="cart" @click="toCart">
+							<p class="item">購物車</p>
+							<el-badge :value="cartQuantity" v-if="cartQuantity !== 0" />
+						</a>
+					</el-tooltip>
 					<a class="item" v-if="showLogout" @click="logout">登出</a>
 				</div>
 			</div>
@@ -117,8 +129,6 @@ export default class App extends Vue {
 	toCart() {
 		if (this.cartQuantity !== 0) {
 			this.$router.push({ path: '/Cart' });
-		} else {
-			console.log('購物車為空');
 		}
 	}
 
