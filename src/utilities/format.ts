@@ -45,5 +45,8 @@ export const formatMixin = {
 		setMemberFull(status: boolean) {
 			return status === true ? '尚未' : '已滿員';
 		},
+		setCoupon(status: boolean) {
+			return status === true ? '啟用' : '未啟用';
+		},
 	},
 };

@@ -591,6 +591,48 @@ body,
 			}
 		}
 
+		.Coupons {
+			margin-top: 20px;
+			border-top: 1px dashed #bdbdbd;
+			padding: 20px 0;
+
+			.el-input,
+			.el-button {
+				display: inline-block;
+			}
+
+			.el-input {
+				width: 200px;
+				margin-right: 15px;
+			}
+
+			h4 {
+				margin-top: 5px;
+				font-weight: 900;
+				color: $major;
+				font-size: 13px;
+			}
+
+			.CouponDelete {
+				padding: 30px 0;
+
+				h4 {
+					margin-right: 20px;
+					display: inline-block;
+				}
+
+				.el-button {
+					display: inline-block;
+					background-color: #fff;
+					border: 2px solid $major;
+					color: $major;
+					font-weight: 500;
+				}
+			}
+
+
+		}
+
 		.Product:last-child {
 			margin-bottom: 0;
 			border-bottom: none;
@@ -640,8 +682,14 @@ body,
 	}
 
 	.total {
+		h3 {
+			font-weight: 900;
+			text-decoration: line-through;
+			margin-bottom: 10px;
+		}
+
 		h1 {
-			margin: 30px 0;
+			margin-bottom: 20px;
 			text-align: center;
 			font-weight: 900;
 			color: $major;
@@ -674,7 +722,9 @@ body,
 	}
 
 	.el-form-item:nth-child(6) {
-		width: 100%;
+		.el-select {
+			width: 100%;
+		}
 	}
 
 	.el-form-item:last-child {
@@ -761,8 +811,19 @@ body,
 	}
 
 	.el-button {
-		margin-top: 40px;
+		margin-top: 30px;
 		width: 40%;
+	}
+
+	.Coupons {
+		width: 40%;
+		margin: 30px auto 0 auto;
+
+		h3 {
+			font-weight: 900;
+			color: $major;
+			margin-top: 30px;
+		}
 	}
 }
 
@@ -950,6 +1011,19 @@ body,
 		text-align: center;
 	}
 
+	// 優惠券
+	.Coupon {
+		.el-dialog__body {
+			.el-form {
+				width: 100%;
+
+				input {
+					width: 100%;
+				}
+			}
+		}
+	}
+
 }
 
 
@@ -983,4 +1057,9 @@ body,
 	.el-step__icon-inner {
 		color: $major;
 	}
+}
+
+.el-button--mini {
+	width: 80px;
+	text-align: center;
 }

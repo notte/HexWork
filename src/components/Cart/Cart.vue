@@ -29,6 +29,14 @@
 						/>
 					</div>
 				</div>
+				<div class="Coupons">
+					<el-input type="text" v-model="couponsCode" placeholder="請輸入優惠券代碼"></el-input>
+					<el-button @click="getCoupon(couponsCode)">兌換</el-button>
+					<div v-if="isShowCoupon" class="CouponDelete">
+						<h4>已使用優惠券：{{Coupon}}</h4>
+						<el-button size="mini" @click="deleCoupon">刪除</el-button>
+					</div>
+				</div>
 			</div>
 			<div class="Compute">
 				<div class="itemList">
@@ -41,7 +49,9 @@
 					<el-divider>
 						<h2>總計</h2>
 					</el-divider>
-					<h1>${{total | moneyFormat}}</h1>
+					<h3 v-if="isShowCoupon">原價：${{total | moneyFormat}}</h3>
+					<h1 v-if="!isShowCoupon">${{total | moneyFormat}}</h1>
+					<h1 v-if="isShowCoupon">${{discountTotal | moneyFormat}}</h1>
 					<el-button @click="nextStep">下一步</el-button>
 					<el-button class="major" @click="empty">清空購物車</el-button>
 				</div>
@@ -66,9 +76,21 @@ const qs = require('qs');
 @Component({ mixins: [formatMixin] })
 export default class Cart extends Vue {
 	CartList: Model.ICartData[] = [];
+	CartListTWO = {} as Model.ICartDataTWO;
 	// 人數
 	options: number[] = [1, 2, 3, 4, 5];
+	// 原價總金額
 	total: string = '';
+	// User key 的優惠券碼（v-model 欄位）
+	couponsCode: string = '';
+	// 確認已執行的優惠券碼
+	Coupon: string = '';
+	// 判斷顯示優惠價格還是原價
+	isShowCoupon: boolean = false;
+	// 折扣
+	discount: number = 0;
+	// 折扣後總金額
+	discountTotal: number = 0;
 	// 映射 state
 	@tokenModule.State('CartList') cart!: string;
 	@Action('cart/setCartList') private setCartList!: any;
@@ -85,12 +107,38 @@ export default class Cart extends Vue {
 		this.total = total.toString();
 	}
 
+	getCoupon(coupon: string) {
+		if (coupon !== '' && this.Coupon === '') {
+			Api.getCoupon(coupon)
+				.then((res) => {
+					this.couponsCode = '';
+					this.Coupon = coupon;
+					this.isShowCoupon = true;
+					this.discount = res.data.percent / 100;
+					this.discountTotal = +this.total * this.discount;
+				})
+				.catch((err) => {});
+		} else if (this.Coupon !== '') {
+			return '優惠券僅能使用乙張';
+		} else if (coupon === '') {
+			return '請輸入優惠券';
+		}
+	}
+
+	deleCoupon() {
+		this.isShowCoupon = false;
+		this.Coupon = '';
+		this.couponsCode = '';
+	}
+
 	// 獲取購物車
 	getCart() {
 		Api.getCart()
 			.then((res) => {
-				this.CartList = res.data;
-				this.setCartList(this.CartList);
+				// this.CartList = res.data;
+				this.CartListTWO.coupon = this.Coupon;
+				// this.setCartList(this.CartList);
+				// console.log(this.CartListTWO);
 			})
 			.catch((err) => {});
 	}

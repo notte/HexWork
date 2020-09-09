@@ -14,7 +14,7 @@
 		<SetOrder v-if="isShow('SetOrder')" />
 
 		<!-- 結帳 -->
-		<CheckOut v-if="isShow('CheckOut')" />
+		<CheckOut v-if="isShow('CheckOut')" :Payment="Payment" />
 
 		<!-- 結帳完畢 -->
 		<Completed v-if="isShow('Completed')" />
@@ -41,6 +41,7 @@ export default class Foreign extends Vue {
 	CheckOut: Status.OpenType.CheckOut = Status.OpenType.CheckOut;
 	Completed: Status.OpenType.Completed = Status.OpenType.Completed;
 	steps: number = 0;
+	Payment: string = '';
 
 	isShow(tab: Status.OpenType): boolean {
 		return this.CurrentType === tab ? true : false;
@@ -67,6 +68,7 @@ export default class Foreign extends Vue {
 	mounted() {
 		EventBus.$on('open-type', (param: any) => {
 			this.CurrentType = param.type;
+			this.Payment = param.id;
 		});
 	}
 }

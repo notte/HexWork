@@ -16,6 +16,9 @@
 					<el-form-item label="地址" prop="address" required>
 						<el-input v-model="form.address"></el-input>
 					</el-form-item>
+					<el-form-item label="優惠券" prop="address" required>
+						<el-input v-model="form.coupon"></el-input>
+					</el-form-item>
 					<el-form-item label="付款方式" prop="payment" required>
 						<el-select v-model="form.payment" placeholder="請選擇">
 							<el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
@@ -60,6 +63,7 @@ import * as Model from '@/models/interfaces/frontend/cart';
 
 const tokenModule = namespace('cart');
 const qs = require('qs');
+
 @Component({ mixins: [formatMixin] })
 export default class SetOrder extends Vue {
 	total: string = '';
@@ -94,8 +98,10 @@ export default class SetOrder extends Vue {
 	};
 
 	@tokenModule.State('CartList') cart!: Model.ICartData[];
-	@tokenModule.State('SetOrderForm') SetForm!: string;
+	@tokenModule.State('OrderInfo') orderInfo!: object;
+	// @tokenModule.State('SetOrderForm') SetForm!: string;
 	@Action('cart/SetOrderForm') private SetOrderForm!: any;
+	@Action('cart/SetOrderInfo') private SetOrderInfo!: any;
 
 	mounted() {
 		let total = 0;
@@ -111,10 +117,12 @@ export default class SetOrder extends Vue {
 				this.SetOrderForm(this.form);
 				Api.setOrder(this.form)
 					.then((res) => {
-						EventBus.sendOrderInfo(res.data.id, res.data.created.datetime, res.data.amount);
+						const newOrderInfo: Model.ISetOrderInfo = { id: res.data.id, datetime: res.data.created.datetime, amount: res.data.amount };
+						this.SetOrderInfo(newOrderInfo);
+						EventBus.setCartQuantity(0);
 					})
 					.catch((err) => {});
-				EventBus.getOpenType(Status.OpenType.CheckOut);
+				EventBus.getOpenType(Status.OpenType.CheckOut, this.form.payment);
 			} else {
 				return false;
 			}

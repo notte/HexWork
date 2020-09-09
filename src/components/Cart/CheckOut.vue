@@ -40,7 +40,7 @@
 				</div>
 				<div class="item">
 					<p>訂單編號：</p>
-					<p>{{orderID}}</p>
+					<p>{{orderID | captureOrderID}}</p>
 				</div>
 				<div class="item">
 					<p>總金額：</p>
@@ -51,20 +51,15 @@
 				<div slot="header" class="clearfix">
 					<span>結帳資訊</span>
 				</div>
-				<!-- <div class="item">
-					<p>信用卡卡號：</p>
-					<el-input />
-				</div>
-				<div class="item">
-					<p>有效期限：</p>
-					<el-input />
-				</div>
-				<div class="item">
-					<p>背後末三碼：</p>
-					<el-input />
-				</div>-->
-
-				<el-form ref="form" :model="form" :rules="rules" label-width="80px" label-position="top">
+				<h3 v-if="Payment =='ATM'">前往 ATM 繳款</h3>
+				<el-form
+					v-if="Payment =='Credit'"
+					ref="form"
+					:model="form"
+					:rules="rules"
+					label-width="80px"
+					label-position="top"
+				>
 					<el-form-item label="信用卡卡號" prop="card" required>
 						<el-input maxlength="16" v-model.number.lazy="form.card"></el-input>
 					</el-form-item>
@@ -77,7 +72,8 @@
 				</el-form>
 			</el-card>
 			<div class="item button">
-				<el-button class="major" @click="CheckOut(orderID)">結帳</el-button>
+				<el-button class="major" v-if="Payment =='ATM'" @click="CheckOut(orderID)">結帳</el-button>
+				<el-button class="major" v-if="Payment =='Credit'" @click="CheckOut(orderID,'form')">結帳</el-button>
 			</div>
 		</div>
 	</div>
@@ -85,9 +81,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import { State, Action, Getter, namespace } from 'vuex-class';
 import EventBus from '@/utilities/event-bus';
+import * as Model from '@/models/interfaces/frontend/cart';
 import { formatMixin } from '@/utilities/format';
 import * as Status from '@/models/status/type';
 import Api from '@/api/frontend/cart.ts';
@@ -97,14 +94,15 @@ const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class CheckOut extends Vue {
+	@Prop(String) Payment!: string;
 	orderID: string = '';
 	orderCreated: string = '';
 	orderAmount: string = '';
 	value2: any = '';
 	form: object = {
-		card: '',
+		card: '1232123212321232',
 		date: '',
-		code: '',
+		code: '123',
 	};
 	rules: object = {
 		card: [
@@ -122,24 +120,38 @@ export default class CheckOut extends Vue {
 	};
 	@tokenModule.State('SetOrderForm') SetForm!: string;
 	@tokenModule.State('CartList') cart!: string;
+	@tokenModule.State('OrderInfo') OrderInfo!: Model.ISetOrderInfo;
 
 	mounted() {
-		EventBus.$on('send-order-info', (param: any) => {
-			this.orderID = param.id;
-			this.orderCreated = param.created;
-			this.orderAmount = param.amount.toString();
-		});
+		this.orderID = this.OrderInfo.id;
+		this.orderCreated = this.OrderInfo.datetime;
+		this.orderAmount = this.OrderInfo.amount.toString();
 	}
 
-	CheckOut(id: string) {
-		Api.checkOut(id)
-			.then((res) => {
-				const datetime = res.data.updated.datetime;
-				const amount = res.data.amount;
-				EventBus.$emit('send-order-info', { id, datetime, amount });
-				EventBus.$emit('open-type', { type: Status.OpenType.Completed });
-			})
-			.catch((err) => {});
+	CheckOut(id: string, form?: string) {
+		if (form) {
+			(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
+				if (valid) {
+					Api.checkOut(id)
+						.then((res) => {
+							const datetime = res.data.updated.datetime;
+							const amount = res.data.amount;
+							EventBus.$emit('open-type', { type: Status.OpenType.Completed });
+						})
+						.catch((err) => {});
+				} else {
+					return false;
+				}
+			});
+		} else {
+			Api.checkOut(id)
+				.then((res) => {
+					const datetime = res.data.updated.datetime;
+					const amount = res.data.amount;
+					EventBus.$emit('open-type', { type: Status.OpenType.Completed });
+				})
+				.catch((err) => {});
+		}
 	}
 }
 </script>

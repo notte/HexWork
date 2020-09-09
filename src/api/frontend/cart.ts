@@ -61,4 +61,14 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IOrderItemReponse>result.data;
 	},
+	// 優惠券
+	async getCoupon(coupon: string): Promise<Model.IcheckCouponReponse> {
+		const config = {
+			method: 'post',
+			url: URL + UUID + `/ec/coupon/search`,
+			data: { code: coupon },
+		};
+		const result = await Handler.request(config);
+		return <Model.IcheckCouponReponse>result.data;
+	},
 };

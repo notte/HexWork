@@ -26,6 +26,26 @@ export interface ISetOrderUserForm {
 	coupon?: string;
 }
 
+export interface IcheckCouponReponse {
+	data: ICoupon;
+}
+
+interface ICoupon {
+	title: string;
+	code: string;
+	percent: number;
+	enabled: boolean;
+	deadline_at: string;
+	deadline_diff: string;
+}
+
+// 收件者表單
+export interface ISetOrderInfo {
+	id: string;
+	datetime: string;
+	amount: number;
+}
+
 // 已成立訂單
 export interface IOrderItemReponse {
 	data: IOrder;
@@ -80,6 +100,16 @@ export interface ICartData {
 	created_diff: string;
 	updated_at: string;
 	updated_diff: string;
+}
+
+export interface ICartDataTWO {
+	product: IProduct;
+	quantity: number;
+	created_at: string;
+	created_diff: string;
+	updated_at: string;
+	updated_diff: string;
+	coupon?: string;
 }
 
 export interface IProduct {

@@ -82,6 +82,26 @@ export default class App extends Vue {
 		}
 	}
 
+	mounted() {
+		EventBus.$on('set-tag', () => {
+			this.showLogout = true;
+			this.showLogin = false;
+		});
+
+		EventBus.$on('set-quantity', (quantity?: number) => {
+			this.checkShoppingCart();
+		});
+
+		// 接收切換 router 及頁面的事件，打包參數一併傳遞
+		EventBus.$on('open-type', (param: any) => {
+			this.$router.push({ name: param.type, params: { id: param.id } }).catch((err) => {});
+		});
+
+		// EventBus.$on('to-scroll', (now: number, next: number) => {
+		// 	(this.$refs.childDiv as any).scrollTop = 0;
+		// });
+	}
+
 	checkShoppingCart() {
 		CartApi.getCart().then((res) => {
 			this.cartQuantity = res.data.length;
@@ -104,26 +124,6 @@ export default class App extends Vue {
 				// 刪除 localStorage 中的 token
 				localStorage.removeItem('accessToken');
 			});
-	}
-
-	mounted() {
-		EventBus.$on('set-tag', () => {
-			this.showLogout = true;
-			this.showLogin = false;
-		});
-
-		EventBus.$on('set-quantity', () => {
-			this.checkShoppingCart();
-		});
-
-		// 接收切換 router 及頁面的事件，打包參數一併傳遞
-		EventBus.$on('open-type', (param: any) => {
-			this.$router.push({ name: param.type, params: { id: param.id } }).catch((err) => {});
-		});
-
-		// EventBus.$on('to-scroll', (now: number, next: number) => {
-		// 	(this.$refs.childDiv as any).scrollTop = 0;
-		// });
 	}
 
 	toCart() {

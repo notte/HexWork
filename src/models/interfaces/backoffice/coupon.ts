@@ -4,11 +4,19 @@ export interface ICouponListReponse {
 	meta: IMeta;
 }
 
-interface IMeta {
-	pagination: IPagination;
+export interface IAddCouponItemReponse {
+	data: IData[];
 }
 
-interface IData {
+export interface IAddCouponItem {
+	title: string;
+	code: string;
+	percent: number;
+	enabled: boolean;
+	deadline_at: string;
+}
+
+export interface IData {
 	id: string;
 	title: string;
 	code: string;
@@ -17,6 +25,10 @@ interface IData {
 	deadline: IDeadline;
 	created: ICreated;
 	updated: IUpdated;
+}
+
+interface IMeta {
+	pagination: IPagination;
 }
 
 interface IUpdated {
