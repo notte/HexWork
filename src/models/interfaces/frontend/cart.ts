@@ -4,6 +4,13 @@ export interface ICartListReponse {
 	meta: IMeta;
 }
 
+export interface ICartListAndCoupon {
+	data: ICartData[];
+	total: string;
+	coupon?: string;
+	discountTotal?: string;
+}
+
 // 更新單一產品
 export interface IEditProductCartRequest {
 	product: string;

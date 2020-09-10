@@ -16,8 +16,8 @@
 					<el-form-item label="地址" prop="address" required>
 						<el-input v-model="form.address"></el-input>
 					</el-form-item>
-					<el-form-item label="優惠券" prop="address" required>
-						<el-input v-model="form.coupon"></el-input>
+					<el-form-item label="優惠券" prop="coupon">
+						<el-input v-model="form.coupon" disabled></el-input>
 					</el-form-item>
 					<el-form-item label="付款方式" prop="payment" required>
 						<el-select v-model="form.payment" placeholder="請選擇">
@@ -35,7 +35,7 @@
 			</div>
 			<div class="Compute">
 				<div class="itemList">
-					<div class="item" v-for="(item,index) in cart" :key="index">
+					<div class="item" v-for="(item,index) in cart.data" :key="index">
 						<p>{{item.product.title}} x {{item.quantity}}</p>
 						<h3>${{item.product.price | moneyFormat}}</h3>
 					</div>
@@ -44,7 +44,9 @@
 					<el-divider>
 						<h2>總計</h2>
 					</el-divider>
-					<h1>${{total | moneyFormat}}</h1>
+					<h3 v-if="isShowCoupon">原價：${{total | moneyFormat}}</h3>
+					<h1 v-if="!isShowCoupon">${{total | moneyFormat}}</h1>
+					<h1 v-if="isShowCoupon">${{discountTotal | moneyFormat}}</h1>
 				</div>
 			</div>
 		</div>
@@ -67,6 +69,8 @@ const qs = require('qs');
 @Component({ mixins: [formatMixin] })
 export default class SetOrder extends Vue {
 	total: string = '';
+	discountTotal: string = '';
+	isShowCoupon: boolean = false;
 	form: Model.ISetOrderUserForm = {
 		name: '戴筱瑤',
 		email: 'maonome@gmail.com',
@@ -97,18 +101,19 @@ export default class SetOrder extends Vue {
 		payment: [{ required: true, message: '請選擇付款方式', trigger: 'blur' }],
 	};
 
-	@tokenModule.State('CartList') cart!: Model.ICartData[];
+	@tokenModule.State('CartList') cart!: Model.ICartListAndCoupon;
 	@tokenModule.State('OrderInfo') orderInfo!: object;
 	// @tokenModule.State('SetOrderForm') SetForm!: string;
 	@Action('cart/SetOrderForm') private SetOrderForm!: any;
 	@Action('cart/SetOrderInfo') private SetOrderInfo!: any;
 
 	mounted() {
-		let total = 0;
-		this.cart.forEach((item) => {
-			total = total + item.quantity * item.product.price;
-		});
-		this.total = total.toString();
+		this.total = this.cart.total;
+		if (this.cart.discountTotal && this.cart.coupon) {
+			this.form.coupon = this.cart.coupon;
+			this.discountTotal = this.cart.discountTotal;
+			this.isShowCoupon = true;
+		}
 	}
 
 	submit(form: string) {
@@ -117,12 +122,11 @@ export default class SetOrder extends Vue {
 				this.SetOrderForm(this.form);
 				Api.setOrder(this.form)
 					.then((res) => {
-						const newOrderInfo: Model.ISetOrderInfo = { id: res.data.id, datetime: res.data.created.datetime, amount: res.data.amount };
-						this.SetOrderInfo(newOrderInfo);
+						this.SetOrderInfo({ id: res.data.id, datetime: res.data.created.datetime, amount: res.data.amount });
 						EventBus.setCartQuantity(0);
+						EventBus.getOpenType(Status.OpenType.CheckOut, this.form.payment);
 					})
 					.catch((err) => {});
-				EventBus.getOpenType(Status.OpenType.CheckOut, this.form.payment);
 			} else {
 				return false;
 			}

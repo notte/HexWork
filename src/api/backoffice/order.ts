@@ -4,7 +4,7 @@ const URL = process.env.VUE_APP_URL;
 const UUID = process.env.VUE_APP_UUID;
 
 export default {
-	// 後台，取得優惠券列表
+	// 後台，取得訂單列表
 	async getOrderList(): Promise<Model.IGetOrderListReponse> {
 		const config = {
 			method: 'get',

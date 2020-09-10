@@ -76,7 +76,7 @@ const qs = require('qs');
 @Component({ mixins: [formatMixin] })
 export default class Cart extends Vue {
 	CartList: Model.ICartData[] = [];
-	CartListTWO = {} as Model.ICartDataTWO;
+	CartListAndCoupon = {} as Model.ICartListAndCoupon;
 	// 人數
 	options: number[] = [1, 2, 3, 4, 5];
 	// 原價總金額
@@ -99,14 +99,6 @@ export default class Cart extends Vue {
 		this.getCart();
 	}
 
-	beforeUpdate() {
-		let total = 0;
-		this.CartList.forEach((item) => {
-			total = total + item.quantity * item.product.price;
-		});
-		this.total = total.toString();
-	}
-
 	getCoupon(coupon: string) {
 		if (coupon !== '' && this.Coupon === '') {
 			Api.getCoupon(coupon)
@@ -116,6 +108,9 @@ export default class Cart extends Vue {
 					this.isShowCoupon = true;
 					this.discount = res.data.percent / 100;
 					this.discountTotal = +this.total * this.discount;
+					this.CartListAndCoupon.coupon = coupon;
+					this.CartListAndCoupon.discountTotal = this.discountTotal.toString();
+					this.setCartList(this.CartListAndCoupon);
 				})
 				.catch((err) => {});
 		} else if (this.Coupon !== '') {
@@ -133,24 +128,26 @@ export default class Cart extends Vue {
 
 	// 獲取購物車
 	getCart() {
-		Api.getCart()
-			.then((res) => {
-				// this.CartList = res.data;
-				this.CartListTWO.coupon = this.Coupon;
-				// this.setCartList(this.CartList);
-				// console.log(this.CartListTWO);
-			})
-			.catch((err) => {});
+		Api.getCart().then((res) => {
+			this.CartList = res.data;
+			this.CartListAndCoupon.data = res.data;
+
+			let total = 0;
+			this.CartListAndCoupon.data.forEach((item) => {
+				total = total + item.quantity * item.product.price;
+			});
+			this.total = total.toString();
+			this.CartListAndCoupon.total = this.total;
+			this.setCartList(this.CartListAndCoupon);
+		});
 	}
 
 	// 清空購物車
 	empty() {
-		Api.emptyCart()
-			.then((res) => {
-				this.getCart();
-				EventBus.setCartQuantity();
-			})
-			.catch((err) => {});
+		Api.emptyCart().then((res) => {
+			this.getCart();
+			EventBus.setCartQuantity();
+		});
 	}
 
 	// 更新購物車
@@ -160,12 +157,11 @@ export default class Cart extends Vue {
 			quantity: quantity.toString(),
 		};
 
-		Api.editProduct(params)
-			.then((res) => {
-				this.getCart();
-			})
-			.catch((err) => {});
+		Api.editProduct(params).then((res) => {
+			this.getCart();
+		});
 	}
+
 	// 刪除一品項
 	deleteItem(id: string) {
 		const params: Model.IDeleteProductCartRequest = {
@@ -181,7 +177,9 @@ export default class Cart extends Vue {
 
 	// 下一步
 	nextStep() {
-		EventBus.getOpenType(Status.OpenType.SetOrder);
+		if (this.CartListAndCoupon.data.length !== 0) {
+			EventBus.getOpenType(Status.OpenType.SetOrder);
+		}
 	}
 }
 </script>

@@ -13,8 +13,8 @@
 					<p>訂單金額：${{orderAmount | moneyFormat}}</p>
 				</div>
 			</el-card>
-			<div class="Coupons">
-				<h3>贈送折扣碼：12345</h3>
+			<div class="Coupons" v-if="isShowCoupon">
+				<h3>贈送折扣碼：{{ couponCode }}</h3>
 			</div>
 			<router-link to="/Product">
 				<el-button>繼續選購</el-button>
@@ -36,6 +36,8 @@ const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class Completed extends Vue {
+	isShowCoupon: boolean = false;
+	couponCode: string = '';
 	orderID: string = '';
 	orderCreated: string = '';
 	orderAmount: string = '';
@@ -45,6 +47,16 @@ export default class Completed extends Vue {
 		this.orderID = this.OrderInfo.id;
 		this.orderCreated = this.OrderInfo.datetime;
 		this.orderAmount = this.OrderInfo.amount.toString();
+
+		const money = +this.orderAmount;
+
+		if (money > 20000) {
+			this.isShowCoupon = true;
+			this.couponCode = 'COUPON_TWO';
+		} else if (money > 10000) {
+			this.isShowCoupon = true;
+			this.couponCode = 'COUPON_ONE';
+		}
 	}
 }
 </script>

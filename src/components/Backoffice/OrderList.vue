@@ -18,7 +18,8 @@
 					<span>{{ scope.row.paid_at | captureTime}}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="優惠券" prop="coupon"></el-table-column>
+			<!-- 優惠券在這 -->
+			<el-table-column label="優惠券" prop="coupon.code"></el-table-column>
 			<el-table-column label="更新時間" prop="updated.datetime"></el-table-column>
 			<el-table-column label="編輯">
 				<template slot-scope="scope">
@@ -96,7 +97,10 @@ const qs = require('qs');
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
 	orderList: Model.IGetOrderList[] = [];
-	PageData: object = {};
+	PageData: object = {
+		data: [],
+		coupon: '',
+	};
 	CurrentPage: number = 0;
 	TotalPage: number = 0;
 	orderItem = {} as Model.IOrder;
@@ -132,12 +136,10 @@ export default class ProductList extends Vue {
 	}
 
 	getOrderList() {
-		Api.getOrderList()
-			.then((res) => {
-				this.orderList = res.data;
-				this.setOrderList(this.orderList);
-			})
-			.catch((err) => {});
+		Api.getOrderList().then((res) => {
+			this.orderList = res.data;
+			this.setOrderList(this.orderList);
+		});
 	}
 
 	edit(id: string) {
@@ -148,7 +150,6 @@ export default class ProductList extends Vue {
 				this.id = this.orderItem.id;
 				this.time = this.orderItem.updated.datetime;
 				this.amount = this.orderItem.amount;
-				// console.log(this.orderItem);
 			})
 			.catch((err) => {});
 	}

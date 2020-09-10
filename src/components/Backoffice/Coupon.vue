@@ -2,11 +2,11 @@
 	<div class="Coupon">
 		<el-button class="addButton" @click="dialogVisible = true">新增優惠券</el-button>
 		<el-table empty-text="無商品" :data="couponList">
-			<!-- <el-table-column label="標題">
+			<el-table-column label="標題">
 				<template slot-scope="scope">
 					<span>{{ scope.row.title }}</span>
 				</template>
-			</el-table-column>-->
+			</el-table-column>
 			<el-table-column label="序號">
 				<template slot-scope="scope">
 					<span>{{ scope.row.code }}</span>

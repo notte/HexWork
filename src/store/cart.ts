@@ -2,7 +2,7 @@ import { IActionContextBasic } from '@/store/index';
 import * as Model from '@/models/interfaces/frontend/cart';
 
 export interface IState {
-	CartList: Model.ICartDataTWO;
+	CartList: Model.ICartListAndCoupon;
 	SetOrderForm: Model.ISetOrderUserForm;
 	OrderInfo: Model.ISetOrderInfo;
 }
@@ -12,14 +12,12 @@ const SET_ORDER_FORM = 'SET_ORDER_FORM';
 const SET_ORDER_INFO = 'SET_ORDER_INFO';
 
 const initState: IState = {
+	// id: '', title: '', category: '', content: '', imageUrl: [], enabled: true, origin_price: 0, price: 0, unit: ''
 	CartList: {
-		product: { id: '', title: '', category: '', content: '', imageUrl: [], enabled: true, origin_price: 0, price: 0, unit: '' },
-		quantity: 0,
-		created_at: '',
-		created_diff: '',
-		updated_at: '',
-		updated_diff: '',
+		data: [],
+		total: '',
 		coupon: '',
+		discountTotal: '',
 	},
 	SetOrderForm: { name: '', email: '', tel: null, address: '', payment: '', message: '', coupon: '' },
 	OrderInfo: { id: '', datetime: '', amount: 0 },
@@ -44,7 +42,7 @@ const actions = {
 };
 
 const mutations = {
-	[SET_CART_LIST](state: IState, payload: Model.ICartDataTWO) {
+	[SET_CART_LIST](state: IState, payload: Model.ICartListAndCoupon) {
 		state.CartList = payload;
 	},
 	[SET_ORDER_FORM](state: IState, payload: Model.ISetOrderUserForm) {

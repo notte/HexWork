@@ -14,12 +14,8 @@
 				<h3 v-if="showLogout">後台管理</h3>
 				<div class="float_right">
 					<router-link class="item" v-if="showLogin" to="/Product">產品列表</router-link>
-					<!-- <a v-if="showLogin" class="cart" @click="toCart">
-						<p class="item">購物車</p>
-						<el-badge :value="cartQuantity" v-if="cartQuantity !== 0" />
-					</a>-->
 					<el-tooltip
-						:disabled="cartQuantity !==0"
+						:disabled="showCartQuantity"
 						class="item"
 						effect="dark"
 						content="購物車沒有商品"
@@ -63,6 +59,7 @@ const qs = require('qs');
 	components: {},
 })
 export default class App extends Vue {
+	showCartQuantity: boolean = false;
 	cartQuantity: number = 0;
 	activeName: string = 'first';
 	showLogin: boolean = false;
