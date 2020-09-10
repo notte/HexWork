@@ -30,7 +30,7 @@
 			<el-table-column label="編輯">
 				<template slot-scope="scope">
 					<el-button size="mini" @click="edit(scope.row.id)">編輯</el-button>
-					<el-button size="mini" class="major">刪除</el-button>
+					<el-button size="mini" class="major" @click="deteteCoupon(scope.row.id)">刪除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -110,6 +110,13 @@ export default class ProductList extends Vue {
 				this.getCouponList();
 			})
 			.catch();
+	}
+
+	// 刪除優惠券
+	deteteCoupon(id: string) {
+		Api.deleteCouponItem(id).then((res) => {
+			this.getCouponList();
+		});
 	}
 
 	edit(id: string) {

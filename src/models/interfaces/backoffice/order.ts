@@ -24,7 +24,7 @@ export interface IOrder {
 	id: string;
 	message: string;
 	user: IUser;
-	coupon: ICoupon;
+	coupon: ICoupon | null;
 	amount: number;
 	products: IProduct[];
 	payment: string;
@@ -72,11 +72,11 @@ interface IProductItem {
 }
 
 interface ICoupon {
-	title: string;
-	code: string;
-	percent: number;
-	enabled: boolean;
-	deadline: IDeadline;
+	title: string | undefined;
+	code: string | undefined;
+	percent: number | undefined;
+	enabled: boolean | undefined;
+	deadline: IDeadline | undefined;
 }
 
 interface IDeadline {

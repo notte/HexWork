@@ -53,7 +53,8 @@
 				</div>
 				<div class="item">
 					<p>優惠券：</p>
-					<p>{{orderItem.coupon}}</p>
+					<p v-if="orderItem.coupon">{{orderItem.coupon.code}}</p>
+					<p v-if="!orderItem.coupon"></p>
 				</div>
 				<el-divider>
 					<h3>購買產品</h3>

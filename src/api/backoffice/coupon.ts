@@ -42,4 +42,13 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IAddCouponItemReponse>result.data;
 	},
+	// 後台，刪除單一優惠券
+	async deleteCouponItem(id: string): Promise<Model.IDeteteCouponReponse> {
+		const config = {
+			method: 'delete',
+			url: URL + UUID + `/admin/ec/coupon/${id}`,
+		};
+		const result = await Handler.request(config);
+		return <Model.IDeteteCouponReponse>result.data;
+	},
 };

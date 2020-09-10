@@ -4,6 +4,11 @@ export interface ICouponListReponse {
 	meta: IMeta;
 }
 
+// 取得優惠券列表
+export interface IDeteteCouponReponse {
+	message: string;
+}
+
 export interface IAddCouponItemReponse {
 	data: IData[];
 }

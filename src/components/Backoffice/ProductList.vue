@@ -1,13 +1,9 @@
 <template>
 	<div>
-		<el-button
-			class="addButton"
-			@click="
+		<el-button class="addButton" @click="
 				dialogVisible = true;
 				submitButton = true;
-			"
-			>新增產品</el-button
-		>
+			">新增產品</el-button>
 		<el-table empty-text="無商品" :data="PageData[CurrentPage]">
 			<el-table-column label="行程分類">
 				<template slot-scope="scope">
@@ -43,7 +39,12 @@
 			</el-table-column>
 		</el-table>
 		<!-- 分頁 -->
-		<el-pagination small layout="prev, pager, next" @current-change="handleCurrentChange" :page-count="TotalPage" />
+		<el-pagination
+			small
+			layout="prev, pager, next"
+			@current-change="handleCurrentChange"
+			:page-count="TotalPage"
+		/>
 
 		<!-- dialog -->
 		<el-dialog :visible.sync="dialogVisible" @close="handleClose">
@@ -197,7 +198,7 @@ export default class ProductList extends Vue {
 	// 取得產品列表
 	getProductList() {
 		Api.getBackofficeProductList()
-			.then(res => {
+			.then((res) => {
 				this.ProductList = res.data;
 				this.ProductList.forEach((item: any) => {
 					// console.log(item.title);
@@ -207,11 +208,11 @@ export default class ProductList extends Vue {
 						if (item.title === order.product.title) {
 							item.origin_price = item.origin_price + order.quantity;
 						}
-						console.log(item);
+						// console.log(item);
 					});
 				});
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
 	// 監聽是否有重新獲取商品列表
@@ -241,7 +242,7 @@ export default class ProductList extends Vue {
 		this.modifyButton = true;
 
 		Api.getProductItem(row.id)
-			.then(res => {
+			.then((res) => {
 				this.form = row;
 				this.form.description = res.data.description;
 				[this.img1, this.img2, this.img3, this.img4, this.img5] = this.form.imageUrl;
@@ -249,18 +250,18 @@ export default class ProductList extends Vue {
 				this.startDate = timeArray[0];
 				this.endDate = timeArray[1];
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
 	// 刪除單一品項
 	clearItem(id: string) {
 		this.$confirm('確認刪除？')
-			.then(_ => {
-				Api.deleteProduct(id).then(res => {
+			.then((_) => {
+				Api.deleteProduct(id).then((res) => {
 					this.getProductList();
 				});
 			})
-			.catch(_ => {});
+			.catch((_) => {});
 	}
 
 	// 新增商品
@@ -269,21 +270,21 @@ export default class ProductList extends Vue {
 		this.form.content = this.startDate + '~' + this.endDate;
 		this.form.origin_price = +this.form.origin_price;
 		Api.addProductItem(form)
-			.then(res => {
+			.then((res) => {
 				this.dialogVisible = false;
 				this.getProductList();
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
 	modify(form: Model.IProductItem) {
 		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
 		Api.modifyProductItem(form, form.id)
-			.then(res => {
+			.then((res) => {
 				this.dialogVisible = false;
 				this.getProductList();
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
 	// 關閉 Modal 視窗，將資料歸零
