@@ -129,8 +129,8 @@ body,
 	}
 
 	.layout {
-		margin-top: 121px;
-		height: calc(100vh - 121px);
+		margin-top: 112px;
+		height: calc(100vh - 112px);
 		overflow: hidden;
 		display: flex;
 
@@ -282,6 +282,7 @@ body,
 	.TravelList {
 		width: 90%;
 		margin: 0 auto;
+		padding-bottom: 20px;
 		// display: flex;
 		flex-wrap: wrap;
 

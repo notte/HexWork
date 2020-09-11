@@ -15,7 +15,7 @@
 			<!-- <el-table-column label="付款方式" prop="payment"></el-table-column> -->
 			<el-table-column label="付款時間">
 				<template slot-scope="scope">
-					<span>{{ scope.row.paid_at | captureTime}}</span>
+					<span>{{ scope.row.paid_at | captureTime }}</span>
 				</template>
 			</el-table-column>
 			<!-- 優惠券在這 -->
@@ -29,45 +29,40 @@
 		</el-table>
 
 		<!-- 分頁 -->
-		<el-pagination
-			@current-change="handleCurrentChange"
-			:page-count="TotalPage"
-			small
-			layout="prev, pager, next"
-		></el-pagination>
+		<el-pagination @current-change="handleCurrentChange" :page-count="TotalPage" small layout="prev, pager, next"></el-pagination>
 
 		<!-- dialog -->
 		<el-dialog :visible.sync="dialogVisible">
 			<el-card class="box-card">
 				<div class="item">
 					<p>更新時間：</p>
-					<p>{{time}}</p>
+					<p>{{ time }}</p>
 				</div>
 				<div class="item">
 					<p>訂單編號：</p>
-					<p>{{id | captureOrderID}}</p>
+					<p>{{ id | captureOrderID }}</p>
 				</div>
 				<div class="item">
 					<p>訂單金額：</p>
-					<p>${{amount | moneyFormat}}</p>
+					<p>${{ amount | moneyFormat }}</p>
 				</div>
 				<div class="item">
 					<p>優惠券：</p>
-					<p v-if="orderItem.coupon">{{orderItem.coupon.code}}</p>
+					<p v-if="orderItem.coupon">{{ orderItem.coupon.code }}</p>
 					<p v-if="!orderItem.coupon"></p>
 				</div>
 				<el-divider>
 					<h3>購買產品</h3>
 				</el-divider>
-				<div class="item" v-for="(item,index) in orderItem.products" :key="index">
-					<p>{{item.product.title}} x {{item.quantity}}</p>
+				<div class="item" v-for="(item, index) in orderItem.products" :key="index">
+					<p>{{ item.product.title }} x {{ item.quantity }}</p>
 				</div>
 			</el-card>
 
 			<div class="changeOrder">
 				<h2>修改訂單</h2>
-				<div class="item" v-for="(item,index) in orderItem.products" :key="index">
-					<h3>{{item.product.title}}</h3>
+				<div class="item" v-for="(item, index) in orderItem.products" :key="index">
+					<h3>{{ item.product.title }}</h3>
 					<el-select v-model="item.quantity" placeholder="請選擇">
 						<el-option v-for="num in options" :key="num" :label="num" :value="num"></el-option>
 					</el-select>
@@ -78,7 +73,7 @@
 
 			<span slot="footer" class="dialog-footer">
 				<el-button class="cancel" @click="dialogVisible = false">取消</el-button>
-				<el-button @click="modify(orderItem.paid,orderItem.id)">修改</el-button>
+				<el-button @click="modify(orderItem.paid, orderItem.id)">修改</el-button>
 			</span>
 		</el-dialog>
 	</div>
@@ -137,7 +132,7 @@ export default class ProductList extends Vue {
 	}
 
 	getOrderList() {
-		Api.getOrderList().then((res) => {
+		Api.getOrderList().then(res => {
 			this.orderList = res.data;
 			this.setOrderList(this.orderList);
 		});
@@ -145,25 +140,19 @@ export default class ProductList extends Vue {
 
 	edit(id: string) {
 		this.dialogVisible = true;
-		Api.getOrderItem(id)
-			.then((res) => {
-				this.orderItem = res.data;
-				this.id = this.orderItem.id;
-				this.time = this.orderItem.updated.datetime;
-				this.amount = this.orderItem.amount;
-			})
-			.catch((err) => {});
+		Api.getOrderItem(id).then(res => {
+			this.orderItem = res.data;
+			this.id = this.orderItem.id;
+			this.time = this.orderItem.updated.datetime;
+			this.amount = this.orderItem.amount;
+		});
 	}
 
 	modify(paid: boolean, id: string) {
 		if (paid === true) {
-			Api.setPaid(id)
-				.then((res) => {})
-				.catch((err) => {});
+			Api.setPaid(id).then(res => {});
 		} else {
-			Api.setUnpaid(id)
-				.then((res) => {})
-				.catch((err) => {});
+			Api.setUnpaid(id).then(res => {});
 		}
 		this.dialogVisible = false;
 		this.getOrderList();

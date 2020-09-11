@@ -35,18 +35,18 @@
 			</div>
 			<div class="Compute">
 				<div class="itemList">
-					<div class="item" v-for="(item,index) in cart.data" :key="index">
-						<p>{{item.product.title}} x {{item.quantity}}</p>
-						<h3>${{item.product.price | moneyFormat}}</h3>
+					<div class="item" v-for="(item, index) in cart.data" :key="index">
+						<p>{{ item.product.title }} x {{ item.quantity }}</p>
+						<h3>${{ item.product.price | moneyFormat }}</h3>
 					</div>
 				</div>
 				<div class="total Order">
 					<el-divider>
 						<h2>總計</h2>
 					</el-divider>
-					<h3 v-if="isShowCoupon">原價：${{total | moneyFormat}}</h3>
-					<h1 v-if="!isShowCoupon">${{total | moneyFormat}}</h1>
-					<h1 v-if="isShowCoupon">${{discountTotal | moneyFormat}}</h1>
+					<h3 v-if="isShowCoupon">原價：${{ total | moneyFormat }}</h3>
+					<h1 v-if="!isShowCoupon">${{ total | moneyFormat }}</h1>
+					<h1 v-if="isShowCoupon">${{ discountTotal | moneyFormat }}</h1>
 				</div>
 			</div>
 		</div>
@@ -120,13 +120,11 @@ export default class SetOrder extends Vue {
 		(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
 			if (valid) {
 				this.SetOrderForm(this.form);
-				Api.setOrder(this.form)
-					.then((res) => {
-						this.SetOrderInfo({ id: res.data.id, datetime: res.data.created.datetime, amount: res.data.amount });
-						EventBus.setCartQuantity(0);
-						EventBus.getOpenType(Status.OpenType.CheckOut, this.form.payment);
-					})
-					.catch((err) => {});
+				Api.setOrder(this.form).then(res => {
+					this.SetOrderInfo({ id: res.data.id, datetime: res.data.created.datetime, amount: res.data.amount });
+					EventBus.setCartQuantity(0);
+					EventBus.getOpenType(Status.OpenType.CheckOut, this.form.payment);
+				});
 			} else {
 				return false;
 			}

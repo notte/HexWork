@@ -60,10 +60,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 	next();
-	// console.log(to, from);
-	// if (to.name === 'Cart') {
-	// 	console.log(from);
-	// }
 });
 
 export default router;

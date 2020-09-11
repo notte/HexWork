@@ -42,6 +42,7 @@ export default class TravelList extends Vue {
 	checkStroke(id: string) {
 		// 發送傳遞產品 id 事件，從 APP.vue 接收
 		EventBus.getOpenType(Status.OpenType.TaiwanItem, id);
+		EventBus.getScrollEvent();
 	}
 
 	created() {
@@ -49,35 +50,33 @@ export default class TravelList extends Vue {
 	}
 
 	getProductList() {
-		Api.getProductList()
-			.then((res) => {
-				this.ProductList = res.data;
-				this.ProductList.forEach((element) => {
-					const newData = element.category.split('、');
-					let tag: string = '';
-					newData.forEach((item) => {
-						switch (item) {
-							case '水上':
-								tag = tag + `<span class="sea">水上</span>`;
-								break;
-							case '陸上':
-								tag = tag + `<span class="land">陸上</span>`;
-								break;
-							case '歷史':
-								tag = tag + `<span class="history">歷史</span>`;
-								break;
-							case '購物':
-								tag = tag + `<span class="shopping">購物</span>`;
-								break;
-							default:
-								break;
-						}
-						return tag;
-					});
-					element.category = tag;
+		Api.getProductList().then(res => {
+			this.ProductList = res.data;
+			this.ProductList.forEach(element => {
+				const newData = element.category.split('、');
+				let tag: string = '';
+				newData.forEach(item => {
+					switch (item) {
+						case '水上':
+							tag = tag + `<span class="sea">水上</span>`;
+							break;
+						case '陸上':
+							tag = tag + `<span class="land">陸上</span>`;
+							break;
+						case '歷史':
+							tag = tag + `<span class="history">歷史</span>`;
+							break;
+						case '購物':
+							tag = tag + `<span class="shopping">購物</span>`;
+							break;
+						default:
+							break;
+					}
+					return tag;
 				});
-			})
-			.catch((err) => {});
+				element.category = tag;
+			});
+		});
 	}
 }
 </script>

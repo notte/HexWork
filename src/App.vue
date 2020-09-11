@@ -14,13 +14,7 @@
 				<h3 v-if="showLogout">後台管理</h3>
 				<div class="float_right">
 					<router-link class="item" v-if="showLogin" to="/Product">產品列表</router-link>
-					<el-tooltip
-						:disabled="showCartQuantity"
-						class="item"
-						effect="dark"
-						content="購物車沒有商品"
-						placement="top-start"
-					>
+					<el-tooltip :disabled="showCartQuantity" class="item" effect="dark" content="購物車沒有商品" placement="top-start">
 						<a v-if="showLogin" class="cart" @click="toCart">
 							<p class="item">購物車</p>
 							<el-badge :value="cartQuantity" v-if="cartQuantity !== 0" />
@@ -91,28 +85,28 @@ export default class App extends Vue {
 
 		// 接收切換 router 及頁面的事件，打包參數一併傳遞
 		EventBus.$on('open-type', (param: any) => {
-			this.$router.push({ name: param.type, params: { id: param.id } }).catch((err) => {});
+			this.$router.push({ name: param.type, params: { id: param.id } });
 		});
 
-		// EventBus.$on('to-scroll', (now: number, next: number) => {
-		// 	(this.$refs.childDiv as any).scrollTop = 0;
-		// });
+		EventBus.$on('to-scroll', () => {
+			(this.$refs.childDiv as any).scrollTop = 0;
+		});
 	}
 
 	checkShoppingCart() {
-		CartApi.getCart().then((res) => {
+		CartApi.getCart().then(res => {
 			this.cartQuantity = res.data.length;
 		});
 	}
 
 	checkToken(check: string | null) {
 		Api.check(check)
-			.then((res) => {
+			.then(res => {
 				// token 沒過期
 				this.showLogout = true;
 				this.showLogin = false;
 			})
-			.catch((err) => {
+			.catch(err => {
 				// token 過期
 				this.showLogout = false;
 				this.showLogin = true;
@@ -130,19 +124,17 @@ export default class App extends Vue {
 	}
 
 	logout() {
-		Api.logout(localStorage.getItem('accessToken'))
-			.then((res) => {
-				// 將 vuex 中的 token，設為空值
-				this.setToken('');
-				// 刪除 localStorage 中的 token
-				localStorage.removeItem('accessToken');
-				// 切換登入登出顯示
-				this.showLogout = false;
-				this.showLogin = true;
-				// 跳轉 router 到登入頁面
-				this.$router.push({ path: '/Login' });
-			})
-			.catch((err) => {});
+		Api.logout(localStorage.getItem('accessToken')).then(res => {
+			// 將 vuex 中的 token，設為空值
+			this.setToken('');
+			// 刪除 localStorage 中的 token
+			localStorage.removeItem('accessToken');
+			// 切換登入登出顯示
+			this.showLogout = false;
+			this.showLogin = true;
+			// 跳轉 router 到登入頁面
+			this.$router.push({ path: '/Login' });
+		});
 	}
 }
 </script>

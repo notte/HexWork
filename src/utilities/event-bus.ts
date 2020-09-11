@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import * as Status from '@/models/status/type';
 
-export const getScrollEvent = (now: number, next: number) => {
+export const getScrollEvent = (now?: number, next?: number) => {
 	EventBus.$emit('to-scroll', { now, next });
 };
 

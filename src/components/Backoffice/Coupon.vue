@@ -19,7 +19,7 @@
 			</el-table-column>
 			<el-table-column label="是否啟用">
 				<template slot-scope="scope">
-					<span>{{ scope.row.enabled |setCoupon }}</span>
+					<span>{{ scope.row.enabled | setCoupon }}</span>
 				</template>
 			</el-table-column>
 			<el-table-column label="截止日期">
@@ -47,11 +47,7 @@
 					<el-input v-model.number.lazy="form.percent" />
 				</el-form-item>
 				<el-form-item label="截止時間">
-					<el-date-picker
-						type="datetime"
-						value-format="yyyy-MM-dd HH:mm:ss"
-						v-model.lazy="form.deadline_at"
-					/>
+					<el-date-picker type="datetime" value-format="yyyy-MM-dd HH:mm:ss" v-model.lazy="form.deadline_at" />
 				</el-form-item>
 				<el-form-item label="是否啟用">
 					<el-switch active-text="啟用" inactive-text="不啟用" v-model="form.enabled"></el-switch>
@@ -61,7 +57,7 @@
 			<span slot="footer" class="dialog-footer">
 				<el-button class="cancel" @click="dialogVisible = false">取消</el-button>
 				<el-button v-if="addCouponButton" @click="addCoupon(form)">確定</el-button>
-				<el-button v-if="modifyButton" @click="modify(couponID,form)">修改</el-button>
+				<el-button v-if="modifyButton" @click="modify(couponID, form)">修改</el-button>
 			</span>
 		</el-dialog>
 	</div>
@@ -95,26 +91,22 @@ export default class ProductList extends Vue {
 	}
 
 	getCouponList() {
-		Api.getCouponList()
-			.then((res) => {
-				this.couponList = res.data;
-			})
-			.catch((err) => {});
+		Api.getCouponList().then(res => {
+			this.couponList = res.data;
+		});
 	}
 
 	// 新增優惠券
 	addCoupon(form: Model.IAddCouponItem) {
-		Api.addCoupon(form)
-			.then((res) => {
-				this.dialogVisible = false;
-				this.getCouponList();
-			})
-			.catch();
+		Api.addCoupon(form).then(res => {
+			this.dialogVisible = false;
+			this.getCouponList();
+		});
 	}
 
 	// 刪除優惠券
 	deteteCoupon(id: string) {
-		Api.deleteCouponItem(id).then((res) => {
+		Api.deleteCouponItem(id).then(res => {
 			this.getCouponList();
 		});
 	}
@@ -124,7 +116,7 @@ export default class ProductList extends Vue {
 		this.addCouponButton = false;
 		this.couponID = id;
 		this.dialogVisible = true;
-		Api.getCouponItem(id).then((res) => {
+		Api.getCouponItem(id).then(res => {
 			const newData = res.data as any;
 			this.form.code = newData.code;
 			this.form.title = newData.title;
@@ -135,7 +127,7 @@ export default class ProductList extends Vue {
 	}
 
 	modify(id: string, form: Model.IAddCouponItem) {
-		Api.modifyCouponItem(id, form).then((res) => {
+		Api.modifyCouponItem(id, form).then(res => {
 			this.dialogVisible = false;
 			this.getCouponList();
 		});

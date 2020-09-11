@@ -1,9 +1,7 @@
 <template>
 	<div>
-		<el-button class="addButton" @click="
-				dialogVisible = true;
-				submitButton = true;
-			">新增產品</el-button>
+		<el-button class="addButton" @click="addButton">新增產品</el-button>
+
 		<el-table empty-text="無商品" :data="PageData[CurrentPage]">
 			<el-table-column label="行程分類">
 				<template slot-scope="scope">
@@ -38,13 +36,8 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		<!-- 分頁 -->
-		<el-pagination
-			small
-			layout="prev, pager, next"
-			@current-change="handleCurrentChange"
-			:page-count="TotalPage"
-		/>
+
+		<el-pagination small layout="prev, pager, next" @current-change="handleCurrentChange" :page-count="TotalPage" />
 
 		<!-- dialog -->
 		<el-dialog :visible.sync="dialogVisible" @close="handleClose">
@@ -94,15 +87,14 @@
 				<el-form-item label="行程分類">
 					<el-input v-model.lazy="form.category" />
 				</el-form-item>
-				<el-form-item label="地點">
+				<el-form-item label="總人數">
 					<el-input v-model.lazy="form.unit" />
 				</el-form-item>
-				<el-form-item label="總人數">
-					<!-- :disabled="isShow" -->
+				<el-form-item label="地點">
 					<el-input v-model.lazy="form.description" />
 				</el-form-item>
 				<el-form-item label="已售人數">
-					<el-input v-model.lazy="form.origin_price" />
+					<el-input v-model.number.lazy="form.origin_price" />
 				</el-form-item>
 				<el-form-item label="售價">
 					<el-input v-model.number.lazy="form.price" />
@@ -137,28 +129,6 @@ const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
-	// 表單
-	form: Model.IProductItem = {
-		// 自動生成
-		id: '',
-		// 行程名稱
-		title: '',
-		// 行程類型
-		category: '',
-		// 出團時間
-		content: '',
-		// 行程地點
-		description: '',
-		imageUrl: [],
-		// 是否成團
-		enabled: false,
-		// 已賣名額
-		origin_price: 0,
-		// 價格
-		price: 0,
-		// 總名額
-		unit: '',
-	};
 	dialogVisible: boolean = false;
 	// 未排頁面資料
 	ProductList: Model.IProductList[] = [];
@@ -181,9 +151,32 @@ export default class ProductList extends Vue {
 	// 出發回來日期
 	startDate: string = '';
 	endDate: string = '';
-	soldList: string[] = [];
+	soldList: any[] = [];
+	selectRow = {} as Model.IProductItem;
 	@tokenModule.State('OrderList') OrderList!: string[];
-	// isShow: boolean = false;
+
+	// 表單
+	form: Model.IProductItem = {
+		// 自動生成
+		id: '',
+		// 行程名稱
+		title: '',
+		// 行程類型
+		category: '',
+		// 出團時間
+		content: '',
+		// 行程地點
+		description: '',
+		imageUrl: [],
+		// 是否滿員，false 為未滿 / true 為滿員
+		enabled: false,
+		// 已賣名額
+		origin_price: 0,
+		// 價格
+		price: 0,
+		// 總名額
+		unit: '',
+	};
 
 	created() {
 		// 從訂單列表迭代每一筆訂單
@@ -195,24 +188,16 @@ export default class ProductList extends Vue {
 		this.getProductList();
 	}
 
+	addButton() {
+		this.dialogVisible = true;
+		this.submitButton = true;
+	}
+
 	// 取得產品列表
 	getProductList() {
-		Api.getBackofficeProductList()
-			.then((res) => {
-				this.ProductList = res.data;
-				this.ProductList.forEach((item: any) => {
-					// console.log(item.title);
-					// console.log(this.soldList);
-
-					this.soldList.forEach((order: any) => {
-						if (item.title === order.product.title) {
-							item.origin_price = item.origin_price + order.quantity;
-						}
-						// console.log(item);
-					});
-				});
-			})
-			.catch((err) => {});
+		Api.getBackofficeProductList().then(res => {
+			this.ProductList = res.data;
+		});
 	}
 
 	// 監聽是否有重新獲取商品列表
@@ -220,6 +205,16 @@ export default class ProductList extends Vue {
 	TotalePage() {
 		const newData: any = [];
 		this.ProductList.forEach((item, i) => {
+			for (const order of this.soldList) {
+				if (order.product.title === item.title) {
+					item.origin_price = item.origin_price + order.quantity;
+				}
+			}
+
+			if (+item.unit - item.origin_price === 0) {
+				item.enabled = false;
+			}
+
 			if (i % 10 === 0) {
 				newData.push([]);
 			}
@@ -241,27 +236,26 @@ export default class ProductList extends Vue {
 		this.dialogVisible = true;
 		this.modifyButton = true;
 
-		Api.getProductItem(row.id)
-			.then((res) => {
-				this.form = row;
-				this.form.description = res.data.description;
-				[this.img1, this.img2, this.img3, this.img4, this.img5] = this.form.imageUrl;
-				const timeArray = this.form.content.split('~');
-				this.startDate = timeArray[0];
-				this.endDate = timeArray[1];
-			})
-			.catch((err) => {});
+		this.selectRow = { ...row };
+
+		Api.getProductItem(row.id).then(res => {
+			this.form.enabled = row.enabled;
+			this.form = this.selectRow;
+			this.form.description = res.data.description;
+			[this.img1, this.img2, this.img3, this.img4, this.img5] = this.form.imageUrl;
+			const timeArray = this.form.content.split('~');
+			this.startDate = timeArray[0];
+			this.endDate = timeArray[1];
+		});
 	}
 
 	// 刪除單一品項
 	clearItem(id: string) {
-		this.$confirm('確認刪除？')
-			.then((_) => {
-				Api.deleteProduct(id).then((res) => {
-					this.getProductList();
-				});
-			})
-			.catch((_) => {});
+		this.$confirm('確認刪除？').then(_ => {
+			Api.deleteProduct(id).then(res => {
+				this.getProductList();
+			});
+		});
 	}
 
 	// 新增商品
@@ -269,22 +263,18 @@ export default class ProductList extends Vue {
 		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
 		this.form.content = this.startDate + '~' + this.endDate;
 		this.form.origin_price = +this.form.origin_price;
-		Api.addProductItem(form)
-			.then((res) => {
-				this.dialogVisible = false;
-				this.getProductList();
-			})
-			.catch((err) => {});
+		Api.addProductItem(form).then(res => {
+			this.dialogVisible = false;
+			this.getProductList();
+		});
 	}
 
 	modify(form: Model.IProductItem) {
 		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
-		Api.modifyProductItem(form, form.id)
-			.then((res) => {
-				this.dialogVisible = false;
-				this.getProductList();
-			})
-			.catch((err) => {});
+		Api.modifyProductItem(form, form.id).then(res => {
+			this.dialogVisible = false;
+			this.getProductList();
+		});
 	}
 
 	// 關閉 Modal 視窗，將資料歸零

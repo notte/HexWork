@@ -1,7 +1,7 @@
 <template>
 	<div class="Product">
-		<Carousel />
-		<div class="commodity-search">
+		<!-- <Carousel /> -->
+		<!-- <div class="commodity-search">
 			<div class="item">
 				<el-date-picker v-model="setOff" placeholder="出發日期" type="date" />
 			</div>
@@ -11,7 +11,7 @@
 			<div class="item">
 				<el-button class="major">搜尋行程</el-button>
 			</div>
-		</div>
+		</div> -->
 		<TravelList />
 	</div>
 </template>
