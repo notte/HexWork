@@ -20,7 +20,13 @@
 						<p>人</p>
 					</div>
 					<div class="delete">
-						<el-button type="danger" icon="el-icon-delete" plain circle @click="deleteItem(item.product.id)" />
+						<el-button
+							type="danger"
+							icon="el-icon-delete"
+							plain
+							circle
+							@click="deleteItem(item.product.id)"
+						/>
 					</div>
 				</div>
 				<div class="Coupons">
@@ -56,12 +62,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { State, Action, Getter, namespace } from 'vuex-class';
 import { Component } from 'vue-property-decorator';
-import Api from '@/api/frontend/cart.ts';
 import * as Model from '@/models/interfaces/frontend/cart';
 import * as EventBus from '@/utilities/event-bus';
 import * as Status from '@/models/status/type';
-import { State, Action, Getter, namespace } from 'vuex-class';
+import Api from '@/api/frontend/cart.ts';
 import { formatMixin } from '@/utilities/format';
 
 const tokenModule = namespace('cart');
@@ -69,9 +75,10 @@ const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class Cart extends Vue {
+	// 原始購物車資料
 	CartList: Model.ICartData[] = [];
+	// 購物車 + 優惠券
 	CartListAndCoupon = {} as Model.ICartListAndCoupon;
-	// 人數
 	options: number[] = [1, 2, 3, 4, 5];
 	// 原價總金額
 	total: string = '';
@@ -79,13 +86,12 @@ export default class Cart extends Vue {
 	couponsCode: string = '';
 	// 確認已執行的優惠券碼
 	Coupon: string = '';
-	// 判斷顯示優惠價格還是原價
+	// 判斷顯示優惠價格還是只有顯示原價
 	isShowCoupon: boolean = false;
 	// 折扣
 	discount: number = 0;
 	// 折扣後總金額
 	discountTotal: number = 0;
-	// 映射 state
 	@tokenModule.State('CartList') cart!: string;
 	@Action('cart/setCartList') private setCartList!: any;
 
@@ -95,7 +101,7 @@ export default class Cart extends Vue {
 
 	getCoupon(coupon: string) {
 		if (coupon !== '' && this.Coupon === '') {
-			Api.getCoupon(coupon).then(res => {
+			Api.getCoupon(coupon).then((res) => {
 				this.couponsCode = '';
 				this.Coupon = coupon;
 				this.isShowCoupon = true;
@@ -120,23 +126,27 @@ export default class Cart extends Vue {
 
 	// 獲取購物車
 	getCart() {
-		Api.getCart().then(res => {
+		Api.getCart().then((res) => {
 			this.CartList = res.data;
 			this.CartListAndCoupon.data = res.data;
 
+			// 計算購物車總額
 			let total = 0;
-			this.CartListAndCoupon.data.forEach(item => {
+			this.CartListAndCoupon.data.forEach((item) => {
 				total = total + item.quantity * item.product.price;
 			});
+
 			this.total = total.toString();
+
 			this.CartListAndCoupon.total = this.total;
+			// 記錄到 vuex
 			this.setCartList(this.CartListAndCoupon);
 		});
 	}
 
 	// 清空購物車
 	empty() {
-		Api.emptyCart().then(res => {
+		Api.emptyCart().then((res) => {
 			this.getCart();
 			EventBus.setCartQuantity();
 		});
@@ -149,7 +159,7 @@ export default class Cart extends Vue {
 			quantity: quantity.toString(),
 		};
 
-		Api.editProduct(params).then(res => {
+		Api.editProduct(params).then((res) => {
 			this.getCart();
 		});
 	}
@@ -159,7 +169,7 @@ export default class Cart extends Vue {
 		const params: Model.IDeleteProductCartRequest = {
 			product: id as string,
 		};
-		Api.deleteProduct(id, params).then(res => {
+		Api.deleteProduct(id, params).then((res) => {
 			this.getCart();
 			EventBus.setCartQuantity();
 		});

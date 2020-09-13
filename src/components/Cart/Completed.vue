@@ -25,8 +25,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
 import { State, Action, Getter, namespace } from 'vuex-class';
+import { Component } from 'vue-property-decorator';
 import * as Model from '@/models/interfaces/frontend/cart';
 import EventBus from '@/utilities/event-bus';
 import { formatMixin } from '@/utilities/format';
@@ -36,7 +36,9 @@ const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class Completed extends Vue {
+	// 是否顯示優惠券（結帳金額是否有達到）
 	isShowCoupon: boolean = false;
+	// 要顯示的優惠券碼
 	couponCode: string = '';
 	orderID: string = '';
 	orderCreated: string = '';
@@ -48,6 +50,7 @@ export default class Completed extends Vue {
 		this.orderCreated = this.OrderInfo.datetime;
 		this.orderAmount = this.OrderInfo.amount.toString();
 
+		// 判斷顯示哪個優惠券碼
 		const money = +this.orderAmount;
 
 		if (money > 20000) {

@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<!-- 成立訂單 -->
 		<div class="CartLayout">
 			<div class="SetOrder">
 				<el-form ref="form" :model="form" :rules="rules" label-width="80px" label-position="top">
@@ -55,21 +54,24 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
 import { State, Action, Getter, namespace } from 'vuex-class';
+import { Component } from 'vue-property-decorator';
 import { formatMixin } from '@/utilities/format';
-import Api from '@/api/frontend/cart.ts';
+import * as Model from '@/models/interfaces/frontend/cart';
 import * as EventBus from '@/utilities/event-bus';
 import * as Status from '@/models/status/type';
-import * as Model from '@/models/interfaces/frontend/cart';
+import Api from '@/api/frontend/cart.ts';
 
 const tokenModule = namespace('cart');
 const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class SetOrder extends Vue {
+	// 原價總金額
 	total: string = '';
+	// 折扣後總金額
 	discountTotal: string = '';
+	// 是否有存在優惠券
 	isShowCoupon: boolean = false;
 	form: Model.ISetOrderUserForm = {
 		name: '戴筱瑤',
@@ -103,13 +105,14 @@ export default class SetOrder extends Vue {
 
 	@tokenModule.State('CartList') cart!: Model.ICartListAndCoupon;
 	@tokenModule.State('OrderInfo') orderInfo!: object;
-	// @tokenModule.State('SetOrderForm') SetForm!: string;
 	@Action('cart/SetOrderForm') private SetOrderForm!: any;
 	@Action('cart/SetOrderInfo') private SetOrderInfo!: any;
 
 	mounted() {
 		this.total = this.cart.total;
+		// 如果有折扣總金額 & 優惠券碼
 		if (this.cart.discountTotal && this.cart.coupon) {
+			// 表單中加入優惠券碼
 			this.form.coupon = this.cart.coupon;
 			this.discountTotal = this.cart.discountTotal;
 			this.isShowCoupon = true;
@@ -117,12 +120,17 @@ export default class SetOrder extends Vue {
 	}
 
 	submit(form: string) {
+		// 驗證成立訂單表格
 		(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
 			if (valid) {
+				// 儲存 user 資訊到 vuex
 				this.SetOrderForm(this.form);
-				Api.setOrder(this.form).then(res => {
+				Api.setOrder(this.form).then((res) => {
+					// 儲存結帳資訊到 vuex，訂單 id、時間、總金額
 					this.SetOrderInfo({ id: res.data.id, datetime: res.data.created.datetime, amount: res.data.amount });
+					// 購物車歸零
 					EventBus.setCartQuantity(0);
+					// 切換顯示頁面，並傳遞付款方式
 					EventBus.getOpenType(Status.OpenType.CheckOut, this.form.payment);
 				});
 			} else {
@@ -132,6 +140,7 @@ export default class SetOrder extends Vue {
 	}
 
 	prevStep() {
+		// 返回上一頁
 		this.$router.go(-1);
 		EventBus.getOpenType(Status.OpenType.CartList);
 	}

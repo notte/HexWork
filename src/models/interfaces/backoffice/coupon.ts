@@ -10,7 +10,7 @@ export interface IDeteteCouponReponse {
 }
 
 export interface IAddCouponItemReponse {
-	data: IData[];
+	data: IData;
 }
 
 export interface IAddCouponItem {

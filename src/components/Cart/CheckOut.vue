@@ -52,7 +52,14 @@
 					<span>結帳資訊</span>
 				</div>
 				<h3 v-if="Payment == 'ATM'">前往 ATM 繳款</h3>
-				<el-form v-if="Payment == 'Credit'" ref="form" :model="form" :rules="rules" label-width="80px" label-position="top">
+				<el-form
+					v-if="Payment == 'Credit'"
+					ref="form"
+					:model="form"
+					:rules="rules"
+					label-width="80px"
+					label-position="top"
+				>
 					<el-form-item label="信用卡卡號" prop="card" required>
 						<el-input maxlength="16" v-model.number.lazy="form.card"></el-input>
 					</el-form-item>
@@ -74,24 +81,24 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
 import { State, Action, Getter, namespace } from 'vuex-class';
-import EventBus from '@/utilities/event-bus';
+import { Component, Prop } from 'vue-property-decorator';
 import * as Model from '@/models/interfaces/frontend/cart';
-import { formatMixin } from '@/utilities/format';
 import * as Status from '@/models/status/type';
+import EventBus from '@/utilities/event-bus';
 import Api from '@/api/frontend/cart.ts';
+import { formatMixin } from '@/utilities/format';
 
 const tokenModule = namespace('cart');
 const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class CheckOut extends Vue {
+	// 取得付款方式
 	@Prop(String) Payment!: string;
 	orderID: string = '';
 	orderCreated: string = '';
 	orderAmount: string = '';
-	value2: any = '';
 	form: object = {
 		card: '1232123212321232',
 		date: '',
@@ -121,13 +128,14 @@ export default class CheckOut extends Vue {
 		this.orderAmount = this.OrderInfo.amount.toString();
 	}
 
+	// 	結帳
 	CheckOut(id: string, form?: string) {
+		// 如果付款方式為 Credit，需要驗證 form 表單
 		if (form) {
 			(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
 				if (valid) {
-					Api.checkOut(id).then(res => {
-						const datetime = res.data.updated.datetime;
-						const amount = res.data.amount;
+					Api.checkOut(id).then((res) => {
+						// 跳轉顯示 type
 						EventBus.$emit('open-type', { type: Status.OpenType.Completed });
 					});
 				} else {
@@ -135,9 +143,9 @@ export default class CheckOut extends Vue {
 				}
 			});
 		} else {
-			Api.checkOut(id).then(res => {
-				const datetime = res.data.updated.datetime;
-				const amount = res.data.amount;
+			// 不需要驗證表單
+			Api.checkOut(id).then((res) => {
+				// 跳轉顯示 type
 				EventBus.$emit('open-type', { type: Status.OpenType.Completed });
 			});
 		}

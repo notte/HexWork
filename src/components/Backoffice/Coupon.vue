@@ -34,7 +34,7 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		<!-- dialog -->
+
 		<el-dialog :visible.sync="dialogVisible" width="30%" @close="handleClose">
 			<el-form ref="form" :model="form">
 				<el-form-item label="標題">
@@ -47,7 +47,11 @@
 					<el-input v-model.number.lazy="form.percent" />
 				</el-form-item>
 				<el-form-item label="截止時間">
-					<el-date-picker type="datetime" value-format="yyyy-MM-dd HH:mm:ss" v-model.lazy="form.deadline_at" />
+					<el-date-picker
+						type="datetime"
+						value-format="yyyy-MM-dd HH:mm:ss"
+						v-model.lazy="form.deadline_at"
+					/>
 				</el-form-item>
 				<el-form-item label="是否啟用">
 					<el-switch active-text="啟用" inactive-text="不啟用" v-model="form.enabled"></el-switch>
@@ -66,18 +70,24 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import Api from '@/api/backoffice/coupon';
 import * as Model from '@/models/interfaces/backoffice/coupon';
 import { formatMixin } from '@/utilities/format';
+import Api from '@/api/backoffice/coupon';
 
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
+	// 判斷 Modal 視窗是否顯示
 	dialogVisible: boolean = false;
+	// 優惠券列表
 	couponList: Model.IData[] = [];
+	// 優惠券 ID
 	couponID: string = '';
+	// 判斷修改按鈕是否顯示
 	modifyButton: boolean = false;
+	// 判斷新增優惠券按鈕顯示
 	addCouponButton: boolean = true;
 
+	// 表格
 	form: Model.IAddCouponItem = {
 		title: '',
 		code: '',
@@ -86,19 +96,20 @@ export default class ProductList extends Vue {
 		deadline_at: '',
 	};
 
+	// 先取得優惠券列表
 	created() {
 		this.getCouponList();
 	}
 
 	getCouponList() {
-		Api.getCouponList().then(res => {
+		Api.getCouponList().then((res) => {
 			this.couponList = res.data;
 		});
 	}
 
 	// 新增優惠券
 	addCoupon(form: Model.IAddCouponItem) {
-		Api.addCoupon(form).then(res => {
+		Api.addCoupon(form).then((res) => {
 			this.dialogVisible = false;
 			this.getCouponList();
 		});
@@ -106,28 +117,35 @@ export default class ProductList extends Vue {
 
 	// 刪除優惠券
 	deteteCoupon(id: string) {
-		Api.deleteCouponItem(id).then(res => {
+		Api.deleteCouponItem(id).then((res) => {
 			this.getCouponList();
 		});
 	}
 
+	// 打開 Modal，編輯對應優惠券
 	edit(id: string) {
+		// 顯示修改按鈕
 		this.modifyButton = true;
+		// 關閉新增按鈕（確認送出）
 		this.addCouponButton = false;
+		// 記錄目前打開優惠券 ID
 		this.couponID = id;
+		// 顯示 Modal（修改視窗）
 		this.dialogVisible = true;
-		Api.getCouponItem(id).then(res => {
-			const newData = res.data as any;
-			this.form.code = newData.code;
-			this.form.title = newData.title;
-			this.form.percent = newData.percent;
-			this.form.enabled = newData.enabled;
-			this.form.deadline_at = newData.deadline.datetime;
+		// 取得單一優惠券 API
+		Api.getCouponItem(id).then((res) => {
+			// 將 form 顯示對應資料
+			this.form.code = res.data.code;
+			this.form.title = res.data.title;
+			this.form.percent = res.data.percent;
+			this.form.enabled = res.data.enabled;
+			this.form.deadline_at = res.data.deadline.datetime;
 		});
 	}
 
+	// click 修改按鈕
 	modify(id: string, form: Model.IAddCouponItem) {
-		Api.modifyCouponItem(id, form).then(res => {
+		Api.modifyCouponItem(id, form).then((res) => {
 			this.dialogVisible = false;
 			this.getCouponList();
 		});

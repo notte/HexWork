@@ -371,7 +371,7 @@ body,
 			height: 450px;
 			overflow: hidden;
 			background-color: #7f5524;
-			margin-left: -35px;
+			margin-left: 0;
 
 			img {
 				position: relative;
@@ -500,7 +500,7 @@ body,
 
 .CartMain,
 .login_layout {
-	min-height: calc(100vh - 214px);
+	min-height: calc(100vh - 205px);
 }
 
 .CartMain {

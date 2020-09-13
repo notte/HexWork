@@ -50,12 +50,12 @@ export default class TravelList extends Vue {
 	}
 
 	getProductList() {
-		Api.getProductList().then(res => {
+		Api.getProductList().then((res) => {
 			this.ProductList = res.data;
-			this.ProductList.forEach(element => {
+			this.ProductList.forEach((element) => {
 				const newData = element.category.split('、');
 				let tag: string = '';
-				newData.forEach(item => {
+				newData.forEach((item) => {
 					switch (item) {
 						case '水上':
 							tag = tag + `<span class="sea">水上</span>`;

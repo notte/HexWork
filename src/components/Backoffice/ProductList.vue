@@ -37,7 +37,12 @@
 			</el-table-column>
 		</el-table>
 
-		<el-pagination small layout="prev, pager, next" @current-change="handleCurrentChange" :page-count="TotalPage" />
+		<el-pagination
+			small
+			layout="prev, pager, next"
+			@current-change="handleCurrentChange"
+			:page-count="TotalPage"
+		/>
 
 		<!-- dialog -->
 		<el-dialog :visible.sync="dialogVisible" @close="handleClose">
@@ -195,7 +200,7 @@ export default class ProductList extends Vue {
 
 	// 取得產品列表
 	getProductList() {
-		Api.getBackofficeProductList().then(res => {
+		Api.getBackofficeProductList().then((res) => {
 			this.ProductList = res.data;
 		});
 	}
@@ -238,7 +243,7 @@ export default class ProductList extends Vue {
 
 		this.selectRow = { ...row };
 
-		Api.getProductItem(row.id).then(res => {
+		Api.getProductItem(row.id).then((res) => {
 			this.form.enabled = row.enabled;
 			this.form = this.selectRow;
 			this.form.description = res.data.description;
@@ -251,8 +256,8 @@ export default class ProductList extends Vue {
 
 	// 刪除單一品項
 	clearItem(id: string) {
-		this.$confirm('確認刪除？').then(_ => {
-			Api.deleteProduct(id).then(res => {
+		this.$confirm('確認刪除？').then((_) => {
+			Api.deleteProduct(id).then((res) => {
 				this.getProductList();
 			});
 		});
@@ -263,7 +268,7 @@ export default class ProductList extends Vue {
 		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
 		this.form.content = this.startDate + '~' + this.endDate;
 		this.form.origin_price = +this.form.origin_price;
-		Api.addProductItem(form).then(res => {
+		Api.addProductItem(form).then((res) => {
 			this.dialogVisible = false;
 			this.getProductList();
 		});
@@ -271,7 +276,7 @@ export default class ProductList extends Vue {
 
 	modify(form: Model.IProductItem) {
 		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
-		Api.modifyProductItem(form, form.id).then(res => {
+		Api.modifyProductItem(form, form.id).then((res) => {
 			this.dialogVisible = false;
 			this.getProductList();
 		});

@@ -12,13 +12,11 @@
 					<span>${{ scope.row.amount | moneyFormat }}</span>
 				</template>
 			</el-table-column>
-			<!-- <el-table-column label="付款方式" prop="payment"></el-table-column> -->
 			<el-table-column label="付款時間">
 				<template slot-scope="scope">
 					<span>{{ scope.row.paid_at | captureTime }}</span>
 				</template>
 			</el-table-column>
-			<!-- 優惠券在這 -->
 			<el-table-column label="優惠券" prop="coupon.code"></el-table-column>
 			<el-table-column label="更新時間" prop="updated.datetime"></el-table-column>
 			<el-table-column label="編輯">
@@ -28,10 +26,13 @@
 			</el-table-column>
 		</el-table>
 
-		<!-- 分頁 -->
-		<el-pagination @current-change="handleCurrentChange" :page-count="TotalPage" small layout="prev, pager, next"></el-pagination>
+		<el-pagination
+			@current-change="handleCurrentChange"
+			:page-count="TotalPage"
+			small
+			layout="prev, pager, next"
+		></el-pagination>
 
-		<!-- dialog -->
 		<el-dialog :visible.sync="dialogVisible">
 			<el-card class="box-card">
 				<div class="item">
@@ -81,37 +82,47 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Watch } from 'vue-property-decorator';
 import { State, Action, Getter, namespace } from 'vuex-class';
-import Api from '@/api/backoffice/order';
+import { Component, Watch } from 'vue-property-decorator';
 import * as Model from '@/models/interfaces/backoffice/order';
 import { formatMixin } from '@/utilities/format';
+import Api from '@/api/backoffice/order';
 
 const tokenModule = namespace('order');
 const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
-	orderList: Model.IGetOrderList[] = [];
+	// 分頁後所有訂單資料 + 對應優惠券
 	PageData: object = {
 		data: [],
 		coupon: '',
 	};
+	// 選中頁數
 	CurrentPage: number = 0;
+	// 總頁數
 	TotalPage: number = 0;
+	// 所有訂單資料
+	orderList: Model.IGetOrderList[] = [];
+	// 單一筆訂單
 	orderItem = {} as Model.IOrder;
-	// orderItem: Model.IOrder[] = [];
+	// 訂單 ID
 	id: string = '';
+	// 訂單完成時間
 	time: string = '';
+	// 訂單總金額
 	amount: number = 0;
+	// 判斷 Modal 是否開啟
 	dialogVisible: boolean = false;
 	options: number[] = [1, 2, 3, 4, 5];
 	@Action('order/setOrderList') private setOrderList!: any;
 
 	created() {
+		// 取得所有訂單
 		this.getOrderList();
 	}
 
+	// 監聽所有訂單變數
 	@Watch('orderList')
 	TotalePage() {
 		const newData: any = [];
@@ -131,30 +142,36 @@ export default class ProductList extends Vue {
 		this.CurrentPage = val - 1;
 	}
 
+	// 取得訂單列表
 	getOrderList() {
-		Api.getOrderList().then(res => {
+		Api.getOrderList().then((res) => {
 			this.orderList = res.data;
 			this.setOrderList(this.orderList);
 		});
 	}
 
+	// 編輯訂單
 	edit(id: string) {
 		this.dialogVisible = true;
-		Api.getOrderItem(id).then(res => {
+		Api.getOrderItem(id).then((res) => {
 			this.orderItem = res.data;
+			// 在 Modal 顯示對應訂單資料
 			this.id = this.orderItem.id;
 			this.time = this.orderItem.updated.datetime;
 			this.amount = this.orderItem.amount;
 		});
 	}
 
+	// 送出修改
 	modify(paid: boolean, id: string) {
+		// 切換已付款 / 未付款狀態
 		if (paid === true) {
-			Api.setPaid(id).then(res => {});
+			Api.setPaid(id).then((res) => {});
 		} else {
-			Api.setUnpaid(id).then(res => {});
+			Api.setUnpaid(id).then((res) => {});
 		}
 		this.dialogVisible = false;
+		// 重新取得訂單
 		this.getOrderList();
 	}
 }
