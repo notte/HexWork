@@ -1,5 +1,3 @@
-// models > status，為管理類別的檔案，例如訊息類型：錯誤、成功、確認等
-
 // 開啟類型
 export enum OpenType {
 	// 旅遊列表
@@ -22,4 +20,20 @@ export enum OpenType {
 	CheckOut = 'CheckOut',
 	// 完成訂單
 	Completed = 'Completed',
+}
+
+// 錯誤訊息類型
+export enum SysMessageType {
+	// 資訊
+	Information = 'Information',
+	// 警告
+	Warning = 'Warning',
+	// 錯誤
+	Error = 'Error',
+	// 完美
+	Success = 'Success',
+	// 確認
+	Confirmation = 'Confirmation',
+	// 確認&取消
+	ConfirmationWithCancel = 'ConfirmationWithCancel',
 }

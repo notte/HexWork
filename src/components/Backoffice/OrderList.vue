@@ -26,12 +26,7 @@
 			</el-table-column>
 		</el-table>
 
-		<el-pagination
-			@current-change="handleCurrentChange"
-			:page-count="TotalPage"
-			small
-			layout="prev, pager, next"
-		></el-pagination>
+		<el-pagination @current-change="handleCurrentChange" :page-count="TotalPage" small layout="prev, pager, next"></el-pagination>
 
 		<el-dialog :visible.sync="dialogVisible">
 			<el-card class="box-card">
@@ -62,12 +57,12 @@
 
 			<div class="changeOrder">
 				<h2>修改訂單</h2>
-				<div class="item" v-for="(item, index) in orderItem.products" :key="index">
+				<!-- <div class="item" v-for="(item, index) in orderItem.products" :key="index">
 					<h3>{{ item.product.title }}</h3>
 					<el-select v-model="item.quantity" placeholder="請選擇">
 						<el-option v-for="num in options" :key="num" :label="num" :value="num"></el-option>
 					</el-select>
-				</div>
+				</div> -->
 				<h3>訂單是否已付款</h3>
 				<el-switch v-model="orderItem.paid" active-text="已付" inactive-text="未付"></el-switch>
 			</div>
@@ -85,6 +80,8 @@ import Vue from 'vue';
 import { State, Action, Getter, namespace } from 'vuex-class';
 import { Component, Watch } from 'vue-property-decorator';
 import * as Model from '@/models/interfaces/backoffice/order';
+import * as Status from '@/models/status/type';
+import * as EventBus from '@/utilities/event-bus';
 import { formatMixin } from '@/utilities/format';
 import Api from '@/api/backoffice/order';
 
@@ -144,33 +141,41 @@ export default class ProductList extends Vue {
 
 	// 取得訂單列表
 	getOrderList() {
-		Api.getOrderList().then((res) => {
+		EventBus.FullLoading(true);
+		Api.getOrderList().then(res => {
 			this.orderList = res.data;
 			this.setOrderList(this.orderList);
+
+			EventBus.FullLoading(false);
 		});
 	}
 
 	// 編輯訂單
 	edit(id: string) {
+		EventBus.FullLoading(true);
 		this.dialogVisible = true;
-		Api.getOrderItem(id).then((res) => {
+		Api.getOrderItem(id).then(res => {
 			this.orderItem = res.data;
 			// 在 Modal 顯示對應訂單資料
 			this.id = this.orderItem.id;
 			this.time = this.orderItem.updated.datetime;
 			this.amount = this.orderItem.amount;
+			EventBus.FullLoading(false);
 		});
 	}
 
 	// 送出修改
 	modify(paid: boolean, id: string) {
+		EventBus.FullLoading(true);
 		// 切換已付款 / 未付款狀態
 		if (paid === true) {
-			Api.setPaid(id).then((res) => {});
+			Api.setPaid(id).then(res => {});
 		} else {
-			Api.setUnpaid(id).then((res) => {});
+			Api.setUnpaid(id).then(res => {});
 		}
 		this.dialogVisible = false;
+		EventBus.FullLoading(false);
+		EventBus.SystemAlert(Status.SysMessageType.Information, '編輯成功');
 		// 重新取得訂單
 		this.getOrderList();
 	}

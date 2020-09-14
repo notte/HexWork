@@ -20,13 +20,7 @@
 						<p>人</p>
 					</div>
 					<div class="delete">
-						<el-button
-							type="danger"
-							icon="el-icon-delete"
-							plain
-							circle
-							@click="deleteItem(item.product.id)"
-						/>
+						<el-button type="danger" icon="el-icon-delete" plain circle @click="deleteItem(item.product.id)" />
 					</div>
 				</div>
 				<div class="Coupons">
@@ -100,8 +94,9 @@ export default class Cart extends Vue {
 	}
 
 	getCoupon(coupon: string) {
+		EventBus.FullLoading(true);
 		if (coupon !== '' && this.Coupon === '') {
-			Api.getCoupon(coupon).then((res) => {
+			Api.getCoupon(coupon).then(res => {
 				this.couponsCode = '';
 				this.Coupon = coupon;
 				this.isShowCoupon = true;
@@ -110,6 +105,7 @@ export default class Cart extends Vue {
 				this.CartListAndCoupon.coupon = coupon;
 				this.CartListAndCoupon.discountTotal = this.discountTotal.toString();
 				this.setCartList(this.CartListAndCoupon);
+				EventBus.FullLoading(false);
 			});
 		} else if (this.Coupon !== '') {
 			return '優惠券僅能使用乙張';
@@ -126,13 +122,14 @@ export default class Cart extends Vue {
 
 	// 獲取購物車
 	getCart() {
-		Api.getCart().then((res) => {
+		EventBus.FullLoading(true);
+		Api.getCart().then(res => {
 			this.CartList = res.data;
 			this.CartListAndCoupon.data = res.data;
 
 			// 計算購物車總額
 			let total = 0;
-			this.CartListAndCoupon.data.forEach((item) => {
+			this.CartListAndCoupon.data.forEach(item => {
 				total = total + item.quantity * item.product.price;
 			});
 
@@ -141,25 +138,35 @@ export default class Cart extends Vue {
 			this.CartListAndCoupon.total = this.total;
 			// 記錄到 vuex
 			this.setCartList(this.CartListAndCoupon);
+
+			EventBus.FullLoading(false);
 		});
 	}
 
 	// 清空購物車
 	empty() {
-		Api.emptyCart().then((res) => {
-			this.getCart();
-			EventBus.setCartQuantity();
-		});
+		this.$confirm('確認清空購物車？')
+			.then(_ => {
+				EventBus.FullLoading(true);
+				Api.emptyCart().then(res => {
+					this.getCart();
+					EventBus.setCartQuantity();
+					EventBus.FullLoading(false);
+				});
+			})
+			.catch(err => {});
 	}
 
 	// 更新購物車
 	editItem(id: string, quantity: number) {
+		EventBus.FullLoading(true);
 		const params: Model.IEditProductCartRequest = {
 			product: id as string,
 			quantity: quantity.toString(),
 		};
 
-		Api.editProduct(params).then((res) => {
+		Api.editProduct(params).then(res => {
+			EventBus.FullLoading(false);
 			this.getCart();
 		});
 	}
@@ -169,7 +176,7 @@ export default class Cart extends Vue {
 		const params: Model.IDeleteProductCartRequest = {
 			product: id as string,
 		};
-		Api.deleteProduct(id, params).then((res) => {
+		Api.deleteProduct(id, params).then(res => {
 			this.getCart();
 			EventBus.setCartQuantity();
 		});

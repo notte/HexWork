@@ -42,7 +42,6 @@ export default class TravelList extends Vue {
 	checkStroke(id: string) {
 		// 發送傳遞產品 id 事件，從 APP.vue 接收
 		EventBus.getOpenType(Status.OpenType.TaiwanItem, id);
-		EventBus.getScrollEvent();
 	}
 
 	created() {
@@ -50,12 +49,13 @@ export default class TravelList extends Vue {
 	}
 
 	getProductList() {
-		Api.getProductList().then((res) => {
+		EventBus.FullLoading(true);
+		Api.getProductList().then(res => {
 			this.ProductList = res.data;
-			this.ProductList.forEach((element) => {
+			this.ProductList.forEach(element => {
 				const newData = element.category.split('、');
 				let tag: string = '';
-				newData.forEach((item) => {
+				newData.forEach(item => {
 					switch (item) {
 						case '水上':
 							tag = tag + `<span class="sea">水上</span>`;
@@ -75,6 +75,8 @@ export default class TravelList extends Vue {
 					return tag;
 				});
 				element.category = tag;
+
+				EventBus.FullLoading(false);
 			});
 		});
 	}

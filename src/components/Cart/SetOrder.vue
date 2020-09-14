@@ -122,16 +122,18 @@ export default class SetOrder extends Vue {
 	submit(form: string) {
 		// 驗證成立訂單表格
 		(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
+			EventBus.FullLoading(true);
 			if (valid) {
 				// 儲存 user 資訊到 vuex
 				this.SetOrderForm(this.form);
-				Api.setOrder(this.form).then((res) => {
+				Api.setOrder(this.form).then(res => {
 					// 儲存結帳資訊到 vuex，訂單 id、時間、總金額
 					this.SetOrderInfo({ id: res.data.id, datetime: res.data.created.datetime, amount: res.data.amount });
 					// 購物車歸零
 					EventBus.setCartQuantity(0);
 					// 切換顯示頁面，並傳遞付款方式
 					EventBus.getOpenType(Status.OpenType.CheckOut, this.form.payment);
+					EventBus.FullLoading(false);
 				});
 			} else {
 				return false;

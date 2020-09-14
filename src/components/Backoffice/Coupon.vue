@@ -47,11 +47,7 @@
 					<el-input v-model.number.lazy="form.percent" />
 				</el-form-item>
 				<el-form-item label="截止時間">
-					<el-date-picker
-						type="datetime"
-						value-format="yyyy-MM-dd HH:mm:ss"
-						v-model.lazy="form.deadline_at"
-					/>
+					<el-date-picker type="datetime" value-format="yyyy-MM-dd HH:mm:ss" v-model.lazy="form.deadline_at" />
 				</el-form-item>
 				<el-form-item label="是否啟用">
 					<el-switch active-text="啟用" inactive-text="不啟用" v-model="form.enabled"></el-switch>
@@ -71,8 +67,10 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import * as Model from '@/models/interfaces/backoffice/coupon';
+import * as Status from '@/models/status/type';
 import { formatMixin } from '@/utilities/format';
 import Api from '@/api/backoffice/coupon';
+import * as EventBus from '@/utilities/event-bus';
 
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
@@ -102,28 +100,43 @@ export default class ProductList extends Vue {
 	}
 
 	getCouponList() {
-		Api.getCouponList().then((res) => {
+		EventBus.FullLoading(true);
+		Api.getCouponList().then(res => {
 			this.couponList = res.data;
+
+			EventBus.FullLoading(false);
 		});
 	}
 
 	// 新增優惠券
 	addCoupon(form: Model.IAddCouponItem) {
-		Api.addCoupon(form).then((res) => {
+		EventBus.FullLoading(true);
+		Api.addCoupon(form).then(res => {
 			this.dialogVisible = false;
+
+			EventBus.FullLoading(false);
 			this.getCouponList();
+			EventBus.SystemAlert(Status.SysMessageType.Information, '新增成功');
 		});
 	}
 
 	// 刪除優惠券
 	deteteCoupon(id: string) {
-		Api.deleteCouponItem(id).then((res) => {
-			this.getCouponList();
-		});
+		this.$confirm('確認刪除？')
+			.then(_ => {
+				EventBus.FullLoading(true);
+				Api.deleteCouponItem(id).then(res => {
+					this.getCouponList();
+					EventBus.FullLoading(false);
+					EventBus.SystemAlert(Status.SysMessageType.Information, '刪除成功');
+				});
+			})
+			.catch(err => {});
 	}
 
 	// 打開 Modal，編輯對應優惠券
 	edit(id: string) {
+		EventBus.FullLoading(true);
 		// 顯示修改按鈕
 		this.modifyButton = true;
 		// 關閉新增按鈕（確認送出）
@@ -133,20 +146,25 @@ export default class ProductList extends Vue {
 		// 顯示 Modal（修改視窗）
 		this.dialogVisible = true;
 		// 取得單一優惠券 API
-		Api.getCouponItem(id).then((res) => {
+		Api.getCouponItem(id).then(res => {
 			// 將 form 顯示對應資料
 			this.form.code = res.data.code;
 			this.form.title = res.data.title;
 			this.form.percent = res.data.percent;
 			this.form.enabled = res.data.enabled;
 			this.form.deadline_at = res.data.deadline.datetime;
+
+			EventBus.FullLoading(false);
 		});
 	}
 
 	// click 修改按鈕
 	modify(id: string, form: Model.IAddCouponItem) {
-		Api.modifyCouponItem(id, form).then((res) => {
+		EventBus.FullLoading(true);
+		Api.modifyCouponItem(id, form).then(res => {
 			this.dialogVisible = false;
+			EventBus.FullLoading(false);
+			EventBus.SystemAlert(Status.SysMessageType.Information, '編輯成功');
 			this.getCouponList();
 		});
 	}

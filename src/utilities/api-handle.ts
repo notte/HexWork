@@ -20,7 +20,6 @@ class Axios {
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			};
 		}
-		// SystemAlert(Status.SysMessageType.Error, Status.ErrorPopupContent.InternalServer);
 
 		const instance = axios.create();
 

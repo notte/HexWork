@@ -2,12 +2,7 @@
 	<div class="login_layout">
 		<div class="login">
 			<h1>登入</h1>
-			<el-form
-				:model="dynamicValidateForm"
-				:rules="rules"
-				ref="dynamicValidateForm"
-				class="demo-dynamic"
-			>
+			<el-form :model="dynamicValidateForm" :rules="rules" ref="dynamicValidateForm" class="demo-dynamic">
 				<el-form-item prop="email">
 					<el-input placeholder="請輸入電子信箱" v-model="dynamicValidateForm.email"></el-input>
 				</el-form-item>
@@ -55,7 +50,8 @@ export default class Login extends Vue {
 
 	// 登入事件
 	login(dynamicValidateForm: Model.IgetTokenRequest) {
-		Api.login(dynamicValidateForm).then((res) => {
+		EventBus.FullLoading(true);
+		Api.login(dynamicValidateForm).then(res => {
 			// 將 token 儲存 localStorage
 			localStorage.setItem('accessToken', res.token);
 			// 將 token 儲存 vuex（暫用）
@@ -64,6 +60,17 @@ export default class Login extends Vue {
 			this.$router.push({ name: 'Backoffice' });
 			// 發送事件，讓登入登出按鈕切換顯示
 			EventBus.setTag();
+
+			EventBus.FullLoading(false);
+			this.$notify({
+				title: '登入成功',
+				message: '',
+				position: 'bottom-left',
+				showClose: false,
+				duration: 5000,
+				iconClass: 'el-icon-lollipop',
+				customClass: 'alertItem_info',
+			});
 		});
 	}
 }

@@ -42,6 +42,7 @@ const responseFail = (errorData: any) => {
 	}
 	// 發送api-error事件，並帶入err物件
 	EventBus.$emit('api-error', err);
+	EventBus.$emit('full-loading', false);
 	// 返回給Promise物件
 	return Promise.reject(err);
 };

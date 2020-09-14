@@ -450,14 +450,14 @@ body,
 
 		// 行程(+購物車)
 		.stroke {
-			width: 45%;
+			width: 48%;
 			position: relative;
 			left: 50%;
 			transform: translateX(-50%);
 			margin-top: 20px;
 			padding: 20px;
 			border-radius: 10px;
-			border: 1px solid #ccc;
+			border-top: 1px dashed #ccc;
 
 			h3 {
 				margin: 10px 0;
@@ -485,8 +485,8 @@ body,
 
 		// 報名按鈕
 		.el-button {
-			width: 20%;
-			margin-top: 20px;
+			width: 12%;
+			padding: 15px;
 		}
 	}
 }
@@ -1063,4 +1063,26 @@ body,
 .el-button--mini {
 	width: 80px;
 	text-align: center;
+}
+
+
+.alertItem {
+	background-color: #ffffffc9;
+	box-shadow: 0 0 6px 0px #33333378;
+
+	&__error {
+
+		.el-notification__title,
+		.el-notification__icon {
+			color: $major;
+		}
+	}
+
+	&_info {
+
+		.el-notification__title,
+		.el-notification__icon {
+			color: $sea;
+		}
+	}
 }

@@ -23,10 +23,12 @@ export const formatMixin = {
 
 			return money;
 		},
-		timeFormat(time: string) {
-			const newTime = time.split('~');
+		timeFormat(time: string | undefined) {
+			if (time !== undefined) {
+				const newTime = time.split('~');
 
-			time = newTime[0] + ' 至 ' + newTime[1];
+				time = newTime[0] + ' 至 ' + newTime[1];
+			}
 			return time;
 		},
 		captureTime(time: string | null) {
