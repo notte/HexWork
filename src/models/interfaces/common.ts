@@ -21,6 +21,18 @@ export interface IRules {
 	password: string;
 }
 
+export interface IIineraryContentReponse {
+	sea: IStroke;
+	land: IStroke;
+	shopping: IStroke;
+	history: IStroke;
+}
+
+interface IStroke {
+	title: string;
+	content: string[];
+}
+
 // 暫定錯誤類型
 
 // 錯誤物件回傳的型別

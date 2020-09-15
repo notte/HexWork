@@ -3,6 +3,7 @@ import Vuex, { Commit, Dispatch } from 'vuex';
 import token from '@/store/token';
 import cart from '@/store/cart';
 import order from '@/store/order';
+import stroke from '@/store/stroke';
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
 		token,
 		cart,
 		order,
+		stroke,
 	},
 });
 

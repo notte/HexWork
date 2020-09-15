@@ -4,13 +4,13 @@
 			<h2>感謝您的訂購，歡迎您再次光臨</h2>
 			<el-card class="box-card">
 				<div class="item">
-					<p>完成時間：{{orderCreated}}</p>
+					<p>完成時間：{{ orderCreated }}</p>
 				</div>
 				<div class="item">
-					<p>訂單編號：{{orderID | captureOrderID}}</p>
+					<p>訂單編號：{{ orderID | captureOrderID }}</p>
 				</div>
 				<div class="item">
-					<p>訂單金額：${{orderAmount | moneyFormat}}</p>
+					<p>訂單金額：${{ orderAmount | moneyFormat }}</p>
 				</div>
 			</el-card>
 			<div class="Coupons" v-if="isShowCoupon">
@@ -31,7 +31,7 @@ import * as Model from '@/models/interfaces/frontend/cart';
 import EventBus from '@/utilities/event-bus';
 import { formatMixin } from '@/utilities/format';
 
-const tokenModule = namespace('cart');
+const cartModule = namespace('cart');
 const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
@@ -43,7 +43,7 @@ export default class Completed extends Vue {
 	orderID: string = '';
 	orderCreated: string = '';
 	orderAmount: string = '';
-	@tokenModule.State('OrderInfo') OrderInfo!: Model.ISetOrderInfo;
+	@cartModule.State('OrderInfo') OrderInfo!: Model.ISetOrderInfo;
 
 	mounted() {
 		this.orderID = this.OrderInfo.id;

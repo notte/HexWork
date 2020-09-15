@@ -64,6 +64,7 @@ export default class App extends Vue {
 	fullscreenLoading: boolean = false;
 	// vuex 中 set token 的方法
 	@Action('token/setToken') private setToken!: any;
+	@Action('stroke/setStrokeList') private setStroke!: any;
 
 	created() {
 		// 先確認目前購物車是否有商品
@@ -79,6 +80,9 @@ export default class App extends Vue {
 	}
 
 	mounted() {
+		EventBus.$on('get-stroke', (StrokeList: any) => {
+			this.setStroke(StrokeList.StrokeList);
+		});
 		// 接收登入登出按鈕顯示狀態
 		EventBus.$on('set-tag', () => {
 			this.showLogout = true;

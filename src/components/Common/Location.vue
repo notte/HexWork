@@ -8,23 +8,21 @@
 		</div>
 		<div class="content">
 			<div class="Propaganda">
-				<h1>花蓮的山海，自由自在無拘無束</h1>
+				<h1>{{ productItem.description }}{{ strokeTitle }}</h1>
 				<div class="text">
-					<h3>世界遺產潛力點►太魯閣國家公園</h3>
 					<div class="img">
 						<img :src="img2" alt />
 					</div>
 					<p>
-						太魯閣峽谷是台灣島上具有世界級水準的地理景觀。峽谷沿立霧溪而行長達數十公里，觸目所及皆是壁立千仞的峭壁、斷崖、峽谷，連綿曲折的山洞隧道、大理岩層和溪流等風光，歷經立霧溪沖刷重量、風化侵蝕和地殼上升的變動，才成就了太魯閣雄偉壯闊的峽谷景觀，遊客無不讚嘆造物者之鬼斧神工。如今我們在太魯閣峭壁看到的裸露岩層，擁有6500萬年的歷史，在台灣這座僅約600萬年歲的年輕島嶼，居然藏著如此古老靈魂。尤以天祥至太魯閣口一段最為壯觀，也是主要的旅遊據點，由於地理景觀獨特，內政部於民國75年設立了「太魯閣國家公園」，成為我國第四座國家公園。
+						{{ strokeContentOne }}
 					</p>
 				</div>
 				<div class="text">
-					<h3>世界遺產潛力點►太魯閣國家公園</h3>
 					<div class="img">
 						<img :src="img3" alt />
 					</div>
 					<p>
-						太魯閣峽谷是台灣島上具有世界級水準的地理景觀。峽谷沿立霧溪而行長達數十公里，觸目所及皆是壁立千仞的峭壁、斷崖、峽谷，連綿曲折的山洞隧道、大理岩層和溪流等風光，歷經立霧溪沖刷重量、風化侵蝕和地殼上升的變動，才成就了太魯閣雄偉壯闊的峽谷景觀，遊客無不讚嘆造物者之鬼斧神工。如今我們在太魯閣峭壁看到的裸露岩層，擁有6500萬年的歷史，在台灣這座僅約600萬年歲的年輕島嶼，居然藏著如此古老靈魂。尤以天祥至太魯閣口一段最為壯觀，也是主要的旅遊據點，由於地理景觀獨特，內政部於民國75年設立了「太魯閣國家公園」，成為我國第四座國家公園。
+						{{ strokeContentTWO }}
 					</p>
 				</div>
 			</div>
@@ -47,11 +45,15 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
+import { State, Action, Getter, namespace } from 'vuex-class';
 import Api from '@/api/frontend/product.ts';
 import * as Model from '@/models/interfaces/frontend/product';
 import * as EventBus from '@/utilities/event-bus';
 import { formatMixin } from '@/utilities/format';
+
+const strokeModule = namespace('stroke');
+const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class Location extends Vue {
@@ -66,12 +68,59 @@ export default class Location extends Vue {
 	price: string = '';
 	options: number[] = [1, 2, 3, 4, 5];
 	value: number = 1;
+	// 行程標題
+	strokeTitle: string = '';
+	// 行程內文一
+	strokeContentOne: string = '';
+	// 行程內文二
+	strokeContentTWO: string = '';
+	@strokeModule.State('StrokeList') StrokeList!: any;
 
 	created() {
-		EventBus.getScrollEvent();
 		// 設定 id
 		this.productId = this.productId[1];
 		this.getProductItem(this.productId);
+	}
+
+	@Watch('productItem')
+	changeContent() {
+		// console.log(this.StrokeList);
+		const tag = this.productItem.category.split('、');
+		tag.forEach((item, i) => {
+			switch (item) {
+				case '陸上':
+					if (this.strokeTitle === '') {
+						this.strokeTitle = this.StrokeList.land.title;
+					}
+					this.strokeContentOne = this.StrokeList.land.content[0];
+					this.strokeContentTWO = this.StrokeList.land.content[1];
+					break;
+				case '水上':
+					if (this.strokeTitle === '') {
+						this.strokeTitle = this.StrokeList.sea.title;
+					}
+					this.strokeContentOne = this.StrokeList.sea.content[0];
+					this.strokeContentTWO = this.StrokeList.sea.content[1];
+					break;
+				case '購物':
+					if (this.strokeTitle === '') {
+						this.strokeTitle = this.StrokeList.shopping.title;
+					}
+					this.strokeContentOne = this.StrokeList.shopping.content[0];
+					break;
+				case '歷史':
+					if (this.strokeTitle === '') {
+						this.strokeTitle = this.StrokeList.history.title;
+					}
+					this.strokeContentOne = this.StrokeList.history.content[0];
+					break;
+				default:
+					break;
+					if (this.strokeContentTWO === '' && item === '陸上') {
+						this.strokeContentTWO = this.StrokeList.land.content[1];
+					}
+			}
+		});
 	}
 
 	// 取得單一產品
@@ -83,6 +132,7 @@ export default class Location extends Vue {
 			this.img2 = this.productItem.imageUrl[1];
 			this.img3 = this.productItem.imageUrl[2];
 			this.price = this.productItem.price.toString();
+			EventBus.getScrollEvent();
 			EventBus.FullLoading(false);
 		});
 	}

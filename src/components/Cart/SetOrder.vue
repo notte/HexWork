@@ -62,7 +62,7 @@ import * as EventBus from '@/utilities/event-bus';
 import * as Status from '@/models/status/type';
 import Api from '@/api/frontend/cart.ts';
 
-const tokenModule = namespace('cart');
+const cartModule = namespace('cart');
 const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
@@ -103,8 +103,8 @@ export default class SetOrder extends Vue {
 		payment: [{ required: true, message: '請選擇付款方式', trigger: 'blur' }],
 	};
 
-	@tokenModule.State('CartList') cart!: Model.ICartListAndCoupon;
-	@tokenModule.State('OrderInfo') orderInfo!: object;
+	@cartModule.State('CartList') cart!: Model.ICartListAndCoupon;
+	@cartModule.State('OrderInfo') orderInfo!: object;
 	@Action('cart/SetOrderForm') private SetOrderForm!: any;
 	@Action('cart/SetOrderInfo') private SetOrderInfo!: any;
 

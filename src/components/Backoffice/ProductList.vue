@@ -52,12 +52,12 @@
 				<div class="ImageItem">
 					<img :src="img3" alt />
 				</div>
-				<div class="ImageItem">
+				<!-- <div class="ImageItem">
 					<img :src="img4" alt />
 				</div>
 				<div class="ImageItem">
 					<img :src="img5" alt />
-				</div>
+				</div> -->
 			</div>
 			<el-form ref="form" :model="form">
 				<el-form-item label="主題圖">
@@ -69,12 +69,12 @@
 				<el-form-item label="行程圖">
 					<el-input v-model.lazy="img3" />
 				</el-form-item>
-				<el-form-item label="行程圖">
+				<!-- <el-form-item label="行程圖">
 					<el-input v-model.lazy="img4" />
 				</el-form-item>
 				<el-form-item label="行程圖">
 					<el-input v-model.lazy="img5" />
-				</el-form-item>
+				</el-form-item> -->
 				<el-form-item label="行程標題">
 					<el-input v-model.lazy="form.title" />
 				</el-form-item>
@@ -126,7 +126,7 @@ import * as Status from '@/models/status/type';
 import * as EventBus from '@/utilities/event-bus';
 import { formatMixin } from '@/utilities/format';
 
-const tokenModule = namespace('order');
+const orderModule = namespace('order');
 const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
@@ -155,7 +155,7 @@ export default class ProductList extends Vue {
 	endDate: string = '';
 	soldList: any[] = [];
 	selectRow = {} as Model.IProductItem;
-	@tokenModule.State('OrderList') OrderList!: string[];
+	@orderModule.State('OrderList') OrderList!: string[];
 
 	// 表單
 	form: Model.IProductItem = {

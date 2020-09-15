@@ -52,14 +52,7 @@
 					<span>結帳資訊</span>
 				</div>
 				<h3 v-if="Payment == 'ATM'">前往 ATM 繳款</h3>
-				<el-form
-					v-if="Payment == 'Credit'"
-					ref="form"
-					:model="form"
-					:rules="rules"
-					label-width="80px"
-					label-position="top"
-				>
+				<el-form v-if="Payment == 'Credit'" ref="form" :model="form" :rules="rules" label-width="80px" label-position="top">
 					<el-form-item label="信用卡卡號" prop="card" required>
 						<el-input maxlength="16" v-model.number.lazy="form.card"></el-input>
 					</el-form-item>
@@ -89,7 +82,7 @@ import EventBus from '@/utilities/event-bus';
 import Api from '@/api/frontend/cart.ts';
 import { formatMixin } from '@/utilities/format';
 
-const tokenModule = namespace('cart');
+const cartModule = namespace('cart');
 const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
@@ -118,9 +111,9 @@ export default class CheckOut extends Vue {
 			{ type: 'number', length: 3, message: '請輸入正確的背後末三碼', trigger: ['blur', 'change'] },
 		],
 	};
-	@tokenModule.State('SetOrderForm') SetForm!: string;
-	@tokenModule.State('CartList') cart!: string;
-	@tokenModule.State('OrderInfo') OrderInfo!: Model.ISetOrderInfo;
+	@cartModule.State('SetOrderForm') SetForm!: string;
+	@cartModule.State('CartList') cart!: string;
+	@cartModule.State('OrderInfo') OrderInfo!: Model.ISetOrderInfo;
 
 	mounted() {
 		this.orderID = this.OrderInfo.id;
@@ -134,7 +127,7 @@ export default class CheckOut extends Vue {
 		if (form) {
 			(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
 				if (valid) {
-					Api.checkOut(id).then((res) => {
+					Api.checkOut(id).then(res => {
 						// 跳轉顯示 type
 						EventBus.$emit('open-type', { type: Status.OpenType.Completed });
 					});
@@ -144,7 +137,7 @@ export default class CheckOut extends Vue {
 			});
 		} else {
 			// 不需要驗證表單
-			Api.checkOut(id).then((res) => {
+			Api.checkOut(id).then(res => {
 				// 跳轉顯示 type
 				EventBus.$emit('open-type', { type: Status.OpenType.Completed });
 			});

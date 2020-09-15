@@ -64,7 +64,7 @@ import * as Status from '@/models/status/type';
 import Api from '@/api/frontend/cart.ts';
 import { formatMixin } from '@/utilities/format';
 
-const tokenModule = namespace('cart');
+const cartModule = namespace('cart');
 const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
@@ -86,7 +86,7 @@ export default class Cart extends Vue {
 	discount: number = 0;
 	// 折扣後總金額
 	discountTotal: number = 0;
-	@tokenModule.State('CartList') cart!: string;
+	@cartModule.State('CartList') cart!: string;
 	@Action('cart/setCartList') private setCartList!: any;
 
 	created() {

@@ -30,5 +30,9 @@ export const setTag = () => {
 	EventBus.$emit('set-tag');
 };
 
+export const getSrtokeList = (StrokeList: object) => {
+	EventBus.$emit('get-stroke', { StrokeList });
+};
+
 const EventBus = new Vue();
 export default EventBus;

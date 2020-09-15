@@ -85,9 +85,6 @@ import * as EventBus from '@/utilities/event-bus';
 import { formatMixin } from '@/utilities/format';
 import Api from '@/api/backoffice/order';
 
-const tokenModule = namespace('order');
-const qs = require('qs');
-
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
 	// 分頁後所有訂單資料 + 對應優惠券
