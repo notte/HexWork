@@ -2,10 +2,6 @@ import Vue from 'vue';
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { requestSuccess, requestFail, responseSuccess, responseFail } from './error-handler';
 
-/*
- * axios API handler
- */
-
 class Axios {
 	constructor() {}
 	async request<T>(cfg: AxiosRequestConfig) {

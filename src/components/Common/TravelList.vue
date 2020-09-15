@@ -39,13 +39,14 @@ export default class TravelList extends Vue {
 	isHistory: boolean = false;
 	price: string = '';
 
-	checkStroke(id: string) {
-		// 發送傳遞產品 id 事件，從 APP.vue 接收
-		EventBus.getOpenType(Status.OpenType.TaiwanItem, id);
-	}
-
 	created() {
 		this.getProductList();
+	}
+
+	checkStroke(id: string) {
+		// 發送傳遞產品 id 事件，從 APP.vue 接收
+		EventBus.getScrollEvent();
+		EventBus.getOpenType(Status.OpenType.Location, id);
 	}
 
 	getProductList() {

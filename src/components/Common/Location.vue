@@ -82,9 +82,12 @@ export default class Location extends Vue {
 		this.getProductItem(this.productId);
 	}
 
+	mounted() {
+		EventBus.getScrollEvent();
+	}
+
 	@Watch('productItem')
 	changeContent() {
-		// console.log(this.StrokeList);
 		const tag = this.productItem.category.split('、');
 		tag.forEach((item, i) => {
 			switch (item) {
@@ -132,7 +135,6 @@ export default class Location extends Vue {
 			this.img2 = this.productItem.imageUrl[1];
 			this.img3 = this.productItem.imageUrl[2];
 			this.price = this.productItem.price.toString();
-			EventBus.getScrollEvent();
 			EventBus.FullLoading(false);
 		});
 	}

@@ -94,11 +94,6 @@ export default class App extends Vue {
 			this.checkShoppingCart();
 		});
 
-		// 接收切換 router 及頁面的事件，打包參數一併傳遞
-		EventBus.$on('open-type', (param: { id: string; type: string }) => {
-			this.$router.push({ name: param.type, params: { id: param.id } });
-		});
-
 		// 接收捲軸置頂事件
 		EventBus.$on('to-scroll', () => {
 			(this.$refs.childDiv as any).scrollTop = 0;

@@ -3,7 +3,7 @@ export enum OpenType {
 	// 旅遊列表
 	TravelList = 'TravelList',
 	// 個別商品頁面
-	TaiwanItem = 'TaiwanItem',
+	Location = 'Location',
 	// 搜尋
 	SearchPage = 'SearchPage',
 	// 推薦

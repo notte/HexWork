@@ -3,6 +3,11 @@ import VueRouter, { RouteConfig } from 'vue-router';
 
 Vue.use(VueRouter);
 
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location: any) {
+	return (originalPush.call(this, location) as any).catch((err: any) => err);
+};
+
 const routes: RouteConfig[] = [
 	{
 		path: '/',
@@ -47,7 +52,7 @@ const routes: RouteConfig[] = [
 	},
 	{
 		path: '/:id',
-		name: 'TaiwanItem',
+		name: 'Location',
 		component: () => import('@/components/Common/Location.vue'),
 	},
 ];
@@ -57,7 +62,6 @@ const router = new VueRouter({
 	base: process.env.BASE_URL,
 	routes,
 });
-
 
 router.beforeEach((to, from, next) => {
 	next();
