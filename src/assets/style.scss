@@ -128,6 +128,10 @@ body,
 		width: 100%;
 		position: relative;
 		background-color: #333;
+
+		.el-carousel {
+			height: 70vh;
+		}
 	}
 
 	.layout {
@@ -1085,5 +1089,108 @@ body,
 		.el-notification__icon {
 			color: $sea;
 		}
+	}
+}
+
+// 圖片牆
+.sixlist {
+	width: 100%;
+	display: block;
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+
+	h2 {
+		display: inline;
+		position: absolute;
+		right: 5%;
+		font-size: 2.5em;
+	}
+}
+
+.sixbox-bottom-right {
+	text-align: right;
+}
+
+.sixlist .sixbox {
+	width: 25%;
+	overflow: hidden;
+	-webkit-clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+	-moz-clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+	-o-clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+	-ms-clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+	clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+	display: inline-block;
+	margin: 1%;
+	transition: all 0.15s ease-out 0s;
+
+	img {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.sixbox-top,
+.sixbox-bottom {
+	display: inline;
+}
+
+.sixlist .sixbox-top .sixbox:nth-child(1) {
+	position: relative;
+	top: 0em;
+	left: 2em;
+}
+
+.sixlist .sixbox-top .sixbox:nth-child(2) {
+	position: relative;
+	top: 10em;
+	left: -4em;
+}
+
+.sixlist .sixbox-top .sixbox:nth-child(3) {
+	position: relative;
+	left: -10em;
+	top: 0em;
+}
+
+.sixlist .sixbox-top .sixbox:nth-child(4) {
+	position: relative;
+	left: 6em;
+	top: -1em;
+}
+
+.sixlist .sixbox-bottom .sixbox:nth-child(1) {
+	position: relative;
+	top: 10em;
+	right: -4em;
+}
+
+.sixlist .sixbox-bottom .sixbox:nth-child(2) {
+	position: relative;
+	right: 2em;
+}
+
+
+@media screen and (min-width: 1280px) {
+	.sixlist .sixbox {
+		height: 270px;
+	}
+}
+
+@media screen and (min-width: 1366px) {
+	.sixlist .sixbox {
+		height: 300px;
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	.sixlist .sixbox {
+		height: 300px;
+	}
+}
+
+@media screen and (min-width: 1441px) {
+	.sixlist .sixbox {
+		height: 400px;
 	}
 }

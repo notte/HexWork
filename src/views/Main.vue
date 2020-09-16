@@ -1,10 +1,9 @@
 <template>
 	<div class="Main">
-		<Carousel />
+		<SixBoxTop />
 		<div class="Main-content">
-			<h2>關於 Journey</h2>
 			<div class="img">
-				<img src="https://i.imgur.com/D3v5BnN.jpg" alt />
+				<img src="https://i.imgur.com/lo03koa.jpg" alt />
 			</div>
 			<p>
 				「Journey」因應不同的市場定位及顧客的需求差異，調整價位與產品設定，精準回饋消費者的需求；定位開創新產品服務新客群，規劃高端質感的旅遊產品。<br />
@@ -24,16 +23,18 @@
 				「Journey」是可以滿足既有需求的經營者；更是具備創意，能開發出嶄新需求的開創者！秉承初衷努力實現，呈獻給我們的每一位旅客。我們誠摯帶您走訪世界的各個角落，豐富您美好的人生，見證您幸福的時刻。
 			</p>
 		</div>
+		<SixBoxBottom />
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import Carousel from '@/components/Common/Carousel.vue';
+import SixBoxTop from '@/components/Common/SixBox_Top.vue';
+import SixBoxBottom from '@/components/Common/SixBox_Bottom.vue';
 
 @Component({
-	components: { Carousel },
+	components: { SixBoxTop, SixBoxBottom },
 })
 export default class Main extends Vue {}
 </script>

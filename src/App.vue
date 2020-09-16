@@ -46,9 +46,7 @@ import Api from '@/api/common.ts';
 const tokenModule = namespace('token');
 const qs = require('qs');
 
-@Component({
-	components: {},
-})
+@Component
 export default class App extends Vue {
 	// 判斷是否出線"購物車沒有商品"
 	showCartQuantity: boolean = false;
