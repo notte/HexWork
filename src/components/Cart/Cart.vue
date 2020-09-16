@@ -176,10 +176,15 @@ export default class Cart extends Vue {
 		const params: Model.IDeleteProductCartRequest = {
 			product: id as string,
 		};
-		Api.deleteProduct(id, params).then(res => {
-			this.getCart();
-			EventBus.setCartQuantity();
-		});
+		this.$confirm('確認刪除？')
+			.then(_ => {
+				EventBus.FullLoading(true);
+				Api.deleteProduct(id, params).then(res => {
+					this.getCart();
+					EventBus.setCartQuantity();
+				});
+			})
+			.catch(err => {});
 	}
 
 	// 下一步
