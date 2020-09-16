@@ -12,7 +12,7 @@ import './assets/style.scss';
 Vue.use(ElementUI, { locale });
 Vue.config.productionTip = false;
 
-axios.get('/travelContent.json').then((res: any) => {
+axios.get('/static/travelContent.json').then((res: any) => {
 	EventBus.getSrtokeList(res.data);
 });
 
