@@ -5,13 +5,13 @@
 				<img src="https://i.imgur.com/D3v5BnN.jpg" />
 			</div>
 			<div class="sixbox">
-				<img src="https://i.imgur.com/FAoWKfp.jpg" />
-			</div>
-			<div class="sixbox">
-				<img src="https://i.imgur.com/IkxtflL.jpg" />
-			</div>
-			<div class="sixbox">
 				<img src="https://i.imgur.com/tQ0RGwh.jpg" />
+			</div>
+			<div class="sixbox">
+				<img src="https://i.imgur.com/2Jmvef6.jpg" />
+			</div>
+			<div class="sixbox">
+				<img src="https://i.imgur.com/YGp0IfU.jpg" />
 			</div>
 		</div>
 		<h2>關於 Journey</h2>

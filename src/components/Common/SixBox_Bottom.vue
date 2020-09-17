@@ -5,7 +5,7 @@
 				<img src="https://i.imgur.com/qIL5Joy.jpg" />
 			</div>
 			<div class="sixbox">
-				<img src="https://i.imgur.com/VGV92oC.jpg" />
+				<img src="https://i.imgur.com/IkxtflL.jpg" />
 			</div>
 		</div>
 	</div>

@@ -13,17 +13,13 @@
 					<div class="img">
 						<img :src="img2" alt />
 					</div>
-					<p>
-						{{ strokeContentOne }}
-					</p>
+					<p>{{ strokeContentOne }}</p>
 				</div>
 				<div class="text">
 					<div class="img">
 						<img :src="img3" alt />
 					</div>
-					<p>
-						{{ strokeContentTWO }}
-					</p>
+					<p>{{ strokeContentTWO }}</p>
 				</div>
 			</div>
 			<div class="stroke">
@@ -58,7 +54,7 @@ const qs = require('qs');
 @Component({ mixins: [formatMixin] })
 export default class Location extends Vue {
 	// 從 URL 取得產品 id，用 split 改為陣列格式
-	productId: string[] | string = location.hash.split('#/');
+	productId: string = location.hash.split('#/')[1];
 	productItem = {} as Model.IData;
 	// 圖片位址
 	img1: string = '';
@@ -78,7 +74,8 @@ export default class Location extends Vue {
 
 	created() {
 		// 設定 id
-		this.productId = this.productId[1];
+		// this.productId = this.productId[1];
+		// console.log(this.productId);
 		this.getProductItem(this.productId);
 	}
 
@@ -128,8 +125,8 @@ export default class Location extends Vue {
 
 	// 取得單一產品
 	getProductItem(id: string) {
-		EventBus.FullLoading(true);
-		Api.getProductItem(id).then(res => {
+		Api.getProductItem(id).then((res) => {
+			EventBus.FullLoading(true);
 			this.productItem = res.data;
 			this.img1 = this.productItem.imageUrl[0];
 			this.img2 = this.productItem.imageUrl[1];
@@ -147,7 +144,7 @@ export default class Location extends Vue {
 			quantity: this.value.toString(),
 		};
 		// 發送購物車事件
-		Api.addProductCart(params).then(res => {
+		Api.addProductCart(params).then((res) => {
 			EventBus.setCartQuantity();
 			EventBus.FullLoading(false);
 		});
