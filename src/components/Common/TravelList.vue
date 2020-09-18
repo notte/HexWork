@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="Product">
 		<el-row class="TravelList">
 			<el-col v-for="(item, index) in ProductList" :key="index">
 				<el-card shadow="hover">
@@ -44,8 +44,9 @@ export default class TravelList extends Vue {
 	}
 
 	checkStroke(id: string) {
-		// 發送傳遞產品 id 事件，從 APP.vue 接收
-		EventBus.getOpenProductType(Status.OpenType.Location, id);
+		// 跳轉 router
+		this.$router.push({ name: Status.OpenType.Location, params: { id } }).catch(err => {});
+		EventBus.getScrollEvent();
 	}
 
 	getProductList() {

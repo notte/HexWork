@@ -17,7 +17,7 @@ const routes: RouteConfig[] = [
 	{
 		path: '/Product',
 		name: 'Product',
-		component: () => import('@/views/Product.vue'),
+		component: () => import('@/components/Common/TravelList.vue'),
 	},
 	{
 		path: '/Cart',
