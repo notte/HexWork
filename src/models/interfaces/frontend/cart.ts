@@ -1,4 +1,3 @@
-// 購物車列表
 export interface ICartListReponse {
 	data: ICartData[];
 	meta: IMeta;
@@ -11,18 +10,15 @@ export interface ICartListAndCoupon {
 	discountTotal?: string;
 }
 
-// 更新單一產品
 export interface IEditProductCartRequest {
 	product: string;
 	quantity: string;
 }
 
-// 刪除
 export interface IDeleteProductCartRequest {
 	product: string;
 }
 
-// 收件者表單
 export interface ISetOrderUserForm {
 	name: string;
 	email: string;
@@ -46,14 +42,12 @@ interface ICoupon {
 	deadline_diff: string;
 }
 
-// 收件者表單
 export interface ISetOrderInfo {
 	id: string;
 	datetime: string;
 	amount: number;
 }
 
-// 已成立訂單
 export interface IOrderItemReponse {
 	data: IOrder;
 }

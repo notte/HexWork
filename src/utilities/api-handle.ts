@@ -10,7 +10,6 @@ class Axios {
 			'Content-Type': 'application/json',
 		};
 
-		// 如果 request 的 url 帶有 admin，加入 token
 		if ((cfg.url as string).search('admin') !== -1) {
 			cfg.headers = {
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

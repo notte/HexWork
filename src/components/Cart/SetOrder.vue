@@ -67,11 +67,8 @@ const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class SetOrder extends Vue {
-	// 原價總金額
 	total: string = '';
-	// 折扣後總金額
 	discountTotal: string = '';
-	// 是否有存在優惠券
 	isShowCoupon: boolean = false;
 	form: Model.ISetOrderUserForm = {
 		name: '戴筱瑤',
@@ -110,9 +107,7 @@ export default class SetOrder extends Vue {
 
 	mounted() {
 		this.total = this.cart.total;
-		// 如果有折扣總金額 & 優惠券碼
 		if (this.cart.discountTotal && this.cart.coupon) {
-			// 表單中加入優惠券碼
 			this.form.coupon = this.cart.coupon;
 			this.discountTotal = this.cart.discountTotal;
 			this.isShowCoupon = true;
@@ -120,18 +115,13 @@ export default class SetOrder extends Vue {
 	}
 
 	submit(form: string) {
-		// 驗證成立訂單表格
 		(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
 			EventBus.FullLoading(true);
 			if (valid) {
-				// 儲存 user 資訊到 vuex
 				this.SetOrderForm(this.form);
 				Api.setOrder(this.form).then(res => {
-					// 儲存結帳資訊到 vuex，訂單 id、時間、總金額
 					this.SetOrderInfo({ id: res.data.id, datetime: res.data.created.datetime, amount: res.data.amount });
-					// 購物車歸零
 					EventBus.setCartQuantity(0);
-					// 切換顯示頁面，並傳遞付款方式
 					EventBus.getOpenCartType(Status.OpenType.CheckOut, this.form.payment);
 					EventBus.FullLoading(false);
 				});
@@ -142,7 +132,6 @@ export default class SetOrder extends Vue {
 	}
 
 	prevStep() {
-		// 返回上一頁
 		this.$router.go(-1);
 		EventBus.getOpenCartType(Status.OpenType.CartList);
 	}

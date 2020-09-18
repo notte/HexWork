@@ -43,7 +43,6 @@ const routes: RouteConfig[] = [
 		path: '/Backoffice',
 		name: 'Backoffice',
 		component: () => import('@/views/Backoffice.vue'),
-		// children: [],
 	},
 	{
 		path: '/Login',

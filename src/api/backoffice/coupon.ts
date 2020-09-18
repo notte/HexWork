@@ -4,7 +4,6 @@ const URL = process.env.VUE_APP_URL;
 const UUID = process.env.VUE_APP_UUID;
 
 export default {
-	// 後台，取得優惠券列表
 	async getCouponList(): Promise<Model.ICouponListReponse> {
 		const config = {
 			method: 'get',
@@ -13,7 +12,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.ICouponListReponse>result.data;
 	},
-	// 後台，新增優惠券一張
 	async addCoupon(coupon: Model.IAddCouponItem): Promise<Model.IAddCouponItemReponse> {
 		const config = {
 			method: 'post',
@@ -23,7 +21,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IAddCouponItemReponse>result.data;
 	},
-	// 後台，取得單一優惠券細節
 	async getCouponItem(id: string): Promise<Model.IAddCouponItemReponse> {
 		const config = {
 			method: 'get',
@@ -32,7 +29,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IAddCouponItemReponse>result.data;
 	},
-	// 後台，修改單一優惠券細節
 	async modifyCouponItem(id: string, coupon: Model.IAddCouponItem): Promise<Model.IAddCouponItemReponse> {
 		const config = {
 			method: 'patch',
@@ -42,7 +38,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IAddCouponItemReponse>result.data;
 	},
-	// 後台，刪除單一優惠券
 	async deleteCouponItem(id: string): Promise<Model.IDeteteCouponReponse> {
 		const config = {
 			method: 'delete',

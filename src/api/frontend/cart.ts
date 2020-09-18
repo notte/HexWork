@@ -4,7 +4,6 @@ const URL = process.env.VUE_APP_URL;
 const UUID = process.env.VUE_APP_UUID;
 
 export default {
-	// 取得購物車列表
 	async getCart(): Promise<Model.ICartListReponse> {
 		const config = {
 			method: 'get',
@@ -13,7 +12,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.ICartListReponse>result.data;
 	},
-	// 清空購物車
 	async emptyCart(): Promise<string> {
 		const config = {
 			method: 'delete',
@@ -22,7 +20,6 @@ export default {
 		const result = await Handler.request(config);
 		return <string>result.data;
 	},
-	// 更新單一產品
 	async editProduct(params: Model.IEditProductCartRequest): Promise<Model.ICartListReponse> {
 		const config = {
 			method: 'patch',
@@ -32,7 +29,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.ICartListReponse>result.data;
 	},
-	// 刪除一產品
 	async deleteProduct(id: string, params: Model.IDeleteProductCartRequest): Promise<Model.ICartListReponse> {
 		const config = {
 			method: 'delete',
@@ -42,7 +38,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.ICartListReponse>result.data;
 	},
-	// 成立一筆訂單
 	async setOrder(params: Model.ISetOrderUserForm): Promise<Model.IOrderItemReponse> {
 		const config = {
 			method: 'post',
@@ -52,7 +47,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IOrderItemReponse>result.data;
 	},
-	// 付費結帳
 	async checkOut(id: string): Promise<Model.IOrderItemReponse> {
 		const config = {
 			method: 'post',
@@ -61,7 +55,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IOrderItemReponse>result.data;
 	},
-	// 優惠券
 	async getCoupon(coupon: string): Promise<Model.IcheckCouponReponse> {
 		const config = {
 			method: 'post',

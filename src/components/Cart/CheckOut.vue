@@ -87,7 +87,6 @@ const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class CheckOut extends Vue {
-	// 取得付款方式
 	@Prop(String) Payment!: string;
 	orderID: string = '';
 	orderCreated: string = '';
@@ -121,14 +120,11 @@ export default class CheckOut extends Vue {
 		this.orderAmount = this.OrderInfo.amount.toString();
 	}
 
-	// 	結帳
 	CheckOut(id: string, form?: string) {
-		// 如果付款方式為 Credit，需要驗證 form 表單
 		if (form) {
 			(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
 				if (valid) {
 					Api.checkOut(id).then(res => {
-						// 跳轉顯示 type
 						EventBus.$emit('open-cart-type', { type: Status.OpenType.Completed });
 					});
 				} else {
@@ -136,9 +132,7 @@ export default class CheckOut extends Vue {
 				}
 			});
 		} else {
-			// 不需要驗證表單
 			Api.checkOut(id).then(res => {
-				// 跳轉顯示 type
 				EventBus.$emit('open-cart-type', { type: Status.OpenType.Completed });
 			});
 		}

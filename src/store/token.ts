@@ -1,5 +1,4 @@
 import { IActionContextBasic } from '@/store/index';
-// 引入 commit 及 dispatch
 
 export interface IState {
 	token: string;

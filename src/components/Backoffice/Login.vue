@@ -29,13 +29,11 @@ const qs = require('qs');
 
 @Component
 export default class Login extends Vue {
-	// 登入表格資料
 	dynamicValidateForm: Model.IgetTokenRequest = {
 		email: '',
 		password: '',
 	};
 
-	// 驗證規則
 	rules: object = {
 		email: [
 			{ required: true, message: '請輸入電子信箱', trigger: 'blur' },
@@ -43,22 +41,15 @@ export default class Login extends Vue {
 		],
 	};
 
-	// vuex 中的 token
 	@tokenModule.State('token') token!: string;
-	// set vuex token 的方法
 	@Action('token/setToken') private setToken!: any;
 
-	// 登入事件
 	login(dynamicValidateForm: Model.IgetTokenRequest) {
 		EventBus.FullLoading(true);
 		Api.login(dynamicValidateForm).then(res => {
-			// 將 token 儲存 localStorage
 			localStorage.setItem('accessToken', res.token);
-			// 將 token 儲存 vuex（暫用）
 			this.setToken(res.token);
-			// 跳轉 router 到後台
 			this.$router.push({ name: 'Backoffice' });
-			// 發送事件，讓登入登出按鈕切換顯示
 			EventBus.setTag();
 
 			EventBus.FullLoading(false);

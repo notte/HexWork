@@ -69,22 +69,14 @@ const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class Cart extends Vue {
-	// 原始購物車資料
 	CartList: Model.ICartData[] = [];
-	// 購物車 + 優惠券
 	CartListAndCoupon = {} as Model.ICartListAndCoupon;
 	options: number[] = [1, 2, 3, 4, 5];
-	// 原價總金額
 	total: string = '';
-	// User key 的優惠券碼（v-model 欄位）
 	couponsCode: string = '';
-	// 確認已執行的優惠券碼
 	Coupon: string = '';
-	// 判斷顯示優惠價格還是只有顯示原價
 	isShowCoupon: boolean = false;
-	// 折扣
 	discount: number = 0;
-	// 折扣後總金額
 	discountTotal: number = 0;
 	@cartModule.State('CartList') cart!: string;
 	@Action('cart/setCartList') private setCartList!: any;
@@ -120,30 +112,25 @@ export default class Cart extends Vue {
 		this.couponsCode = '';
 	}
 
-	// 獲取購物車
 	getCart() {
 		EventBus.FullLoading(true);
 		Api.getCart().then(res => {
 			this.CartList = res.data;
 			this.CartListAndCoupon.data = res.data;
 
-			// 計算購物車總額
 			let total = 0;
 			this.CartListAndCoupon.data.forEach(item => {
 				total = total + item.quantity * item.product.price;
 			});
 
 			this.total = total.toString();
-
 			this.CartListAndCoupon.total = this.total;
-			// 記錄到 vuex
 			this.setCartList(this.CartListAndCoupon);
 
 			EventBus.FullLoading(false);
 		});
 	}
 
-	// 清空購物車
 	empty() {
 		this.$confirm('確認清空購物車？')
 			.then(_ => {
@@ -157,7 +144,6 @@ export default class Cart extends Vue {
 			.catch(err => {});
 	}
 
-	// 更新購物車
 	editItem(id: string, quantity: number) {
 		EventBus.FullLoading(true);
 		const params: Model.IEditProductCartRequest = {
@@ -171,7 +157,6 @@ export default class Cart extends Vue {
 		});
 	}
 
-	// 刪除一品項
 	deleteItem(id: string) {
 		const params: Model.IDeleteProductCartRequest = {
 			product: id as string,
@@ -187,7 +172,6 @@ export default class Cart extends Vue {
 			.catch(err => {});
 	}
 
-	// 下一步
 	nextStep() {
 		if (this.CartListAndCoupon.data.length !== 0) {
 			EventBus.getOpenCartType(Status.OpenType.SetOrder);

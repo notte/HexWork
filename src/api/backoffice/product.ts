@@ -4,7 +4,6 @@ const URL = process.env.VUE_APP_URL;
 const UUID = process.env.VUE_APP_UUID;
 
 export default {
-	// 後台，取得所有商品
 	async getBackofficeProductList(): Promise<Model.IGetProductListReponse> {
 		const config = {
 			method: 'get',
@@ -13,7 +12,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetProductListReponse>result.data;
 	},
-	// 後台，取得單一商品
 	async getProductItem(id: string): Promise<Model.IGetProductItemReponse> {
 		const config = {
 			method: 'get',
@@ -22,7 +20,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetProductItemReponse>result.data;
 	},
-	// 後台，刪除單一產品
 	async deleteProduct(id: string): Promise<Model.IGetProductListReponse> {
 		const config = {
 			method: 'delete',
@@ -31,7 +28,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetProductListReponse>result.data;
 	},
-	// 後台，新增商品
 	async addProductItem(form: Model.IProductItem): Promise<Model.IGetProductListReponse> {
 		const config = {
 			method: 'post',
@@ -41,7 +37,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetProductListReponse>result.data;
 	},
-	// 後台，修改商品
 	async modifyProductItem(form: Model.IProductItem, id: string): Promise<Model.IGetProductListReponse> {
 		const config = {
 			method: 'patch',

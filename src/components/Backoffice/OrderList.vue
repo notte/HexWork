@@ -57,12 +57,6 @@
 
 			<div class="changeOrder">
 				<h2>修改訂單</h2>
-				<!-- <div class="item" v-for="(item, index) in orderItem.products" :key="index">
-					<h3>{{ item.product.title }}</h3>
-					<el-select v-model="item.quantity" placeholder="請選擇">
-						<el-option v-for="num in options" :key="num" :label="num" :value="num"></el-option>
-					</el-select>
-				</div> -->
 				<h3>訂單是否已付款</h3>
 				<el-switch v-model="orderItem.paid" active-text="已付" inactive-text="未付"></el-switch>
 			</div>
@@ -87,36 +81,25 @@ import Api from '@/api/backoffice/order';
 
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
-	// 分頁後所有訂單資料 + 對應優惠券
 	PageData: object = {
 		data: [],
 		coupon: '',
 	};
-	// 選中頁數
 	CurrentPage: number = 0;
-	// 總頁數
 	TotalPage: number = 0;
-	// 所有訂單資料
 	orderList: Model.IGetOrderList[] = [];
-	// 單一筆訂單
 	orderItem = {} as Model.IOrder;
-	// 訂單 ID
 	id: string = '';
-	// 訂單完成時間
 	time: string = '';
-	// 訂單總金額
 	amount: number = 0;
-	// 判斷 Modal 是否開啟
 	dialogVisible: boolean = false;
 	options: number[] = [1, 2, 3, 4, 5];
 	@Action('order/setOrderList') private setOrderList!: any;
 
 	created() {
-		// 取得所有訂單
 		this.getOrderList();
 	}
 
-	// 監聽所有訂單變數
 	@Watch('orderList')
 	TotalePage() {
 		const newData: any = [];
@@ -136,7 +119,6 @@ export default class ProductList extends Vue {
 		this.CurrentPage = val - 1;
 	}
 
-	// 取得訂單列表
 	getOrderList() {
 		EventBus.FullLoading(true);
 		Api.getOrderList().then(res => {
@@ -147,13 +129,11 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	// 編輯訂單
 	edit(id: string) {
 		EventBus.FullLoading(true);
 		this.dialogVisible = true;
 		Api.getOrderItem(id).then(res => {
 			this.orderItem = res.data;
-			// 在 Modal 顯示對應訂單資料
 			this.id = this.orderItem.id;
 			this.time = this.orderItem.updated.datetime;
 			this.amount = this.orderItem.amount;
@@ -161,10 +141,8 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	// 送出修改
 	modify(paid: boolean, id: string) {
 		EventBus.FullLoading(true);
-		// 切換已付款 / 未付款狀態
 		if (paid === true) {
 			Api.setPaid(id).then(res => {});
 		} else {
@@ -173,7 +151,6 @@ export default class ProductList extends Vue {
 		this.dialogVisible = false;
 		EventBus.FullLoading(false);
 		EventBus.SystemAlert(Status.SysMessageType.Information, '編輯成功');
-		// 重新取得訂單
 		this.getOrderList();
 	}
 }

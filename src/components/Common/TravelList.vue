@@ -44,7 +44,6 @@ export default class TravelList extends Vue {
 	}
 
 	checkStroke(id: string) {
-		// 跳轉 router
 		this.$router.push({ name: Status.OpenType.Location, params: { id } }).catch(err => {});
 		EventBus.getScrollEvent();
 	}

@@ -28,23 +28,18 @@ import EventBus from '@/utilities/event-bus';
 	components: { Cart, CheckOut, Completed, SetOrder },
 })
 export default class Foreign extends Vue {
-	// 目前顯示頁面
 	CurrentType: string = Status.OpenType.CartList;
 	CartList: Status.OpenType.CartList = Status.OpenType.CartList;
 	SetOrder: Status.OpenType.SetOrder = Status.OpenType.SetOrder;
 	CheckOut: Status.OpenType.CheckOut = Status.OpenType.CheckOut;
 	Completed: Status.OpenType.Completed = Status.OpenType.Completed;
-	// 記錄付款方式
 	Payment: string = '';
-	// 記錄目前結帳步驟
 	steps: number = 0;
 
-	// 判斷顯示
 	isShow(tab: Status.OpenType): boolean {
 		return this.CurrentType === tab ? true : false;
 	}
 
-	// 監聽目前顯示的位置，調整結帳階段
 	@Watch('CurrentType')
 	changeStep() {
 		switch (this.CurrentType) {
@@ -64,7 +59,6 @@ export default class Foreign extends Vue {
 	}
 
 	mounted() {
-		// 接收修改顯示頁面
 		EventBus.$on('open-cart-type', (param: { type: string; id: string }) => {
 			this.CurrentType = param.type;
 			this.$router.push({ name: param.type });

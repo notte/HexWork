@@ -39,7 +39,6 @@
 
 		<el-pagination small layout="prev, pager, next" @current-change="handleCurrentChange" :page-count="TotalPage" />
 
-		<!-- dialog -->
 		<el-dialog :visible.sync="dialogVisible" @close="handleClose">
 			<div class="fromImage">
 				<h2>圖片預覽</h2>
@@ -52,12 +51,6 @@
 				<div class="ImageItem">
 					<img :src="img3" alt />
 				</div>
-				<!-- <div class="ImageItem">
-					<img :src="img4" alt />
-				</div>
-				<div class="ImageItem">
-					<img :src="img5" alt />
-				</div> -->
 			</div>
 			<el-form ref="form" :model="form">
 				<el-form-item label="主題圖">
@@ -69,12 +62,6 @@
 				<el-form-item label="行程圖">
 					<el-input v-model.lazy="img3" />
 				</el-form-item>
-				<!-- <el-form-item label="行程圖">
-					<el-input v-model.lazy="img4" />
-				</el-form-item>
-				<el-form-item label="行程圖">
-					<el-input v-model.lazy="img5" />
-				</el-form-item> -->
 				<el-form-item label="行程標題">
 					<el-input v-model.lazy="form.title" />
 				</el-form-item>
@@ -132,56 +119,37 @@ const qs = require('qs');
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
 	dialogVisible: boolean = false;
-	// 未排頁面資料
 	ProductList: Model.IProductList[] = [];
-	// 已排頁面資料
 	PageData: object = {};
-	// 選中的頁數
 	CurrentPage: number = 0;
-	// 總頁數
 	TotalPage: number = 0;
-	// 圖片網址陣列
 	img1: string = '';
 	img2: string = '';
 	img3: string = '';
 	img4: string = '';
 	img5: string = '';
-	// 控制發送按鈕顯示
 	submitButton: boolean = false;
-	// 控制修改按鈕顯示
 	modifyButton: boolean = false;
-	// 出發回來日期
 	startDate: string = '';
 	endDate: string = '';
 	soldList: any[] = [];
 	selectRow = {} as Model.IProductItem;
 	@orderModule.State('OrderList') OrderList!: string[];
 
-	// 表單
 	form: Model.IProductItem = {
-		// 自動生成
 		id: '',
-		// 行程名稱
 		title: '',
-		// 行程類型
 		category: '',
-		// 出團時間
 		content: '',
-		// 行程地點
 		description: '',
 		imageUrl: [],
-		// 是否滿員，false 為未滿 / true 為滿員
 		enabled: false,
-		// 已賣名額
 		origin_price: 0,
-		// 價格
 		price: 0,
-		// 總名額
 		unit: '',
 	};
 
 	created() {
-		// 從訂單列表迭代每一筆訂單
 		this.OrderList.forEach((element: any) => {
 			element.products.forEach((item: any) => {
 				this.soldList = this.soldList.concat([item]);
@@ -195,7 +163,6 @@ export default class ProductList extends Vue {
 		this.submitButton = true;
 	}
 
-	// 取得產品列表
 	getProductList() {
 		EventBus.FullLoading(true);
 		Api.getBackofficeProductList().then(res => {
@@ -204,7 +171,6 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	// 監聽是否有重新獲取商品列表
 	@Watch('ProductList')
 	TotalePage() {
 		const newData: any = [];
@@ -230,12 +196,10 @@ export default class ProductList extends Vue {
 		this.PageData = newData;
 	}
 
-	// 換頁
 	handleCurrentChange(val: number) {
 		this.CurrentPage = val - 1;
 	}
 
-	// 編輯，打開單一商品
 	edit(row: Model.IProductItem) {
 		EventBus.FullLoading(true);
 		this.dialogVisible = true;
@@ -256,7 +220,6 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	// 刪除單一品項
 	clearItem(id: string) {
 		this.$confirm('確認刪除？')
 			.then(_ => {
@@ -271,7 +234,6 @@ export default class ProductList extends Vue {
 			.catch(err => {});
 	}
 
-	// 新增商品
 	submit(form: Model.IProductItem) {
 		EventBus.FullLoading(true);
 		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
@@ -296,7 +258,6 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	// 關閉 Modal 視窗，將資料歸零
 	handleClose() {
 		this.form = {
 			id: '',

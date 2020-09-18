@@ -74,18 +74,12 @@ import * as EventBus from '@/utilities/event-bus';
 
 @Component({ mixins: [formatMixin] })
 export default class ProductList extends Vue {
-	// 判斷 Modal 視窗是否顯示
 	dialogVisible: boolean = false;
-	// 優惠券列表
 	couponList: Model.IData[] = [];
-	// 優惠券 ID
 	couponID: string = '';
-	// 判斷修改按鈕是否顯示
 	modifyButton: boolean = false;
-	// 判斷新增優惠券按鈕顯示
 	addCouponButton: boolean = true;
 
-	// 表格
 	form: Model.IAddCouponItem = {
 		title: '',
 		code: '',
@@ -94,7 +88,6 @@ export default class ProductList extends Vue {
 		deadline_at: '',
 	};
 
-	// 先取得優惠券列表
 	created() {
 		this.getCouponList();
 	}
@@ -108,7 +101,6 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	// 新增優惠券
 	addCoupon(form: Model.IAddCouponItem) {
 		EventBus.FullLoading(true);
 		Api.addCoupon(form).then(res => {
@@ -120,7 +112,6 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	// 刪除優惠券
 	deteteCoupon(id: string) {
 		this.$confirm('確認刪除？')
 			.then(_ => {
@@ -134,20 +125,13 @@ export default class ProductList extends Vue {
 			.catch(err => {});
 	}
 
-	// 打開 Modal，編輯對應優惠券
 	edit(id: string) {
 		EventBus.FullLoading(true);
-		// 顯示修改按鈕
 		this.modifyButton = true;
-		// 關閉新增按鈕（確認送出）
 		this.addCouponButton = false;
-		// 記錄目前打開優惠券 ID
 		this.couponID = id;
-		// 顯示 Modal（修改視窗）
 		this.dialogVisible = true;
-		// 取得單一優惠券 API
 		Api.getCouponItem(id).then(res => {
-			// 將 form 顯示對應資料
 			this.form.code = res.data.code;
 			this.form.title = res.data.title;
 			this.form.percent = res.data.percent;
@@ -158,7 +142,6 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	// click 修改按鈕
 	modify(id: string, form: Model.IAddCouponItem) {
 		EventBus.FullLoading(true);
 		Api.modifyCouponItem(id, form).then(res => {
@@ -169,7 +152,6 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	// 關閉 Modal 視窗，將資料歸零
 	handleClose() {
 		this.form = {
 			title: '',

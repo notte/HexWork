@@ -3,7 +3,6 @@ export interface IGetProductListReponse {
 	meta: IMeta;
 }
 
-// 商品 data 列表
 export interface IProductList {
 	id: string;
 	title: string;
@@ -17,12 +16,10 @@ export interface IProductList {
 	options: IOption;
 }
 
-// 單一產品
 export interface IProductItemReponse {
 	data: IData;
 }
 
-// 單一產品加入購物車，請求 interface
 export interface IAddProductCartRequest {
 	product: string;
 	quantity: string;

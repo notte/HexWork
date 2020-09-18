@@ -4,7 +4,6 @@ const URL = process.env.VUE_APP_URL;
 const UUID = process.env.VUE_APP_UUID;
 
 export default {
-	// 取得所有商品
 	async getProductList(): Promise<Model.IGetProductListReponse> {
 		const config = {
 			method: 'get',
@@ -13,7 +12,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetProductListReponse>result.data;
 	},
-	// 取得單一產品細節
 	async getProductItem(id: string): Promise<Model.IProductItemReponse> {
 		const config = {
 			method: 'get',
@@ -22,7 +20,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IProductItemReponse>result.data;
 	},
-	// 單一產品加入購物車
 	async addProductCart(params: Model.IAddProductCartRequest): Promise<Model.IProductItemReponse> {
 		const config = {
 			method: 'post',

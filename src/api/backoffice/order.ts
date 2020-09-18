@@ -4,7 +4,6 @@ const URL = process.env.VUE_APP_URL;
 const UUID = process.env.VUE_APP_UUID;
 
 export default {
-	// 後台，取得訂單列表
 	async getOrderList(): Promise<Model.IGetOrderListReponse> {
 		const config = {
 			method: 'get',
@@ -13,7 +12,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetOrderListReponse>result.data;
 	},
-	// 後台，取得單一訂單
 	async getOrderItem(id: string): Promise<Model.IGetOrderItem> {
 		const config = {
 			method: 'get',
@@ -22,7 +20,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetOrderItem>result.data;
 	},
-	// 後台，訂單改未付
 	async setUnpaid(id: string): Promise<Model.IGetOrderItem> {
 		const config = {
 			method: 'patch',
@@ -31,7 +28,6 @@ export default {
 		const result = await Handler.request(config);
 		return <Model.IGetOrderItem>result.data;
 	},
-	// 後台，訂單改已付
 	async setPaid(id: string): Promise<Model.IGetOrderItem> {
 		const config = {
 			method: 'patch',

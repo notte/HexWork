@@ -1,10 +1,8 @@
-// 取得優惠券列表
 export interface ICouponListReponse {
 	data: IData[];
 	meta: IMeta;
 }
 
-// 取得優惠券列表
 export interface IDeteteCouponReponse {
 	message: string;
 }

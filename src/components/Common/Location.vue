@@ -53,22 +53,16 @@ const qs = require('qs');
 
 @Component({ mixins: [formatMixin] })
 export default class Location extends Vue {
-	// 從 URL 取得產品 id，用 split 改為陣列格式
 	productId: string = location.hash.split('#/')[1];
 	productItem = {} as Model.IData;
-	// 圖片位址
 	img1: string = '';
 	img2: string = '';
 	img3: string = '';
-	// 金額
 	price: string = '';
 	options: number[] = [1, 2, 3, 4, 5];
 	value: number = 1;
-	// 行程標題
 	strokeTitle: string = '';
-	// 行程內文一
 	strokeContentOne: string = '';
-	// 行程內文二
 	strokeContentTWO: string = '';
 	@strokeModule.State('StrokeList') StrokeList!: any;
 
@@ -76,7 +70,6 @@ export default class Location extends Vue {
 		this.getProduct(this.productId);
 	}
 
-	// 取得單一產品
 	getProduct(id: string) {
 		Api.getProductItem(id).then(res => {
 			this.productItem = res.data;
@@ -127,27 +120,16 @@ export default class Location extends Vue {
 		});
 	}
 
-	// 新增購物車
 	addCart() {
 		EventBus.FullLoading(true);
 		const params: Model.IAddProductCartRequest = {
 			product: this.productId as string,
 			quantity: this.value.toString(),
 		};
-		// 發送購物車事件
 		Api.addProductCart(params).then(res => {
 			EventBus.setCartQuantity();
 			EventBus.FullLoading(false);
 		});
 	}
-
-	// 計算屬性示例
-	// <h1>${{setPrice}}</h1>
-	// get setPrice(): string {
-	// 	return getMoney(this.price);
-	// }
-	// set setPrice(value:number){
-	// 	return this.price = value;
-	// }
 }
 </script>

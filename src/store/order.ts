@@ -2,7 +2,6 @@ import { IActionContextBasic } from '@/store/index';
 import * as Model from '@/models/interfaces/backoffice/order';
 
 export interface IState {
-	// 所有訂單列表
 	OrderList: object;
 }
 

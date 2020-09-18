@@ -1,8 +1,5 @@
-import * as EventBus from '@/utilities/event-bus';
-
 export const formatMixin = {
 	filters: {
-		// 三位數補上一逗點
 		moneyFormat(money: string | string[]) {
 			money = money + '';
 			money = money.split('');
