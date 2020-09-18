@@ -12,7 +12,6 @@ const SET_ORDER_FORM = 'SET_ORDER_FORM';
 const SET_ORDER_INFO = 'SET_ORDER_INFO';
 
 const initState: IState = {
-	// id: '', title: '', category: '', content: '', imageUrl: [], enabled: true, origin_price: 0, price: 0, unit: ''
 	CartList: {
 		data: [],
 		total: '',

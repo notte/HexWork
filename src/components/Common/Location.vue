@@ -41,7 +41,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Watch } from 'vue-property-decorator';
+import { Component, Watch, Prop } from 'vue-property-decorator';
 import { State, Action, Getter, namespace } from 'vuex-class';
 import Api from '@/api/frontend/product.ts';
 import * as Model from '@/models/interfaces/frontend/product';
@@ -71,11 +71,10 @@ export default class Location extends Vue {
 	// 行程內文二
 	strokeContentTWO: string = '';
 	@strokeModule.State('StrokeList') StrokeList!: any;
+	@Prop(String) id!: string;
 
 	created() {
 		// 設定 id
-		// this.productId = this.productId[1];
-		// console.log(this.productId);
 		this.getProductItem(this.productId);
 	}
 
@@ -125,7 +124,7 @@ export default class Location extends Vue {
 
 	// 取得單一產品
 	getProductItem(id: string) {
-		Api.getProductItem(id).then((res) => {
+		Api.getProductItem(id).then(res => {
 			EventBus.FullLoading(true);
 			this.productItem = res.data;
 			this.img1 = this.productItem.imageUrl[0];
@@ -144,7 +143,7 @@ export default class Location extends Vue {
 			quantity: this.value.toString(),
 		};
 		// 發送購物車事件
-		Api.addProductCart(params).then((res) => {
+		Api.addProductCart(params).then(res => {
 			EventBus.setCartQuantity();
 			EventBus.FullLoading(false);
 		});

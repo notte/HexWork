@@ -38,6 +38,7 @@ import Vue from 'vue';
 import { Component, Watch, Model } from 'vue-property-decorator';
 import { State, Action, Getter, namespace } from 'vuex-class';
 import { IError, IErrorData } from '@/models/interfaces/common';
+import travelContent from '@/assets/travelContent.ts';
 import Login from './components/Backoffice/Login.vue';
 import EventBus from '@/utilities/event-bus';
 import CartApi from '@/api/frontend/cart.ts';
@@ -65,6 +66,7 @@ export default class App extends Vue {
 	@Action('stroke/setStrokeList') private setStroke!: any;
 
 	created() {
+		this.setStroke(travelContent);
 		// 先確認目前購物車是否有商品
 		this.checkShoppingCart();
 		// 如果無法取得 token，顯示登入按鈕
@@ -78,9 +80,6 @@ export default class App extends Vue {
 	}
 
 	mounted() {
-		EventBus.$on('get-stroke', (StrokeList: any) => {
-			this.setStroke(StrokeList.StrokeList);
-		});
 		// 接收登入登出按鈕顯示狀態
 		EventBus.$on('set-tag', () => {
 			this.showLogout = true;
