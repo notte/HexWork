@@ -190,7 +190,7 @@ export default class Cart extends Vue {
 	// 下一步
 	nextStep() {
 		if (this.CartListAndCoupon.data.length !== 0) {
-			EventBus.getOpenType(Status.OpenType.SetOrder);
+			EventBus.getOpenCartType(Status.OpenType.SetOrder);
 		}
 	}
 }

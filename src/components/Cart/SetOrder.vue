@@ -132,7 +132,7 @@ export default class SetOrder extends Vue {
 					// 購物車歸零
 					EventBus.setCartQuantity(0);
 					// 切換顯示頁面，並傳遞付款方式
-					EventBus.getOpenType(Status.OpenType.CheckOut, this.form.payment);
+					EventBus.getOpenCartType(Status.OpenType.CheckOut, this.form.payment);
 					EventBus.FullLoading(false);
 				});
 			} else {
@@ -144,7 +144,7 @@ export default class SetOrder extends Vue {
 	prevStep() {
 		// 返回上一頁
 		this.$router.go(-1);
-		EventBus.getOpenType(Status.OpenType.CartList);
+		EventBus.getOpenCartType(Status.OpenType.CartList);
 	}
 }
 </script>

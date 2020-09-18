@@ -71,7 +71,6 @@ export default class Location extends Vue {
 	// 行程內文二
 	strokeContentTWO: string = '';
 	@strokeModule.State('StrokeList') StrokeList!: any;
-	@Prop(String) id!: string;
 
 	created() {
 		this.getProduct(this.productId);

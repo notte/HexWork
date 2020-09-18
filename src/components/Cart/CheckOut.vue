@@ -129,7 +129,7 @@ export default class CheckOut extends Vue {
 				if (valid) {
 					Api.checkOut(id).then(res => {
 						// 跳轉顯示 type
-						EventBus.$emit('open-type', { type: Status.OpenType.Completed });
+						EventBus.$emit('open-cart-type', { type: Status.OpenType.Completed });
 					});
 				} else {
 					return false;
@@ -139,7 +139,7 @@ export default class CheckOut extends Vue {
 			// 不需要驗證表單
 			Api.checkOut(id).then(res => {
 				// 跳轉顯示 type
-				EventBus.$emit('open-type', { type: Status.OpenType.Completed });
+				EventBus.$emit('open-cart-type', { type: Status.OpenType.Completed });
 			});
 		}
 	}

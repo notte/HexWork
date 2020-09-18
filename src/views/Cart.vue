@@ -65,8 +65,9 @@ export default class Foreign extends Vue {
 
 	mounted() {
 		// 接收修改顯示頁面
-		EventBus.$on('open-type', (param: { type: string; id: string }) => {
+		EventBus.$on('open-cart-type', (param: { type: string; id: string }) => {
 			this.CurrentType = param.type;
+			this.$router.push({ name: param.type });
 			this.Payment = param.id;
 		});
 	}

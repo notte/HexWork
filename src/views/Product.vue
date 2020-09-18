@@ -29,9 +29,9 @@ export default class Product extends Vue {
 
 	mounted() {
 		// 接收修改顯示頁面
-		EventBus.$on('open-type', (param: { type: string; id: string }) => {
+		EventBus.$on('open-product-type', (param: { type: string; id: string }) => {
+			this.$router.push({ name: param.type, params: { id: param.id } }).catch(err => {});
 			this.CurrentType = param.type;
-			this.$router.push({ name: param.type, params: { id: param.id } });
 		});
 	}
 }

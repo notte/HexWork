@@ -18,8 +18,11 @@ export const getScrollEvent = () => {
 	EventBus.$emit('to-scroll');
 };
 
-export const getOpenType = (type: Status.OpenType, id?: string) => {
-	EventBus.$emit('open-type', { type, id });
+export const getOpenCartType = (type: Status.OpenType, id?: string) => {
+	EventBus.$emit('open-cart-type', { type, id });
+};
+export const getOpenProductType = (type: Status.OpenType, id?: string) => {
+	EventBus.$emit('open-product-type', { type, id });
 };
 
 export const setCartQuantity = (quantity?: number) => {
