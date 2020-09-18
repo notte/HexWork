@@ -74,12 +74,18 @@ export default class Location extends Vue {
 	@Prop(String) id!: string;
 
 	created() {
-		// 設定 id
-		this.getProductItem(this.productId);
+		this.getProduct(this.productId);
 	}
 
-	mounted() {
-		EventBus.getScrollEvent();
+	// 取得單一產品
+	getProduct(id: string) {
+		Api.getProductItem(id).then(res => {
+			this.productItem = res.data;
+			this.img1 = this.productItem.imageUrl[0];
+			this.img2 = this.productItem.imageUrl[1];
+			this.img3 = this.productItem.imageUrl[2];
+			this.price = this.productItem.price.toString();
+		});
 	}
 
 	@Watch('productItem')
@@ -119,19 +125,6 @@ export default class Location extends Vue {
 						this.strokeContentTWO = this.StrokeList.land.content[1];
 					}
 			}
-		});
-	}
-
-	// 取得單一產品
-	getProductItem(id: string) {
-		Api.getProductItem(id).then(res => {
-			EventBus.FullLoading(true);
-			this.productItem = res.data;
-			this.img1 = this.productItem.imageUrl[0];
-			this.img2 = this.productItem.imageUrl[1];
-			this.img3 = this.productItem.imageUrl[2];
-			this.price = this.productItem.price.toString();
-			EventBus.FullLoading(false);
 		});
 	}
 
