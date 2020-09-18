@@ -20,10 +20,16 @@
 						<p>人</p>
 					</div>
 					<div class="delete">
-						<el-button type="danger" icon="el-icon-delete" plain circle @click="deleteItem(item.product.id)" />
+						<el-button
+							type="danger"
+							icon="el-icon-delete"
+							plain
+							circle
+							@click="deleteItem(item.product.id)"
+						/>
 					</div>
 				</div>
-				<div class="Coupons">
+				<div class="Coupons" v-if="CartList.length !== 0">
 					<el-input type="text" v-model="couponsCode" placeholder="請輸入優惠券代碼"></el-input>
 					<el-button @click="getCoupon(couponsCode)">兌換</el-button>
 					<div v-if="isShowCoupon" class="CouponDelete">
@@ -46,8 +52,8 @@
 					<h3 v-if="isShowCoupon">原價：${{ total | moneyFormat }}</h3>
 					<h1 v-if="!isShowCoupon">${{ total | moneyFormat }}</h1>
 					<h1 v-if="isShowCoupon">${{ discountTotal | moneyFormat }}</h1>
-					<el-button @click="nextStep">下一步</el-button>
-					<el-button class="major" @click="empty">清空購物車</el-button>
+					<el-button v-if="CartList.length !== 0" @click="nextStep">下一步</el-button>
+					<el-button v-if="CartList.length !== 0" class="major" @click="empty">清空購物車</el-button>
 				</div>
 			</div>
 		</div>
@@ -88,7 +94,7 @@ export default class Cart extends Vue {
 	getCoupon(coupon: string) {
 		EventBus.FullLoading(true);
 		if (coupon !== '' && this.Coupon === '') {
-			Api.getCoupon(coupon).then(res => {
+			Api.getCoupon(coupon).then((res) => {
 				this.couponsCode = '';
 				this.Coupon = coupon;
 				this.isShowCoupon = true;
@@ -114,12 +120,12 @@ export default class Cart extends Vue {
 
 	getCart() {
 		EventBus.FullLoading(true);
-		Api.getCart().then(res => {
+		Api.getCart().then((res) => {
 			this.CartList = res.data;
 			this.CartListAndCoupon.data = res.data;
 
 			let total = 0;
-			this.CartListAndCoupon.data.forEach(item => {
+			this.CartListAndCoupon.data.forEach((item) => {
 				total = total + item.quantity * item.product.price;
 			});
 
@@ -133,15 +139,15 @@ export default class Cart extends Vue {
 
 	empty() {
 		this.$confirm('確認清空購物車？')
-			.then(_ => {
+			.then((_) => {
 				EventBus.FullLoading(true);
-				Api.emptyCart().then(res => {
+				Api.emptyCart().then((res) => {
 					this.getCart();
 					EventBus.setCartQuantity();
 					EventBus.FullLoading(false);
 				});
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
 	editItem(id: string, quantity: number) {
@@ -151,7 +157,7 @@ export default class Cart extends Vue {
 			quantity: quantity.toString(),
 		};
 
-		Api.editProduct(params).then(res => {
+		Api.editProduct(params).then((res) => {
 			EventBus.FullLoading(false);
 			this.getCart();
 		});
@@ -162,14 +168,14 @@ export default class Cart extends Vue {
 			product: id as string,
 		};
 		this.$confirm('確認刪除？')
-			.then(_ => {
+			.then((_) => {
 				EventBus.FullLoading(true);
-				Api.deleteProduct(id, params).then(res => {
+				Api.deleteProduct(id, params).then((res) => {
 					this.getCart();
 					EventBus.setCartQuantity();
 				});
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
 	nextStep() {

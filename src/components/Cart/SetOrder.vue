@@ -71,10 +71,10 @@ export default class SetOrder extends Vue {
 	discountTotal: string = '';
 	isShowCoupon: boolean = false;
 	form: Model.ISetOrderUserForm = {
-		name: '戴筱瑤',
-		email: 'maonome@gmail.com',
-		tel: '0956530329',
-		address: '1212',
+		name: '',
+		email: '',
+		tel: '',
+		address: '',
 		payment: 'Credit',
 		message: '',
 		coupon: '',
@@ -119,7 +119,7 @@ export default class SetOrder extends Vue {
 			EventBus.FullLoading(true);
 			if (valid) {
 				this.SetOrderForm(this.form);
-				Api.setOrder(this.form).then(res => {
+				Api.setOrder(this.form).then((res) => {
 					this.SetOrderInfo({ id: res.data.id, datetime: res.data.created.datetime, amount: res.data.amount });
 					EventBus.setCartQuantity(0);
 					EventBus.getOpenCartType(Status.OpenType.CheckOut, this.form.payment);

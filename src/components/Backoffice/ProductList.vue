@@ -37,7 +37,12 @@
 			</el-table-column>
 		</el-table>
 
-		<el-pagination small layout="prev, pager, next" @current-change="handleCurrentChange" :page-count="TotalPage" />
+		<el-pagination
+			small
+			layout="prev, pager, next"
+			@current-change="handleCurrentChange"
+			:page-count="TotalPage"
+		/>
 
 		<el-dialog :visible.sync="dialogVisible" @close="handleClose">
 			<div class="fromImage">
@@ -52,7 +57,7 @@
 					<img :src="img3" alt />
 				</div>
 			</div>
-			<el-form ref="form" :model="form">
+			<el-form ref="form" :rules="rules" :model="form">
 				<el-form-item label="主題圖">
 					<el-input v-model.lazy="img1" />
 				</el-form-item>
@@ -62,28 +67,28 @@
 				<el-form-item label="行程圖">
 					<el-input v-model.lazy="img3" />
 				</el-form-item>
-				<el-form-item label="行程標題">
+				<el-form-item label="行程標題" prop="title">
 					<el-input v-model.lazy="form.title" />
 				</el-form-item>
-				<el-form-item label="出發日期">
+				<el-form-item label="啟程日期" required>
 					<el-date-picker value-format="yyyy-MM-dd" v-model.lazy="startDate" />
 				</el-form-item>
-				<el-form-item label="回來日期">
+				<el-form-item label="返程日期" required>
 					<el-date-picker value-format="yyyy-MM-dd" v-model.lazy="endDate" />
 				</el-form-item>
-				<el-form-item label="行程分類">
+				<el-form-item label="行程分類" prop="category">
 					<el-input v-model.lazy="form.category" />
 				</el-form-item>
-				<el-form-item label="總人數">
+				<el-form-item label="總人數" prop="unit">
 					<el-input v-model.lazy="form.unit" />
 				</el-form-item>
-				<el-form-item label="地點">
+				<el-form-item label="地點" prop="description">
 					<el-input v-model.lazy="form.description" />
 				</el-form-item>
-				<el-form-item label="已售人數">
+				<el-form-item label="已售人數" prop="origin_price">
 					<el-input v-model.number.lazy="form.origin_price" />
 				</el-form-item>
-				<el-form-item label="售價">
+				<el-form-item label="售價" prop="price">
 					<el-input v-model.number.lazy="form.price" />
 				</el-form-item>
 				<el-form-item label="是否滿員">
@@ -93,7 +98,7 @@
 				<div class="footer">
 					<span slot="footer" class="dialog-footer">
 						<el-button class="cancel" @click="dialogVisible = false">取消</el-button>
-						<el-button @click="submit(form)" v-if="submitButton">確定</el-button>
+						<el-button @click="submit('form')" v-if="submitButton">確定</el-button>
 						<el-button @click="modify(form)" v-if="modifyButton">修改</el-button>
 					</span>
 				</div>
@@ -149,6 +154,24 @@ export default class ProductList extends Vue {
 		unit: '',
 	};
 
+	rules: object = {
+		title: [
+			{ required: true, message: '請輸入標題', trigger: 'blur' },
+			{ type: 'string', message: '請輸入正確的標題', trigger: ['blur', 'change'] },
+		],
+		category: [
+			{ required: true, message: '請輸入行程分類', trigger: 'blur' },
+			{ type: 'string', message: '請輸入正確的行程分類', trigger: ['blur', 'change'] },
+		],
+		unit: [{ required: true, message: '請輸入總人數', trigger: 'blur' }],
+		description: [{ required: true, message: '請輸入地點', trigger: 'blur' }],
+		origin_price: [{ required: true, message: '請輸入已售人數', trigger: 'blur' }],
+		price: [
+			{ required: true, message: '請輸入售價', trigger: 'blur' },
+			{ type: 'number', message: '請輸入正確的售價', trigger: ['blur', 'change'] },
+		],
+	};
+
 	created() {
 		this.OrderList.forEach((element: any) => {
 			element.products.forEach((item: any) => {
@@ -165,7 +188,7 @@ export default class ProductList extends Vue {
 
 	getProductList() {
 		EventBus.FullLoading(true);
-		Api.getBackofficeProductList().then(res => {
+		Api.getBackofficeProductList().then((res) => {
 			this.ProductList = res.data;
 			EventBus.FullLoading(false);
 		});
@@ -207,7 +230,7 @@ export default class ProductList extends Vue {
 
 		this.selectRow = { ...row };
 
-		Api.getProductItem(row.id).then(res => {
+		Api.getProductItem(row.id).then((res) => {
 			this.form.enabled = row.enabled;
 			this.form = this.selectRow;
 			this.form.description = res.data.description;
@@ -222,35 +245,54 @@ export default class ProductList extends Vue {
 
 	clearItem(id: string) {
 		this.$confirm('確認刪除？')
-			.then(_ => {
+			.then((_) => {
 				EventBus.FullLoading(true);
-				Api.deleteProduct(id).then(res => {
+				Api.deleteProduct(id).then((res) => {
 					this.getProductList();
 
 					EventBus.FullLoading(false);
 					EventBus.SystemAlert(Status.SysMessageType.Information, '刪除成功');
 				});
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
-	submit(form: Model.IProductItem) {
-		EventBus.FullLoading(true);
-		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
-		this.form.content = this.startDate + '~' + this.endDate;
-		this.form.origin_price = +this.form.origin_price;
-		Api.addProductItem(form).then(res => {
-			this.dialogVisible = false;
-			EventBus.SystemAlert(Status.SysMessageType.Information, '新增成功');
-			EventBus.FullLoading(false);
-			this.getProductList();
+	submit(form: string) {
+		const Start = Date.parse(this.startDate).valueOf();
+		const End = Date.parse(this.endDate).valueOf();
+
+		if ((this.startDate === '' && this.endDate === '') || (this.startDate === null && this.endDate === null)) {
+			this.$confirm('請再次確認日期');
+		} else if (Start > End || Start === End) {
+			this.$confirm('請確認選擇的日期區間');
+		}
+		(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
+			if (valid) {
+				if (Start > End || Start === End) {
+					this.$confirm('請確認選擇的日期區間');
+				} else if (Start < End && Start !== End) {
+					EventBus.FullLoading(true);
+					this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
+					this.form.content = this.startDate + '~' + this.endDate;
+					this.form.origin_price = +this.form.origin_price;
+
+					Api.addProductItem(this.form).then((res) => {
+						this.dialogVisible = false;
+						EventBus.SystemAlert(Status.SysMessageType.Information, '新增成功');
+						EventBus.FullLoading(false);
+						this.getProductList();
+					});
+				}
+			} else {
+				return false;
+			}
 		});
 	}
 
 	modify(form: Model.IProductItem) {
 		EventBus.FullLoading(true);
 		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
-		Api.modifyProductItem(form, form.id).then(res => {
+		Api.modifyProductItem(form, form.id).then((res) => {
 			this.dialogVisible = false;
 			EventBus.FullLoading(false);
 			EventBus.SystemAlert(Status.SysMessageType.Information, '修改成功');

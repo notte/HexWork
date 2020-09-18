@@ -52,7 +52,14 @@
 					<span>結帳資訊</span>
 				</div>
 				<h3 v-if="Payment == 'ATM'">前往 ATM 繳款</h3>
-				<el-form v-if="Payment == 'Credit'" ref="form" :model="form" :rules="rules" label-width="80px" label-position="top">
+				<el-form
+					v-if="Payment == 'Credit'"
+					ref="form"
+					:model="form"
+					:rules="rules"
+					label-width="80px"
+					label-position="top"
+				>
 					<el-form-item label="信用卡卡號" prop="card" required>
 						<el-input maxlength="16" v-model.number.lazy="form.card"></el-input>
 					</el-form-item>
@@ -78,7 +85,8 @@ import { State, Action, Getter, namespace } from 'vuex-class';
 import { Component, Prop } from 'vue-property-decorator';
 import * as Model from '@/models/interfaces/frontend/cart';
 import * as Status from '@/models/status/type';
-import EventBus from '@/utilities/event-bus';
+// import EventBus from '@/utilities/event-bus';
+import * as EventBus from '@/utilities/event-bus';
 import Api from '@/api/frontend/cart.ts';
 import { formatMixin } from '@/utilities/format';
 
@@ -92,9 +100,9 @@ export default class CheckOut extends Vue {
 	orderCreated: string = '';
 	orderAmount: string = '';
 	form: object = {
-		card: '1232123212321232',
+		card: '',
 		date: '',
-		code: '123',
+		code: '',
 	};
 	rules: object = {
 		card: [
@@ -124,16 +132,20 @@ export default class CheckOut extends Vue {
 		if (form) {
 			(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
 				if (valid) {
-					Api.checkOut(id).then(res => {
-						EventBus.$emit('open-cart-type', { type: Status.OpenType.Completed });
+					EventBus.FullLoading(true);
+					Api.checkOut(id).then((res) => {
+						EventBus.getOpenCartType(Status.OpenType.Completed);
+						EventBus.FullLoading(false);
 					});
 				} else {
 					return false;
 				}
 			});
 		} else {
-			Api.checkOut(id).then(res => {
-				EventBus.$emit('open-cart-type', { type: Status.OpenType.Completed });
+			Api.checkOut(id).then((res) => {
+				EventBus.FullLoading(true);
+				EventBus.getOpenCartType(Status.OpenType.Completed);
+				EventBus.FullLoading(false);
 			});
 		}
 	}

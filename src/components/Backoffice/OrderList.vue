@@ -26,7 +26,12 @@
 			</el-table-column>
 		</el-table>
 
-		<el-pagination @current-change="handleCurrentChange" :page-count="TotalPage" small layout="prev, pager, next"></el-pagination>
+		<el-pagination
+			@current-change="handleCurrentChange"
+			:page-count="TotalPage"
+			small
+			layout="prev, pager, next"
+		></el-pagination>
 
 		<el-dialog :visible.sync="dialogVisible">
 			<el-card class="box-card">
@@ -121,10 +126,9 @@ export default class ProductList extends Vue {
 
 	getOrderList() {
 		EventBus.FullLoading(true);
-		Api.getOrderList().then(res => {
+		Api.getOrderList().then((res) => {
 			this.orderList = res.data;
 			this.setOrderList(this.orderList);
-
 			EventBus.FullLoading(false);
 		});
 	}
@@ -132,7 +136,7 @@ export default class ProductList extends Vue {
 	edit(id: string) {
 		EventBus.FullLoading(true);
 		this.dialogVisible = true;
-		Api.getOrderItem(id).then(res => {
+		Api.getOrderItem(id).then((res) => {
 			this.orderItem = res.data;
 			this.id = this.orderItem.id;
 			this.time = this.orderItem.updated.datetime;
@@ -144,14 +148,20 @@ export default class ProductList extends Vue {
 	modify(paid: boolean, id: string) {
 		EventBus.FullLoading(true);
 		if (paid === true) {
-			Api.setPaid(id).then(res => {});
+			Api.setPaid(id).then((res) => {
+				this.dialogVisible = false;
+				this.getOrderList();
+				EventBus.FullLoading(false);
+				EventBus.SystemAlert(Status.SysMessageType.Information, '編輯成功');
+			});
 		} else {
-			Api.setUnpaid(id).then(res => {});
+			Api.setUnpaid(id).then((res) => {
+				this.dialogVisible = false;
+				this.getOrderList();
+				EventBus.FullLoading(false);
+				EventBus.SystemAlert(Status.SysMessageType.Information, '編輯成功');
+			});
 		}
-		this.dialogVisible = false;
-		EventBus.FullLoading(false);
-		EventBus.SystemAlert(Status.SysMessageType.Information, '編輯成功');
-		this.getOrderList();
 	}
 }
 </script>
