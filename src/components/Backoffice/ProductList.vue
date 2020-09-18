@@ -99,7 +99,7 @@
 					<span slot="footer" class="dialog-footer">
 						<el-button class="cancel" @click="dialogVisible = false">取消</el-button>
 						<el-button @click="submit('form')" v-if="submitButton">確定</el-button>
-						<el-button @click="modify(form)" v-if="modifyButton">修改</el-button>
+						<el-button @click="modify('form')" v-if="modifyButton">修改</el-button>
 					</span>
 				</div>
 			</el-form>
@@ -289,14 +289,34 @@ export default class ProductList extends Vue {
 		});
 	}
 
-	modify(form: Model.IProductItem) {
-		EventBus.FullLoading(true);
-		this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
-		Api.modifyProductItem(form, form.id).then((res) => {
-			this.dialogVisible = false;
-			EventBus.FullLoading(false);
-			EventBus.SystemAlert(Status.SysMessageType.Information, '修改成功');
-			this.getProductList();
+	modify(form: string) {
+		const Start = Date.parse(this.startDate).valueOf();
+		const End = Date.parse(this.endDate).valueOf();
+
+		if ((this.startDate === '' && this.endDate === '') || (this.startDate === null && this.endDate === null)) {
+			this.$confirm('請再次確認日期');
+		} else if (Start > End || Start === End) {
+			this.$confirm('請確認選擇的日期區間');
+		}
+		(this.$refs[form] as HTMLFormElement).validate((valid: string) => {
+			if (valid) {
+				if (Start > End || Start === End) {
+					this.$confirm('請確認選擇的日期區間');
+				} else if (Start < End && Start !== End) {
+					EventBus.FullLoading(true);
+
+					this.form.imageUrl = [this.img1, this.img2, this.img3, this.img4, this.img5];
+					this.form.content = this.startDate + '~' + this.endDate;
+					Api.modifyProductItem(this.form, this.form.id).then((res) => {
+						this.dialogVisible = false;
+						EventBus.FullLoading(false);
+						EventBus.SystemAlert(Status.SysMessageType.Information, '修改成功');
+						this.getProductList();
+					});
+				}
+			} else {
+				return false;
+			}
 		});
 	}
 
