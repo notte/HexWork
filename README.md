@@ -1,19 +1,14 @@
-# hex_work
+## 此專案僅用於線上課程個人作業，無任何商業用途
 
-## Project setup
-```
-npm install
-```
+使用技術
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+* Vue.js
+* TypeScript
+* Element UI
+* Scss
 
-### Compiles and minifies for production
-```
-npm run build
-```
+圖片來源
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* Pixabay
+
+專案結構
