@@ -10,7 +10,13 @@
 				<h3 v-if="$route.name == 'Backoffice'">後台管理</h3>
 				<div class="float_right">
 					<router-link class="item" to="/Product">產品列表</router-link>
-					<el-tooltip :disabled="showCartQuantity" class="item" effect="dark" content="購物車沒有商品" placement="top-start">
+					<el-tooltip
+						:disabled="showCartQuantity"
+						class="item"
+						effect="dark"
+						content="購物車沒有商品"
+						placement="top-start"
+					>
 						<a class="cart" @click="toCart">
 							<p class="item">購物車</p>
 							<el-badge :value="cartQuantity" v-if="cartQuantity !== 0" />
@@ -113,7 +119,7 @@ export default class App extends Vue {
 	}
 
 	checkShoppingCart() {
-		CartApi.getCart().then(res => {
+		CartApi.getCart().then((res) => {
 			this.cartQuantity = res.data.length;
 			this.showCartQuantity = this.cartQuantity === 0 ? false : true;
 		});
@@ -121,11 +127,11 @@ export default class App extends Vue {
 
 	checkToken(check: string | null) {
 		Api.check(check)
-			.then(res => {
+			.then((res) => {
 				this.showLogout = true;
 				this.showLogin = false;
 			})
-			.catch(err => {
+			.catch((err) => {
 				this.showLogout = false;
 				this.showLogin = true;
 				this.setToken('');
@@ -143,7 +149,7 @@ export default class App extends Vue {
 		EventBus.$emit('full-loading', {
 			type: true,
 		});
-		Api.logout(localStorage.getItem('accessToken')).then(res => {
+		Api.logout(localStorage.getItem('accessToken')).then((res) => {
 			this.setToken('');
 			localStorage.removeItem('accessToken');
 			this.showLogout = false;

@@ -54,6 +54,7 @@ const routes: RouteConfig[] = [
 		name: 'Location',
 		component: () => import('@/components/Common/Location.vue'),
 	},
+	{ path: '*', redirect: '/' },
 ];
 
 const router = new VueRouter({

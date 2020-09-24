@@ -61,8 +61,8 @@ interface IOrder {
 	products: IProductQuantity[];
 	payment: string;
 	paid: boolean;
-	paid_at: void /* 未知类型 */;
-	paid_diff: void /* 未知类型 */;
+	paid_at: void;
+	paid_diff: void;
 	created: ITime;
 	created_diff: string;
 	updated: ITime;

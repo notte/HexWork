@@ -19,7 +19,6 @@ body {
 	* {
 		padding: 0;
 		margin: 0;
-		// font-weight: normal;
 		text-decoration: none;
 		list-style: none;
 		box-sizing: border-box;
@@ -45,8 +44,6 @@ body,
 		left: 0;
 		width: 100%;
 		padding: 30px;
-		// background-color: #ffffff;
-		// background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a7a7a7' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
 
 		.itemList {
 			position: relative;
@@ -296,7 +293,6 @@ body,
 		width: 90%;
 		margin: 0 auto;
 		padding-bottom: 20px;
-		// display: flex;
 		flex-wrap: wrap;
 
 
@@ -409,11 +405,6 @@ body,
 			color: $major;
 		}
 
-		// 將 table hover 的顏色改為透明，解決移除 hover 效果、又保留按鈕 hover 
-		// .el-table--enable-row-hover .el-table__body tr:hover>td {
-		// 	background-color: rgba(0, 0, 0, 0) !important;
-		// }
-
 	}
 
 	// 內文區塊（時程）
@@ -479,7 +470,7 @@ body,
 			.addCart {
 
 				h3,
-				h1 {
+				h2 {
 					margin: 0 10px;
 					display: inline-block;
 					vertical-align: middle;
@@ -801,7 +792,6 @@ body,
 	width: 50%;
 	margin: 0 auto;
 	box-shadow: 0 0 4px 1px #c4c4c785;
-	// border-bottom: 1px dashed rgb(223, 223, 223);
 	text-align: center;
 
 	h2 {
@@ -918,10 +908,6 @@ body,
 				label {
 					font-weight: 900;
 				}
-			}
-
-			.el-form-item:nth-child(even) {
-				// padding-right: 20px;
 			}
 
 			.el-form-item:nth-child(1),

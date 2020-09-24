@@ -85,7 +85,6 @@ import { State, Action, Getter, namespace } from 'vuex-class';
 import { Component, Prop } from 'vue-property-decorator';
 import * as Model from '@/models/interfaces/frontend/cart';
 import * as Status from '@/models/status/type';
-// import EventBus from '@/utilities/event-bus';
 import * as EventBus from '@/utilities/event-bus';
 import Api from '@/api/frontend/cart.ts';
 import { formatMixin } from '@/utilities/format';

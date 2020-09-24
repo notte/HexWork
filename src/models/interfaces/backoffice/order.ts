@@ -10,8 +10,8 @@ export interface IGetOrderList {
 	products: IProduct[];
 	payment: string;
 	paid: boolean;
-	paid_at: void /* 未知类型 */;
-	paid_diff: void /* 未知类型 */;
+	paid_at: void;
+	paid_diff: void;
 	created: ICreated;
 	updated: IUpdated;
 }
@@ -29,8 +29,8 @@ export interface IOrder {
 	products: IProduct[];
 	payment: string;
 	paid: boolean;
-	paid_at: void /* 未知类型 */;
-	paid_diff: void /* 未知类型 */;
+	paid_at: void;
+	paid_diff: void;
 	created: ICreated;
 	updated: IUpdated;
 }

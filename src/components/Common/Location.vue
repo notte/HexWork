@@ -8,7 +8,7 @@
 		</div>
 		<div class="content">
 			<div class="Propaganda">
-				<h1>{{ productItem.description }}{{ strokeTitle }}</h1>
+				<h2>{{ productItem.description }}{{ strokeTitle }}</h2>
 				<div class="text">
 					<div class="img">
 						<img :src="img2" alt />
@@ -27,7 +27,7 @@
 				<h4>{{ productItem.content | timeFormat }}</h4>
 				<p>{{ productItem.title }}</p>
 				<div class="addCart">
-					<h1>${{ productItem.price | moneyFormat }}</h1>
+					<h2>${{ productItem.price | moneyFormat }}</h2>
 					<el-select v-model="value" placeholder="請選擇">
 						<el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
 					</el-select>
@@ -71,7 +71,7 @@ export default class Location extends Vue {
 	}
 
 	getProduct(id: string) {
-		Api.getProductItem(id).then(res => {
+		Api.getProductItem(id).then((res) => {
 			this.productItem = res.data;
 			this.img1 = this.productItem.imageUrl[0];
 			this.img2 = this.productItem.imageUrl[1];
@@ -126,7 +126,7 @@ export default class Location extends Vue {
 			product: this.productId as string,
 			quantity: this.value.toString(),
 		};
-		Api.addProductCart(params).then(res => {
+		Api.addProductCart(params).then((res) => {
 			EventBus.setCartQuantity();
 			EventBus.FullLoading(false);
 		});

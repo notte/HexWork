@@ -47,7 +47,11 @@
 					<el-input v-model.number.lazy="form.percent" />
 				</el-form-item>
 				<el-form-item label="截止時間">
-					<el-date-picker type="datetime" value-format="yyyy-MM-dd HH:mm:ss" v-model.lazy="form.deadline_at" />
+					<el-date-picker
+						type="datetime"
+						value-format="yyyy-MM-dd HH:mm:ss"
+						v-model.lazy="form.deadline_at"
+					/>
 				</el-form-item>
 				<el-form-item label="是否啟用">
 					<el-switch active-text="啟用" inactive-text="不啟用" v-model="form.enabled"></el-switch>
@@ -94,7 +98,7 @@ export default class ProductList extends Vue {
 
 	getCouponList() {
 		EventBus.FullLoading(true);
-		Api.getCouponList().then(res => {
+		Api.getCouponList().then((res) => {
 			this.couponList = res.data;
 
 			EventBus.FullLoading(false);
@@ -103,7 +107,7 @@ export default class ProductList extends Vue {
 
 	addCoupon(form: Model.IAddCouponItem) {
 		EventBus.FullLoading(true);
-		Api.addCoupon(form).then(res => {
+		Api.addCoupon(form).then((res) => {
 			this.dialogVisible = false;
 
 			EventBus.FullLoading(false);
@@ -114,15 +118,15 @@ export default class ProductList extends Vue {
 
 	deteteCoupon(id: string) {
 		this.$confirm('確認刪除？')
-			.then(_ => {
+			.then((_) => {
 				EventBus.FullLoading(true);
-				Api.deleteCouponItem(id).then(res => {
+				Api.deleteCouponItem(id).then((res) => {
 					this.getCouponList();
 					EventBus.FullLoading(false);
 					EventBus.SystemAlert(Status.SysMessageType.Information, '刪除成功');
 				});
 			})
-			.catch(err => {});
+			.catch((err) => {});
 	}
 
 	edit(id: string) {
@@ -131,7 +135,7 @@ export default class ProductList extends Vue {
 		this.addCouponButton = false;
 		this.couponID = id;
 		this.dialogVisible = true;
-		Api.getCouponItem(id).then(res => {
+		Api.getCouponItem(id).then((res) => {
 			this.form.code = res.data.code;
 			this.form.title = res.data.title;
 			this.form.percent = res.data.percent;
@@ -144,7 +148,7 @@ export default class ProductList extends Vue {
 
 	modify(id: string, form: Model.IAddCouponItem) {
 		EventBus.FullLoading(true);
-		Api.modifyCouponItem(id, form).then(res => {
+		Api.modifyCouponItem(id, form).then((res) => {
 			this.dialogVisible = false;
 			EventBus.FullLoading(false);
 			EventBus.SystemAlert(Status.SysMessageType.Information, '編輯成功');

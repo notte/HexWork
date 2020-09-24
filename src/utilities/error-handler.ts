@@ -28,9 +28,9 @@ const responseFail = (errorData: any) => {
 	} else {
 		err.message = JSON.stringify(errorData);
 	}
+	return Promise.reject(err);
 	EventBus.$emit('api-error', err);
 	EventBus.$emit('full-loading', false);
-	return Promise.reject(err);
 };
 
 const err: IErrorData = {
