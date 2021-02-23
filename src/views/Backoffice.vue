@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<!-- 後台 -->
 		<Login v-if="isShow('Login')" />
 		<Work v-if="isShow('Backoffice')" />
 	</div>
@@ -10,7 +11,6 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import Work from '@/components/Backoffice/Backoffice.vue';
 import Login from '@/components/Backoffice/Login.vue';
-import EventBus from '@/utilities/event-bus';
 import * as Status from '@/models/status/type';
 
 @Component({

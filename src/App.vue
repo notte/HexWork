@@ -1,21 +1,27 @@
 <template>
 	<div id="app" v-loading.fullscreen.lock="fullscreenLoading">
+		<!-- 上方 header -->
 		<div class="header">
+			<!-- 按鈕列表 -->
 			<div class="itemList">
 				<router-link to="/">
 					<div class="logo">
 						<img src="@/assets/logo.svg" alt />
 					</div>
 				</router-link>
+				<!-- 判斷如果目前 router 在後台模式下就出現文字 -->
 				<h3 v-if="$route.name == 'Backoffice'">後台管理</h3>
 				<div class="float_right">
-					<router-link class="item" to="/Product">產品列表</router-link>
+					<!-- 產品列表 -->
+					<router-link class="item" to="/Product" v-if="$route.name !== 'Backoffice'">產品列表</router-link>
+					<!-- 購物車 -->
 					<el-tooltip :disabled="showCartQuantity" class="item" effect="dark" content="購物車沒有商品" placement="top-start">
-						<a class="cart" @click="toCart">
+						<a class="cart" @click="toCart" v-if="$route.name !== 'Backoffice'">
 							<p class="item">購物車</p>
 							<el-badge :value="cartQuantity" v-if="cartQuantity !== 0" />
 						</a>
 					</el-tooltip>
+					<!-- 登出 -->
 					<a class="item" v-if="showLogout" @click="logout">登出</a>
 				</div>
 			</div>
@@ -23,6 +29,7 @@
 		<div class="layout">
 			<div class="container" ref="childDiv">
 				<router-view />
+				<!-- footer -->
 				<div class="container-footer">
 					<p>Copyright © 2020 Journey. Some Rights Reserved.</p>
 					<router-link class="item" to="/Backoffice" v-if="showLogin">登入後台</router-link>
@@ -35,11 +42,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Watch, Model } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import { State, Action, Getter, namespace } from 'vuex-class';
-import { IError, IErrorData } from '@/models/interfaces/common';
 import travelContent from '@/assets/travelContent.ts';
-import Login from './components/Backoffice/Login.vue';
 import EventBus from '@/utilities/event-bus';
 import CartApi from '@/api/frontend/cart.ts';
 import Api from '@/api/common.ts';
@@ -63,9 +68,10 @@ export default class App extends Vue {
 	fullscreenLoading: boolean = false;
 	// vuex 中 set token 的方法
 	@Action('token/setToken') private setToken!: any;
-	@Action('stroke/setStrokeList') private setStroke!: any;
+	@Action('stroke/setItineraryArticle') private setStroke!: any;
 
 	created() {
+		// 取得商品文案，並儲存在 vuex
 		this.setStroke(travelContent);
 		// 先確認目前購物車是否有商品
 		this.checkShoppingCart();
@@ -73,8 +79,7 @@ export default class App extends Vue {
 		if (!localStorage.getItem('accessToken')) {
 			this.showLogin = true;
 		} else {
-			// 如果有取得 token，顯示登出按鈕並確認 token 是否過期
-			this.showLogout = true;
+			// 如果有取得 token，確認 token 是否過期
 			this.checkToken(this.token);
 		}
 	}
@@ -101,7 +106,7 @@ export default class App extends Vue {
 			this.fullscreenLoading = param.type;
 		});
 
-		// 接收操作反饋
+		// 接收操作反饋 alert
 		EventBus.$on('system-alert', (item: any) => {
 			this.$notify({
 				title: item.type,

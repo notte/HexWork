@@ -1,5 +1,3 @@
-import * as EventBus from '@/utilities/event-bus';
-
 export const formatMixin = {
 	filters: {
 		// 三位數補上一逗點

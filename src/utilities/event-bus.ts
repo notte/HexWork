@@ -33,8 +33,8 @@ export const setTag = () => {
 	EventBus.$emit('set-tag');
 };
 
-export const getSrtokeList = (StrokeList: object) => {
-	EventBus.$emit('get-stroke', { StrokeList });
+export const getSrtokeList = (ItineraryList: object) => {
+	EventBus.$emit('get-stroke', { ItineraryList });
 };
 
 const EventBus = new Vue();

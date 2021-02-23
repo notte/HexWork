@@ -21,11 +21,9 @@ import { State, Action, Getter, namespace } from 'vuex-class';
 import { Component, Provide } from 'vue-property-decorator';
 import * as Model from '@/models/interfaces/common';
 import * as EventBus from '@/utilities/event-bus';
-import * as Status from '@/models/status/type';
 import Api from '@/api/common.ts';
 
 const tokenModule = namespace('token');
-const qs = require('qs');
 
 @Component
 export default class Login extends Vue {

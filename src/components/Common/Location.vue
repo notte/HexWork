@@ -1,4 +1,5 @@
 <template>
+	<!-- 單一行程內容 -->
 	<div class="Stroke">
 		<div class="title">
 			<h1 class>{{ productItem.title }}</h1>
@@ -6,18 +7,20 @@
 				<img :src="img1" alt />
 			</div>
 		</div>
+		<!-- 內容區塊 -->
 		<div class="content">
+			<!-- 宣傳內容 -->
 			<div class="Propaganda">
 				<h1>{{ productItem.description }}{{ strokeTitle }}</h1>
 				<div class="text">
 					<div class="img">
-						<img :src="img2" alt />
+						<img :src="img2" />
 					</div>
 					<p>{{ strokeContentOne }}</p>
 				</div>
 				<div class="text">
 					<div class="img">
-						<img :src="img3" alt />
+						<img :src="img3" />
 					</div>
 					<p>{{ strokeContentTWO }}</p>
 				</div>
@@ -54,7 +57,7 @@ const qs = require('qs');
 @Component({ mixins: [formatMixin] })
 export default class Location extends Vue {
 	// 從 URL 取得產品 id，用 split 改為陣列格式
-	productId: string = location.hash.split('#/')[1];
+	@Prop(String) readonly productId!: string;
 	productItem = {} as Model.IData;
 	// 圖片位址
 	img1: string = '';
@@ -70,7 +73,7 @@ export default class Location extends Vue {
 	strokeContentOne: string = '';
 	// 行程內文二
 	strokeContentTWO: string = '';
-	@strokeModule.State('StrokeList') StrokeList!: any;
+	@strokeModule.State('ItineraryArticle') ItineraryArticle!: any;
 
 	created() {
 		this.getProduct(this.productId);
@@ -90,40 +93,72 @@ export default class Location extends Vue {
 	@Watch('productItem')
 	changeContent() {
 		const tag = this.productItem.category.split('、');
-		tag.forEach((item, i) => {
+		tag.forEach((item,i) => {
 			switch (item) {
 				case '陸上':
 					if (this.strokeTitle === '') {
-						this.strokeTitle = this.StrokeList.land.title;
+						this.strokeTitle = this.ItineraryArticle.land.title;
 					}
-					this.strokeContentOne = this.StrokeList.land.content[0];
-					this.strokeContentTWO = this.StrokeList.land.content[1];
+					switch (i) {
+						case 0:
+							this.strokeContentOne = this.ItineraryArticle.land.content[i];
+							break;
+						case 1:
+							this.strokeContentTWO = this.ItineraryArticle.land.content[i];
+							break;
+						default:
+							break;
+					}
 					break;
 				case '水上':
 					if (this.strokeTitle === '') {
-						this.strokeTitle = this.StrokeList.sea.title;
+						this.strokeTitle = this.ItineraryArticle.sea.title;
 					}
-					this.strokeContentOne = this.StrokeList.sea.content[0];
-					this.strokeContentTWO = this.StrokeList.sea.content[1];
+					switch (i) {
+						case 0:
+							this.strokeContentOne = this.ItineraryArticle.sea.content[i];
+							break;
+						case 1:
+							this.strokeContentTWO = this.ItineraryArticle.sea.content[i];
+							break;
+						default:
+							break;
+					}
 					break;
 				case '購物':
 					if (this.strokeTitle === '') {
-						this.strokeTitle = this.StrokeList.shopping.title;
+						this.strokeTitle = this.ItineraryArticle.shopping.title;
 					}
-					this.strokeContentOne = this.StrokeList.shopping.content[0];
+					switch (i) {
+						case 0:
+							this.strokeContentOne = this.ItineraryArticle.shopping.content[i];
+							break;
+						case 1:
+							this.strokeContentTWO = this.ItineraryArticle.shopping.content[i];
+							break;
+						default:
+							break;
+					}
 					break;
 				case '歷史':
 					if (this.strokeTitle === '') {
-						this.strokeTitle = this.StrokeList.history.title;
+						this.strokeTitle = this.ItineraryArticle.history.title;
 					}
-					this.strokeContentOne = this.StrokeList.history.content[0];
+					switch (i) {
+						case 0:
+							this.strokeContentOne = this.ItineraryArticle.history.content[i];
+							break;
+						case 1:
+							this.strokeContentTWO = this.ItineraryArticle.history.content[i];
+							break;
+						default:
+							break;
+					}
 					break;
 				default:
 					break;
-					if (this.strokeContentTWO === '' && item === '陸上') {
-						this.strokeContentTWO = this.StrokeList.land.content[1];
-					}
 			}
+
 		});
 	}
 

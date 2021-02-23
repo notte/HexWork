@@ -1,5 +1,6 @@
 <template>
 	<div class="CartMain">
+		<!-- 購物車主頁 -->
 		<h1 class="CartTitle">購物車</h1>
 
 		<el-steps :active="steps" simple v-if="CurrentType !== 'CartList'">

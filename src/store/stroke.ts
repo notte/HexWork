@@ -2,29 +2,31 @@ import { IActionContextBasic } from '@/store/index';
 import * as Model from '@/models/interfaces/common';
 
 export interface IState {
-	// 所有訂單列表
-	StrokeList: Model.IIineraryContentReponse;
+	// 所有行程文案列表
+	ItineraryArticle: Model.IIineraryContentReponse;
+
+	
 }
 
-const SRTOKE_LIST = 'SRTOKE_LIST';
+const ITINERARY_ARTICLE = 'ITINERARY_LIST';
 
 const initState: IState = {
-	StrokeList: { sea: { title: '', content: [] }, land: { title: '', content: [] }, shopping: { title: '', content: [] }, history: { title: '', content: [] } },
+	ItineraryArticle: { sea: { title: '', content: [] }, land: { title: '', content: [] }, shopping: { title: '', content: [] }, history: { title: '', content: [] } },
 };
 
 const getters = {
-	StrokeList: (state: IState) => state.StrokeList,
+	ItineraryArticle: (state: IState) => state.ItineraryArticle,
 };
 
 const actions = {
-	setStrokeList(context: IActionContextBasic, payload: string) {
-		context.commit(SRTOKE_LIST, payload);
+	setItineraryArticle(context: IActionContextBasic, payload: string) {
+		context.commit(ITINERARY_ARTICLE, payload);
 	},
 };
 
 const mutations = {
-	[SRTOKE_LIST](state: IState, payload: Model.IIineraryContentReponse) {
-		state.StrokeList = payload;
+	[ITINERARY_ARTICLE](state: IState, payload: Model.IIineraryContentReponse) {
+		state.ItineraryArticle = payload;
 	},
 };
 

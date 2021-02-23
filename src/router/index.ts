@@ -17,7 +17,14 @@ const routes: RouteConfig[] = [
 	{
 		path: '/Product',
 		name: 'Product',
-		component: () => import('@/components/Common/TravelList.vue'),
+		component: () => import('@/views/TravelList.vue'),
+		children:[
+			{
+				path: ':id',
+				name: 'Location',
+				component: () => import('@/components/Common/Location.vue'),
+			},
+		]
 	},
 	{
 		path: '/Cart',
@@ -49,11 +56,6 @@ const routes: RouteConfig[] = [
 		path: '/Login',
 		name: 'Login',
 		component: () => import('@/components/Backoffice/Login.vue'),
-	},
-	{
-		path: '/:id',
-		name: 'Location',
-		component: () => import('@/components/Common/Location.vue'),
 	},
 ];
 
